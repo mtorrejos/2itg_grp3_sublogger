@@ -31,3 +31,50 @@ nav a{
     width: 1000px;
     margin: auto;
 }
+.banner-area{
+    animation-name: animate;
+    animation-duration: 10s;
+    animation-timing-function: ease;
+    animation-iteration-count: infinite;
+    height: 100vh;
+    width: 100vw;
+  }
+.text-area{
+    width: 80%;
+    text-align: center;
+    margin: auto;
+  }
+.text-area h2{
+    font-size: 70px;
+    color: #f8f8f8;
+    margin: 20% 0 0;
+  }
+
+  .text-area a{
+    font-size: 15px;
+    color: #f8f8f8;
+    background: #262626;
+    text-decoration: none;
+    padding: 15px 60px;
+    display: inline-flex;
+    margin-top: 20%;
+    border-radius: 20px;
+  }
+  .text-area p{
+    font-size: 18px;
+    color: #f8f8f8;
+    width: 70%;
+    margin: 0 auto;
+    line-height:1.9;
+  }
+  @keyframes animate {
+    0%{
+      background: #29306a;
+    }
+    50%{
+      background: #ad7c66;
+    }
+    100%{
+      background: #4c9ab6;
+    }
+  }
