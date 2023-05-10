@@ -16,23 +16,13 @@
 			exit;
 		}
 
-		$con = new mysqli($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS,$DATABASE_NAME);
-		$sql = 'CREATE TABLE IF NOT EXISTS ' .$email.'(
-		`user_ID` INT(11) NOT NULL AUTO_INCREMENT,
-		`user_FirstName` VARCHAR(50) NOT NULL,
-		`user_LastName` VARCHAR(50) NOT NULL,
-		`user_Email` VARCHAR(100) NOT NULL,
-		`user_Password` VARCHAR(255) NOT NULL,
-		`user_EmailReminderTime` INT(12) NOT NULL,
-		`user_EmailSurveyTime` INT(12) NOT NULL,
-		PRIMARY KEY(`user_ID`)
-		) ENGINE = InnoDB AUTO_INCREMENT = 2 DEFAULT CHARSET = utf8;';
-		$con->query($sql);
-
-		$sql =  'prepare("INSERT INTO ' .$email. ' (user_FirstName, user_LastName, user_Email, user_Password) VALUES ('.$fName.', '.$lName.', '.$email.', '.$password.')");';
-
+		$sql = $con->'SELECT COUNT(*) FROM `users` WHERE user_Email = '.$email.';';
+		$sql->bind_result($count);
+		$sql->fetch();
 
 		//input basic user data into table
+		$sql =  'INSERT INTO ' .$email. ' (user_FirstName, user_LastName, user_Email, user_Password, user_EmailReminderTime, user_EmailSurveyTime) VALUES ('.$fName.', '.$lName.', '.$email.', '.$password.', 1, 1);';
+		$con->query($sql);
 
 
 		echo 'Account successfully created! Redirecting to home page...';

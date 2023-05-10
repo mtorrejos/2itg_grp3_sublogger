@@ -1,14 +1,6 @@
 <?php
     session_start();
     require_once "init.php";
-
-    try { mysqli_connect($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS, $DATABASE_NAME); }
-    catch(Exception $e) { 
-        $con = new mysqli($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS);
-        $sql = "CREATE DATABASE IF NOT EXISTS sublogger";
-        $con->query($sql);
-    }
-
 ?>
 
 <!DOCTYPE html>
