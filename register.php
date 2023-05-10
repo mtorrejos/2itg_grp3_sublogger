@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php 
 //include_once("connection/connection.php");
 //$con = connection();
@@ -23,14 +22,14 @@
     <link rel="icon" href="img/SubLogger_Logo.png" type="image/gif" sizes="16x16">
     <!--CSS-->
     <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
-    <title>Document</title>
+    <title>Register</title>
 </head>
 <body>
     <?php require_once("headerAndFooter/navbarWithLogin.php"); ?>
     <div style="padding-top:160px;" class="section2">
         <img src="img/SubLogger_Logo.png" class="center" style="width: 150px; height: 150px;">
         <label class="center title" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3));">Register to SubLogger</label>
-        <form name="login" id="login" method="POST" class="center regforms">
+        <form name="register" id="register" method="POST" class="center regforms">
         <div class="row">
             <div class="col-xxl-6 gx-5">
                 <div class="mb-3">
@@ -90,7 +89,7 @@
             </div>
         </div>
             <div class="contentButton">
-                <input type="submit" class="btn btn-primary btn-md btnMid center" id="btnReg" name="btnReg" value="Create Account"><a href="#" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"></a>
+            <a href="indexAndLogin.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" id="btnReg" name="btnReg" value="Create Account"></a>
             </div>
             <a href="indexAndLogin.php" style="text-align:center; color:#fff; text-decoration:none; width:80%;" class="center">Cancel</a>
         </form>
@@ -98,59 +97,4 @@
     </div>
     <?php require_once("headerAndFooter/footer.php"); ?>
 </body>
-=======
-<?php
-	session_start();
-	require_once "init.php";
-
-	if($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-		$email = $_POST['email'];
-		$password = $_POST['password'];
-		$fName = $_POST['fName'];
-		$lName = $_POST['lName'];
-
-		//simple validation to check if all fields are filled
-
-		if(empty($email) || empty($password) || empty($fName) || empty($lName)) { 
-			echo 'One or more fields are empty!';
-			exit;
-		}
-
-		$sql = $con->'SELECT COUNT(*) FROM `users` WHERE user_Email = '.$email.';';
-		$sql->bind_result($count);
-		$sql->fetch();
-
-		//input basic user data into table
-		$sql =  'INSERT INTO ' .$email. ' (user_FirstName, user_LastName, user_Email, user_Password, user_EmailReminderTime, user_EmailSurveyTime) VALUES ('.$fName.', '.$lName.', '.$email.', '.$password.', 1, 1);';
-		$con->query($sql);
-
-
-		echo 'Account successfully created! Redirecting to home page...';
-		header('Location: index.php');
-		}
-?>
-
-<html>
-	<head>
-	    <meta charset="UTF-8">
-	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	    <title>sublogger</title>
-	    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-	    <link rel="stylesheet" href="style.css" type="text/css">
-	</head>
-
-	<body>
-
-	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	Email: <input type="text" name="email"><br>
-	Password: <input type="password" name="password"><br>
-	First Name: <input type="text" name="fName"><br>
-	Last Name: <input type="text" name="lName"><br>
-	<input type="submit" value="Register" name="submit">
-	</form>
-
-	</body>
->>>>>>> 1dd1e214cc7378ffeea1ed7631a0ee0466d7c6bd
 </html>

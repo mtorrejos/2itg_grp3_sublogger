@@ -22,7 +22,7 @@
     <link rel="icon" href="img/SubLogger_Logo.png" type="image/gif" sizes="16x16">
     <!--CSS-->
     <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
-    <title>Document</title>
+    <title>SubLogger</title>
 </head>
 <body>
     <?php require_once("headerAndFooter/navbarWithLogin.php"); ?>
@@ -55,7 +55,7 @@
                     <input type="password" class="form-control textbox-blue" id="password" name="password" required>
                 </div>
                 <div class="contentButton">
-                    <input type="submit" class="btn btn-primary btn-md btnMid center" id="btnLogin" name="btnLogin" value="Login"><a href="#" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"></a>
+                    <a href="homepage" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" id="btnLogin" name="btnLogin" value="Login"></a>
                 </div>
                 <a href="register.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center">No account yet? Register now.</a>
             </form>

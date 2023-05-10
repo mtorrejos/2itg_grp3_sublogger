@@ -280,6 +280,12 @@ footer {
         padding-left: 100px !important;
         padding-right: 100px !important;
     }
+    .editProfileDetails {
+        width: 70% !important;
+    }
+    .sortform {
+        width: 60% !important;
+    }
 }
 @media screen and (max-width: 1200px) {
     .indexh1div {
@@ -291,6 +297,17 @@ footer {
     }
     .card-blue {
         width: 40%;
+    }
+    .editProfileDetails {
+        width: 80% !important;
+    }
+    .sortform {
+        width: 80% !important;
+    }
+}
+@media screen and (max-width: 992px) {
+    .editProfileSpan {
+        height: 100% !important;
     }
 }
 @media screen and (max-width: 890px) {
@@ -339,6 +356,20 @@ footer {
     .card-blue {
         width: 80%;
     }
+    .title {
+        font-size: 40px !important;
+        padding-top: 13px !important;
+    }
+    .surveySubtitle {
+        font-size: 20px !important;
+    }
+    .profileDetails {
+        padding:50px;
+        margin-top:60px;
+    }
+    .homepageSortLabel {
+        width: 80% !important;
+    }
 }
 @media screen and (max-width: 456px) {
     .indexh1div {
@@ -348,6 +379,41 @@ footer {
     }
     .btn {
         width: 100% !important;
+    }
+    .profileDetails {
+        margin-top:60px;
+    }
+    .profileLabel{
+        font-size:18px !important;
+    }
+    .profileValue{
+        font-size:18px !important;
+    }
+    .profileTitle {
+        font-size: 30px !important;
+    }
+    .surveyTitle {
+        font-size: 30px !important;
+        padding-top: 30px !important;
+    }
+    .surveySubtitle {
+        font-size: 15px !important;
+        padding-top: 5px !important;
+    }
+    .btnProfile {
+        width: 150px !important;
+        padding: 5px !important;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+    .editProfileDetails {
+        top:-40px !important;
+    }
+    .homepageSortLabel {
+        width: 100% !important;
+    }
+    .card-blue {
+        height: 500px !important;
     }
 }
 
@@ -431,24 +497,89 @@ td {
     font-weight: 700;
     padding-top: 8px;
     padding-right: 10px;
-    width:60%;
+    width:70%;
     display: block;
     position:relative;
 }
 
-/*Enrollment Form*/
-label.blocklabel {display: block; position:relative; margin: 12px 0px}
-label.specAddress {display: block; position:relative; margin: 12px 0px; left: 180px}
-label.blocklabel input {position: absolute; left: 180px}
-label.blocklabel select {position: absolute; left: 180px}
-#day {position: absolute; left: 350px}
-#year {position: absolute; left: 480px}
-#firstName, #lastName, #address, #phone, #studentID, #program {width: 25em; flex:1;}
-#city, #state {width: 85px}
-#ZIP {width: 80px}
-#comments {width: 550px;}
-#enrollmentForm span {color: red}
-.enrollmentForm {
+/*addSubscription.php & editSubscription.php*/
+.addSubForms {
+    padding-top: 25px;
+    width: 62%;
+    color: #2e3192;
+}
+.textbox-white {
+    color: #2e3192;
+    height: 50px;
+    background-color: #fff;
+    border-radius: 25px;
+    border: 2px solid #2e3192;
+    padding-left: 20px;
+}
+.textbox-white:focus {
+    color: #2e3192;
+    background-color: #fff;
+}
+.dropdown-white {
+    color: #2e3192;
+    height: 50px;
+    background-color: #fff;
+    border-radius: 25px;
+    border: 2px solid #2e3192;
+    width: 100%;
+    margin-top: 5px;
+}
+
+/*profile.php*/
+.profileDetails {
+    padding-top: 25px;
+    width: 62%;
+    color: #2e3192;
+}
+.profileLabel {
+    font-size:22px;
+    color: #2e3192;
+    font-weight: 700;
+    padding-top: 8px;
+    width: 350px;
+    display: inline-block;
+    position:relative;
+}
+.profileValue {
+    font-size:22px;
+    color: #2e3192;
+    font-weight: 400;
+    padding-top: 8px;
+    display: inline-block;
+    position:relative;
+}
+
+/*editProfile.php*/
+.editProfileTextbox {
+    display: inline-block;
+}
+.flexbox-center {
     display: flex;
-    align-items: flex-start;
+    justify-content: center;
+    align-items: center;
+}
+.editProfileSpan {
+    color:#f04148;
+    padding-left:50px;
+    display:block;
+    padding:0;
+    font-size:15px;
+    height:0;
+}
+
+/*survey.php*/
+.surveyTitle {
+    height: 55%;
+}
+.surveySubtitle {
+    font-size: 25px;
+    font-weight: 900;
+    color: #fff;
+    width: 80% !important;
+    text-align: center;
 }

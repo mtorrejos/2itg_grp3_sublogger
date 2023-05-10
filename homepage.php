@@ -22,7 +22,7 @@
     <link rel="icon" href="img/SubLogger_Logo.png" type="image/gif" sizes="16x16">
     <!--CSS-->
     <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
-    <title>Document</title>
+    <title>Homepage</title>
 </head>
 <body>
     <?php require_once("headerAndFooter/navbarWithAccount.php"); ?>
@@ -37,17 +37,33 @@
         </div>
     </div>
     <div class="row">
-        <form name="login" id="login" method="GET" class="center justify-content-start" style="width:80%; display:flex;">
-            <div class="col-md-5 mb-3" style="padding-top:20px; padding-bottom:10px; padding-left:10px; padding-right:10px;">
-                <label class="homepageSortLabel">Sort according to:</label>
-                <input type="text" class="form-control textbox-blue" style="width:50%" id="sortAccordingTo" name="sortAccordingTo">
-            </div>
-            <div class="col-md-5 mb-3" style="padding-top:20px; padding-bottom:10px; padding-left:10px; padding-right:10px;">
-                <label class="homepageSortLabel">In what order::</label>
-                <input type="text" class="form-control textbox-blue" style="width:50%" id="order" name="order">
-            </div>
-            <div class="contentButton" style="visibility:hidden;"> <!--submit form on every change in dropdown-->
-                <input type="submit" class="btn btn-primary btn-md btnMid center" id="btnSort" name="btnSort" value="Sort"><a href="#" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"></a>
+        <form name="login" id="login" method="GET" class="center justify-content-start sortform" style="width:40%;">
+            <div class="row">
+                <div class=col-lg-6>
+                    <div class="row" style="padding-top:20px; padding-bottom:10px; padding-left:10px; padding-right:10px;">
+                        <label class="homepageSortLabel col-sm-6">Sort according to:</label>
+                        <select id="sortAccordingTo" name="sortAccordingTo" class="form-select dropdown-blue col-sm-6">
+                            <option value="Default" selected>Default</option>
+                            <option value="Start Date">Start Date</option>
+                            <option value="End Date">End Date</option>
+                            <option value="Last Used">Last Used</option>
+                            <option value="Name">Name</option>
+                        </select>
+                    </div>
+                </div>
+                <div class=col-lg-6>
+                    <div class="row" style="padding-top:20px; padding-bottom:10px; padding-left:10px; padding-right:10px;">
+                        <label class="homepageSortLabel col-sm-6">In what order:</label>
+                        <select id="order" name="order" class="form-select dropdown-blue col-sm-6">
+                            <option value="None" selected>None</option>
+                            <option value="Ascending">Ascending</option>
+                            <option value="Descending">Descending</option>
+                        </select>
+                    </div>
+                </div>
+            </div><br>
+            <div class="contentButton" style="visibility:hidden; width:0; height:0;"> <!--submit form on every change in dropdown-->
+                <input type="submit" id="btnSort" name="btnSort" value="Sort"><a href="#" target="_self"></a>
             </div>
         </form>
     </div>
@@ -57,27 +73,27 @@
             <table>
                 <tr>
                     <td class="homepageLabel">Type:</td>
-                    <td class="homepageValue">Premium</td>
+                    <td class="homepageValue" id="subType" name="subType">Premium</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">Start Date:</td>
-                    <td class="homepageValue">March 20, 2023</td>
+                    <td class="homepageValue" id="subStartDate" name="subStartDate">March 20, 2023</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">End Date:</td>
-                    <td class="homepageValue">April 20, 2023</td>
+                    <td class="homepageValue" id="subEndDate" name="subEndDate">April 20, 2023</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">Last Used:</td>
-                    <td class="homepageValue">March 20, 2023</td>
+                    <td class="homepageValue" id="subLastUsed" name="subLastUsed">March 20, 2023</td>
                 </tr>
             </table>
             <table>
-                <tr><td class="homepageValue">Ira Rayzel S. Ji</td></tr>
-                <tr><td class="homepageValue">irarayzelji2002</td></tr>
-                <tr><td class="homepageValue">irarayzelji@gmail.com</td></tr>
-                <tr><td class="homepageValue">MasterCard</td></tr>
-                <tr><td class="homepageValue">**** **** **** ****</td></tr>
+                <tr><td class="homepageValue" id="subAcctName" name="subAcctname">Ira Rayzel S. Ji</td></tr>
+                <tr><td class="homepageValue" id="subUsername" name="subUsername">irarayzelji2002</td></tr>
+                <tr><td class="homepageValue" id="subEmail" name="subEmail">irarayzelji@gmail.com</td></tr>
+                <tr><td class="homepageValue" id="subCardName" name="subCardName">MasterCard</td></tr>
+                <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber">**** **** **** ****</td></tr>
             </table>
             <div class="d-flex justify-content-end">
                 <a href="editSubscription.php"><img src="img/Edit_Icon.png" class="homepageIcon"></a>
@@ -89,27 +105,27 @@
             <table>
                 <tr>
                     <td class="homepageLabel">Type:</td>
-                    <td class="homepageValue">Premium</td>
+                    <td class="homepageValue" id="subType" name="subType">Premium</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">Start Date:</td>
-                    <td class="homepageValue">March 20, 2023</td>
+                    <td class="homepageValue" id="subStartDate" name="subStartDate">March 20, 2023</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">End Date:</td>
-                    <td class="homepageValue">April 20, 2023</td>
+                    <td class="homepageValue" id="subEndDate" name="subEndDate">April 20, 2023</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">Last Used:</td>
-                    <td class="homepageValue">March 20, 2023</td>
+                    <td class="homepageValue" id="subLastUsed" name="subLastUsed">March 20, 2023</td>
                 </tr>
             </table>
             <table>
-                <tr><td class="homepageValue">Ira Rayzel S. Ji</td></tr>
-                <tr><td class="homepageValue">irarayzelji2002</td></tr>
-                <tr><td class="homepageValue">irarayzelji@gmail.com</td></tr>
-                <tr><td class="homepageValue">MasterCard</td></tr>
-                <tr><td class="homepageValue">**** **** **** ****</td></tr>
+                <tr><td class="homepageValue" id="subAcctName" name="subAcctname">Ira Rayzel S. Ji</td></tr>
+                <tr><td class="homepageValue" id="subUsername" name="subUsername">irarayzelji2002</td></tr>
+                <tr><td class="homepageValue" id="subEmail" name="subEmail">irarayzelji@gmail.com</td></tr>
+                <tr><td class="homepageValue" id="subCardName" name="subCardName">MasterCard</td></tr>
+                <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber">**** **** **** ****</td></tr>
             </table>
             <div class="d-flex justify-content-end">
                 <a href="editSubscription.php"><img src="img/Edit_Icon.png" class="homepageIcon"></a>
@@ -121,60 +137,27 @@
             <table>
                 <tr>
                     <td class="homepageLabel">Type:</td>
-                    <td class="homepageValue">Premium</td>
+                    <td class="homepageValue" id="subType" name="subType">Premium</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">Start Date:</td>
-                    <td class="homepageValue">March 20, 2023</td>
+                    <td class="homepageValue" id="subStartDate" name="subStartDate">March 20, 2023</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">End Date:</td>
-                    <td class="homepageValue">April 20, 2023</td>
+                    <td class="homepageValue" id="subEndDate" name="subEndDate">April 20, 2023</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">Last Used:</td>
-                    <td class="homepageValue">March 20, 2023</td>
+                    <td class="homepageValue" id="subLastUsed" name="subLastUsed">March 20, 2023</td>
                 </tr>
             </table>
             <table>
-                <tr><td class="homepageValue">Ira Rayzel S. Ji</td></tr>
-                <tr><td class="homepageValue">irarayzelji2002</td></tr>
-                <tr><td class="homepageValue">irarayzelji@gmail.com</td></tr>
-                <tr><td class="homepageValue">MasterCard</td></tr>
-                <tr><td class="homepageValue">**** **** **** ****</td></tr>
-            </table>
-            <div class="d-flex justify-content-end">
-                <a href="editSubscription.php"><img src="img/Edit_Icon.png" class="homepageIcon"></a>
-                <a href="deleteSubscription.php"><img src="img/Delete_Icon.png" class="homepageIcon"></a>
-            </div>
-        </div>
-
-        <div class="col-3 card-blue">
-            <h1 class="homepageSubName">Canva</h1>
-            <table>
-                <tr>
-                    <td class="homepageLabel">Type:</td>
-                    <td class="homepageValue">Premium</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">Start Date:</td>
-                    <td class="homepageValue">March 20, 2023</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">End Date:</td>
-                    <td class="homepageValue">April 20, 2023</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">Last Used:</td>
-                    <td class="homepageValue">March 20, 2023</td>
-                </tr>
-            </table>
-            <table>
-                <tr><td class="homepageValue">Ira Rayzel S. Ji</td></tr>
-                <tr><td class="homepageValue">irarayzelji2002</td></tr>
-                <tr><td class="homepageValue">irarayzelji@gmail.com</td></tr>
-                <tr><td class="homepageValue">MasterCard</td></tr>
-                <tr><td class="homepageValue">**** **** **** ****</td></tr>
+                <tr><td class="homepageValue" id="subAcctName" name="subAcctname">Ira Rayzel S. Ji</td></tr>
+                <tr><td class="homepageValue" id="subUsername" name="subUsername">irarayzelji2002</td></tr>
+                <tr><td class="homepageValue" id="subEmail" name="subEmail">irarayzelji@gmail.com</td></tr>
+                <tr><td class="homepageValue" id="subCardName" name="subCardName">MasterCard</td></tr>
+                <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber">**** **** **** ****</td></tr>
             </table>
             <div class="d-flex justify-content-end">
                 <a href="editSubscription.php"><img src="img/Edit_Icon.png" class="homepageIcon"></a>
@@ -186,27 +169,27 @@
             <table>
                 <tr>
                     <td class="homepageLabel">Type:</td>
-                    <td class="homepageValue">Premium</td>
+                    <td class="homepageValue" id="subType" name="subType">Premium</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">Start Date:</td>
-                    <td class="homepageValue">March 20, 2023</td>
+                    <td class="homepageValue" id="subStartDate" name="subStartDate">March 20, 2023</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">End Date:</td>
-                    <td class="homepageValue">April 20, 2023</td>
+                    <td class="homepageValue" id="subEndDate" name="subEndDate">April 20, 2023</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">Last Used:</td>
-                    <td class="homepageValue">March 20, 2023</td>
+                    <td class="homepageValue" id="subLastUsed" name="subLastUsed">March 20, 2023</td>
                 </tr>
             </table>
             <table>
-                <tr><td class="homepageValue">Ira Rayzel S. Ji</td></tr>
-                <tr><td class="homepageValue">irarayzelji2002</td></tr>
-                <tr><td class="homepageValue">irarayzelji@gmail.com</td></tr>
-                <tr><td class="homepageValue">MasterCard</td></tr>
-                <tr><td class="homepageValue">**** **** **** ****</td></tr>
+                <tr><td class="homepageValue" id="subAcctName" name="subAcctname">Ira Rayzel S. Ji</td></tr>
+                <tr><td class="homepageValue" id="subUsername" name="subUsername">irarayzelji2002</td></tr>
+                <tr><td class="homepageValue" id="subEmail" name="subEmail">irarayzelji@gmail.com</td></tr>
+                <tr><td class="homepageValue" id="subCardName" name="subCardName">MasterCard</td></tr>
+                <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber">**** **** **** ****</td></tr>
             </table>
             <div class="d-flex justify-content-end">
                 <a href="editSubscription.php"><img src="img/Edit_Icon.png" class="homepageIcon"></a>
@@ -218,27 +201,59 @@
             <table>
                 <tr>
                     <td class="homepageLabel">Type:</td>
-                    <td class="homepageValue">Premium</td>
+                    <td class="homepageValue" id="subType" name="subType">Premium</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">Start Date:</td>
-                    <td class="homepageValue">March 20, 2023</td>
+                    <td class="homepageValue" id="subStartDate" name="subStartDate">March 20, 2023</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">End Date:</td>
-                    <td class="homepageValue">April 20, 2023</td>
+                    <td class="homepageValue" id="subEndDate" name="subEndDate">April 20, 2023</td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">Last Used:</td>
-                    <td class="homepageValue">March 20, 2023</td>
+                    <td class="homepageValue" id="subLastUsed" name="subLastUsed">March 20, 2023</td>
                 </tr>
             </table>
             <table>
-                <tr><td class="homepageValue">Ira Rayzel S. Ji</td></tr>
-                <tr><td class="homepageValue">irarayzelji2002</td></tr>
-                <tr><td class="homepageValue">irarayzelji@gmail.com</td></tr>
-                <tr><td class="homepageValue">MasterCard</td></tr>
-                <tr><td class="homepageValue">**** **** **** ****</td></tr>
+                <tr><td class="homepageValue" id="subAcctName" name="subAcctname">Ira Rayzel S. Ji</td></tr>
+                <tr><td class="homepageValue" id="subUsername" name="subUsername">irarayzelji2002</td></tr>
+                <tr><td class="homepageValue" id="subEmail" name="subEmail">irarayzelji@gmail.com</td></tr>
+                <tr><td class="homepageValue" id="subCardName" name="subCardName">MasterCard</td></tr>
+                <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber">**** **** **** ****</td></tr>
+            </table>
+            <div class="d-flex justify-content-end">
+                <a href="editSubscription.php"><img src="img/Edit_Icon.png" class="homepageIcon"></a>
+                <a href="deleteSubscription.php"><img src="img/Delete_Icon.png" class="homepageIcon"></a>
+            </div>
+        </div>
+        <div class="col-3 card-blue">
+            <h1 class="homepageSubName">Canva</h1>
+            <table>
+                <tr>
+                    <td class="homepageLabel">Type:</td>
+                    <td class="homepageValue" id="subType" name="subType">Premium</td>
+                </tr>
+                <tr>
+                    <td class="homepageLabel">Start Date:</td>
+                    <td class="homepageValue" id="subStartDate" name="subStartDate">March 20, 2023</td>
+                </tr>
+                <tr>
+                    <td class="homepageLabel">End Date:</td>
+                    <td class="homepageValue" id="subEndDate" name="subEndDate">April 20, 2023</td>
+                </tr>
+                <tr>
+                    <td class="homepageLabel">Last Used:</td>
+                    <td class="homepageValue" id="subLastUsed" name="subLastUsed">March 20, 2023</td>
+                </tr>
+            </table>
+            <table>
+                <tr><td class="homepageValue" id="subAcctName" name="subAcctname">Ira Rayzel S. Ji</td></tr>
+                <tr><td class="homepageValue" id="subUsername" name="subUsername">irarayzelji2002</td></tr>
+                <tr><td class="homepageValue" id="subEmail" name="subEmail">irarayzelji@gmail.com</td></tr>
+                <tr><td class="homepageValue" id="subCardName" name="subCardName">MasterCard</td></tr>
+                <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber">**** **** **** ****</td></tr>
             </table>
             <div class="d-flex justify-content-end">
                 <a href="editSubscription.php"><img src="img/Edit_Icon.png" class="homepageIcon"></a>
@@ -256,5 +271,15 @@
     -->
     
     <?php require_once("headerAndFooter/footer.php"); ?>
+
+    <!--Turning card number into asterisks (Not Working)-->
+    <script>
+        var pass= document.getElementById("subCardNumber").innerHTML;
+        var char = pass.length;
+        var hidden ="";
+        for (i=0;i<char;i++) {
+            hidden += "*"; }
+        document.getElementById("subCardNumber").innerHTML = subCardNumber;
+    </script>
 </body>
 </html>
