@@ -13,12 +13,12 @@
 
 	try {
 	$mail->isSMTP(); 
-	$mail->Host       = 'smtp.gmail.com';                           //Set the SMTP server to send through
+	$mail->Host       = '';                           //Set the SMTP server to send through
     $mail->SMTPAuth   = true;                                       //Enable SMTP authentication
-    $mail->Username   = 'reminder.sublogger@gmail.com';             //SMTP username
-    $mail->Password   = 'vnmvnjtmrcilqrmh';                         //SMTP password
+    $mail->Username   = '';             //SMTP username
+    $mail->Password   = '';                         //SMTP password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            	//Enable implicit TLS encryption
-    $mail->Port       = 465;                                    	//TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    $mail->Port       = ;                                    	//TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     $mail->setFrom('sublogger@gmail.com', 'Sublogger Reminders');
     $mail->addAddress($_SESSION['email']);
