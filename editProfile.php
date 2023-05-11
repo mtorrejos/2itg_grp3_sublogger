@@ -2,6 +2,44 @@
     session_start();
     require_once "connection/connection.php";
     $con = connection();
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $fName = $_POST['firstname'];
+        $lName = $_POST['lastname'];
+        $emailtime = $_POST['emailReminderFrequency'];
+        $emailsurvey = $_POST['emailSurveyFrequency'];
+
+        //if email is changed
+        if($_SESSION['email'] != $email) {
+            $sql =  "INSERT INTO users (user_FirstName, user_LastName, user_Email, user_Password, user_EmailReminderTime, user_EmailSurveyTime) VALUES ('$fName', '$lName', '$email', '$password', '.$emailtime.', '.$emailsurvey.');";
+            $con->query($sql);
+            $sql = "DELETE FROM users WHERE user_Email = '{$_SESSION['email']}';";
+            $con->query($sql);
+
+            //move subscriptions into new table
+            $sql = "CREATE TABLE `$email` LIKE `{$_SESSION['email']}`;";
+            $con->query($sql);
+            $sql = "INSERT INTO `$email` SELECT * FROM `{$_SESSION['email']}`;";
+             $con->query($sql);
+
+            $sql = "DROP TABLE `{$_SESSION['email']}`;";
+            $con->query($sql);
+            $_SESSION['email'] = $email;
+        }
+
+        //otherwise, just change everything else
+        else {
+            $sql = "UPDATE users SET user_FirstName = '$fName', user_LastName = '$lName', user_Password = '$password', user_EmailReminderTime = '$emailtime', user_EmailSurveyTime = '$emailsurvey' WHERE user_Email = '{$_SESSION['email']}';";
+            $con->query($sql);
+        }
+
+        echo '<script>alert("Account Modified! Directing to homepage...")</script>';
+        session_destroy();
+        header("Location: indexAndLogin.php");
+    }
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +77,7 @@
                 <span class="editProfileSpan">No numbers allowed</span>
             </div>
             <div class="col-lg-7">
-                <input type="text" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="firstname" name="firstname" value="Ira Rayzel" required>
+                <input type="text" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="firstname" name="firstname" value="" required>
             </div>
         </div>
         <div class="row" style="margin-top:5px; margin-bottom:5px;">
@@ -48,7 +86,7 @@
                 <span class="editProfileSpan">No numbers allowed</span>
             </div>
             <div class="col-lg-7">
-                <input type="text" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="lastname" name="lastname" value="Ji" required>
+                <input type="text" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="lastname" name="lastname" value="" required>
             </div>
         </div>
         <div class="row" style="margin-top:5px; margin-bottom:5px;">
@@ -57,7 +95,7 @@
                 <span class="editProfileSpan">Not a valid email address</span>
             </div>
             <div class="col-lg-7">
-                <input type="email" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="email" name="email" value="irarayzelji@gmail.com" required>
+                <input type="email" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="email" name="email" value="" required>
             </div>
         </div>
         <div class="row" style="margin-top:5px; margin-bottom:5px;">
@@ -66,7 +104,7 @@
                 <span class="editProfileSpan">Must contain atleast 8 characters</span>
             </div>
             <div class="col-lg-7">
-                <input type="password" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="password" name="password" value="a password here" required>
+                <input type="password" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="password" name="password" value="" required>
             </div>
         </div>
         <div class="row" style="margin-top:5px; margin-bottom:5px;">
@@ -75,13 +113,13 @@
             </div>
             <div class="col-lg-7">
                 <select id="emailReminderFrequency" name="emailReminderFrequency" class="form-select dropdown-blue" required>
-                    <option value="every 5 minutes" selected>every 5 minutes</option>
-                    <option value="every hour">every hour</option>
-                    <option value="once a month">once a month</option>
-                    <option value="twice a month">twice a month</option>
-                    <option value="once every two months">once every two months</option>
-                    <option value="once every six months">once every six months</option>
-                    <option value="once a year">once a year</option>
+                    <option value="1" selected>every 5 minutes</option>
+                    <option value="2">every hour</option>
+                    <option value="3">once a month</option>
+                    <option value="4">twice a month</option>
+                    <option value="5">once every two months</option>
+                    <option value="6">once every six months</option>
+                    <option value="7">once a year</option>
                 </select>
             </div>
         </div>
@@ -91,13 +129,13 @@
             </div>
             <div class="col-lg-7">
                 <select id="emailSurveyFrequency" name="emailSurveyFrequency" class="form-select dropdown-blue" required>
-                    <option value="every 5 minutes" selected>every 5 minutes</option>
-                    <option value="every hour">every hour</option>
-                    <option value="once a month">once a month</option>
-                    <option value="twice a month">twice a month</option>
-                    <option value="once every two months">once every two months</option>
-                    <option value="once every six months">once every six months</option>
-                    <option value="once a year">once a year</option>
+                    <option value="1" selected>every 5 minutes</option>
+                    <option value="2">every hour</option>
+                    <option value="3">once a month</option>
+                    <option value="4">twice a month</option>
+                    <option value="5">once every two months</option>
+                    <option value="6">once every six months</option>
+                    <option value="7">once a year</option>
                 </select>
             </div>
         </div>
