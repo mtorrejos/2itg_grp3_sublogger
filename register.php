@@ -11,7 +11,7 @@
         $emailtime = $_POST['emailReminderFrequency'];
         $emailsurvey = $_POST['emailSurveyFrequency'];
 
-        if(checkAccount($email, $password) <= 0) { //change this to be more in line with the visuals
+        if(checkAccount($email) <= 0) { //change this to be more in line with the visuals
             $sql =  "INSERT INTO users (user_FirstName, user_LastName, user_Email, user_Password, user_EmailReminderTime, user_EmailSurveyTime) VALUES ('$fName', '$lName', '$email', '$password', '.$emailtime.', '.$emailsurvey.');";
             $con->query($sql);
             echo '<script>alert("Account Created! Directing to homepage...")</script>';
