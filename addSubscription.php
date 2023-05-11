@@ -48,15 +48,15 @@
                 </div>
                 <div class="mb-3">
                     <label for="subStartDate" class="form-label" style="font-size:18px;">Start Date<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">Should not be empty</span></label>
-                    <input type="text" class="form-control textbox-white" id="subStartDate" name="subStartDate" placeholder="MM/DD/YYYY" required>
+                    <input type="date" class="form-control textbox-white" id="subStartDate" name="subStartDate" required>
                 </div>
                 <div class="mb-3" style="padding-top:15px;">
                     <label for="subEndDate" class="form-label" style="font-size:18px;">End Date<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">Should not be empty</span></label>
-                    <input type="text" class="form-control textbox-white" id="subEndDate" name="subEndDate" placeholder="MM/DD/YYYY" required>
+                    <input type="date" class="form-control textbox-white" id="subEndDate" name="subEndDate" required>
                 </div>
                 <div class="mb-3" style="padding-top:15px;">
                     <label for="subLastUsed" class="form-label" style="font-size:18px;">Last Used<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">Should not be empty</span></label>
-                    <input type="text" class="form-control textbox-white" id="subLastUsed" name="subLastUsed" placeholder="MM/DD/YYYY" required>
+                    <input type="date" class="form-control textbox-white" id="subLastUsed" name="subLastUsed" required>
                 </div>
             </div>
             <div class="col-xxl-6 gx-5">
