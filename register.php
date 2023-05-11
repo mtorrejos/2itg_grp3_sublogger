@@ -1,6 +1,29 @@
 <?php 
-//include_once("connection/connection.php");
-//$con = connection();
+    require_once "connection/connection.php";
+    $con = connection();
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $fName = $_POST['firstname'];
+        $lName = $_POST['lastname'];
+        $emailtime = $_POST['emailReminderFrequency'];
+        $emailsurvey = $_POST['emailSurveyFrequency'];
+
+        if(checkAccount($email, $password) <= 0) { //change this to be more in line with the visuals
+            $sql =  "INSERT INTO users (user_FirstName, user_LastName, user_Email, user_Password, user_EmailReminderTime, user_EmailSurveyTime) VALUES ('$fName', '$lName', '$email', '$password', '.$emailtime.', '.$emailsurvey.');";
+            $con->query($sql);
+            echo '<script>alert("Account Created! Directing to homepage...")</script>';
+            header("Location: indexAndLogin.php");
+        }
+
+        else {
+            echo '<script>alert("There is already an account with that email!")</script>';
+        }
+
+       
+    }
 ?>
 
 <!DOCTYPE html>
@@ -60,13 +83,13 @@
                             <label for="emailReminderFrequency" class="form-label" style="font-size:18px; margin:0; height:15px;">Email Reminder Frequency<span style="color:#f04148; padding-left:10px;">*</label>
                             <br><span style="color:#fff; font-size:10px;">This is to reminder you of your subscription dues</span>
                             <select id="emailReminderFrequency" name="emailReminderFrequency" class="form-select dropdown-blue" required>
-                                <option value="every 5 minutes" selected>every 5 minutes</option>
-                                <option value="every hour">every hour</option>
-                                <option value="once a month">once a month</option>
-                                <option value="twice a month">twice a month</option>
-                                <option value="once every two months">once every two months</option>
-                                <option value="once every six months">once every six months</option>
-                                <option value="once a year">once a year</option>
+                                <option value="1" selected>every 5 minutes</option>
+                                <option value="2">every hour</option>
+                                <option value="3">once a month</option>
+                                <option value="4">twice a month</option>
+                                <option value="5">once every two months</option>
+                                <option value="6">once every six months</option>
+                                <option value="7">once a year</option>
                             </select>
                         </div>
                     </div>
@@ -75,13 +98,13 @@
                             <label for="emailSurveyFrequency" class="form-label" style="font-size:18px; margin:0; height:15px;">Email Survey Frequency<span style="color:#f04148; padding-left:10px;">*</span></label>
                             <br><span style="color:#fff; font-size:10px;">This is to record the last time you used your subscription</span>
                             <select id="emailSurveyFrequency" name="emailSurveyFrequency" class="form-select dropdown-blue" required>
-                                <option value="every 5 minutes" selected>every 5 minutes</option>
-                                <option value="every hour">every hour</option>
-                                <option value="once a month">once a month</option>
-                                <option value="twice a month">twice a month</option>
-                                <option value="once every two months">once every two months</option>
-                                <option value="once every six months">once every six months</option>
-                                <option value="once a year">once a year</option>
+                                <option value="1" selected>every 5 minutes</option>
+                                <option value="2">every hour</option>
+                                <option value="3">once a month</option>
+                                <option value="4">twice a month</option>
+                                <option value="5">once every two months</option>
+                                <option value="6">once every six months</option>
+                                <option value="7">once a year</option>
                             </select>
                         </div>
                     </div>

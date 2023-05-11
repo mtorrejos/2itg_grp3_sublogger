@@ -1,6 +1,7 @@
 <?php 
-//include_once("connection/connection.php");
-//$con = connection();
+    session_start();
+    require_once "connection/connection.php";
+    $con = connection();
 ?>
 
 <!DOCTYPE html>
