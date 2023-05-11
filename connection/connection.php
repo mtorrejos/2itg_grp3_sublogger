@@ -10,7 +10,7 @@
         //database creation
         try { mysqli_connect(DATABASE_HOST, DATABASE_USER, DATABASE_PASS, DATABASE_NAME); }
         catch(Exception $e) { 
-            $con = new mysqli($DATABASE_HOST, $DATABASE_USER, $DATABASE_PASS);
+            $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS);
             $sql = "CREATE DATABASE IF NOT EXISTS sublogger";
             $con->query($sql);
         }
@@ -75,4 +75,97 @@
         $con->query($sql);
         //user subscriptions table
     }
+
+    function getPassword($email) {
+        $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
+        $sql = $con->prepare("SELECT user_Password FROM users WHERE user_Email = '$email';");
+        $sql->execute();
+        $sql->bind_result($dbpass);
+        $sql->fetch();
+        $sql->close();
+        return $dbpass;
+    }
+
+    function getFrequency($email) {
+        $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
+        $sql = $con->prepare("SELECT user_EmailReminderTime FROM users WHERE user_Email = '$email';");
+        $sql->execute();
+        $sql->bind_result($time);
+        $sql->fetch();
+        $sql->close();
+        return $time;
+    }
+
+    function getFrequencyText($email) {
+        switch (getFrequency($email)){
+            case 1:
+                return "Every 5 minutes"; //might be a bit too much lmao
+                break;
+            case 2:
+                return "Every hour";
+                break;
+            case 3:
+                return "Once a month"; 
+                break;
+            case 4:
+                return "Twice a month"; 
+                break;
+            case 5:
+                return "Once every two months"; 
+                break;
+            case 6:
+                return "Once every six months"; 
+                break;
+            case 7:
+                return "Once a year";
+                break;
+            default:
+                return "Error - Contact help if you get this.";
+                break;
+        }
+    }
+
+    function getSurvey($email) {
+        $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
+        $sql = $con->prepare("SELECT user_EmailSurveyTime FROM users WHERE user_Email = '$email';");
+        $sql->execute();
+        $sql->bind_result($time);
+        $sql->fetch();
+        $sql->close();
+        return $time;
+    }
+
+    function getSurveyText($email) {
+        switch (getFrequency($email)){
+            case 1:
+                return "Every 5 minutes"; //might be a bit too much lmao
+                break;
+            case 2:
+                return "Every hour";
+                break;
+            case 3:
+                return "Once a month"; 
+                break;
+            case 4:
+                return "Twice a month"; 
+                break;
+            case 5:
+                return "Once every two months"; 
+                break;
+            case 6:
+                return "Once every six months"; 
+                break;
+            case 7:
+                return "Once a year";
+                break;
+            default:
+                return "Error - Contact help if you get this.";
+                break;
+        }
+    }
+
+
+
+
+
 ?>

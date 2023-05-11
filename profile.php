@@ -3,6 +3,7 @@
     require_once "connection/connection.php";
     $con = connection();
     createSubTable($_SESSION['email']);
+
 ?>
 
 <!DOCTYPE html>
@@ -33,13 +34,13 @@
     </div>
     <div class="profileDetails" style="display:block; margin-left:auto; margin-right:auto; width:auto; position:relative; top:-50px;">
         <label for="email" class="form-label profileLabel">Email Address:</label>
-        <label for="text" class="form-label profileValue" id=email name=email>irarayzelji@gmail.com</label> <br>
+        <label for="text" class="form-label profileValue" id=email name=email><?php echo $_SESSION['email']; ?></label> <br>
         <label for="text" class="form-label profileLabel">Password:</label>
-        <label for="password" class="form-label profileValue" id=password name=password>some password here</label> <br>
+        <label for="password" class="form-label profileValue" id=password name=password><?php echo getPassword($_SESSION['email']); ?></label> <br>
         <label for="text" class="form-label profileLabel">Email Reminder Frequency:</label>
-        <label for="text" class="form-label profileValue" id=text name=text>once a month</label> <br>
+        <label for="text" class="form-label profileValue" id=text name=text><?php echo getFrequencyText($_SESSION['email']); ?></label> <br>
         <label for="text" class="form-label profileLabel">Email Survey Frequency:</label>
-        <label for="text" class="form-label profileValue" id=text name=text>once a month</label> <br>
+        <label for="text" class="form-label profileValue" id=text name=text><?php echo getSurveyText($_SESSION['email']); ?></label> <br>
 
         <div class="contentButton" style="padding-top:30px;">
             <a href="editProfile.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="button" class="btn btn-primary btn-md btnMid btnProfile center" id="btnReg" name="btnReg" value="Edit"></a>

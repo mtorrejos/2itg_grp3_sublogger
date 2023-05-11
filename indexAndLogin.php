@@ -8,25 +8,12 @@
         $password = $_POST['password'];
 
         if(isset($email) && isset($password)) { 
-            $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
-            $sql = $con->prepare("SELECT COUNT(*) FROM users WHERE user_Email = '$email';");
-            $sql->execute();
-            $sql->bind_result($count);
-            $sql->fetch();
-            $sql->close();
-
             if(checkAccount($email) <= 0) { //change this to be more in line with the visuals
                 echo '<script>alert("Account not found!")</script>';
             }
 
             else {
-                $sql = $con->prepare("SELECT user_Password FROM users WHERE user_Email = '$email';");
-                $sql->execute();
-                $sql->bind_result($dbpass);
-                $sql->fetch();
-                $sql->close();
-
-                if ($dbpass === $password) {
+                if (getPassword($email) === $password) {
                     $_SESSION['email'] = $email;
                     header("Location: profile.php");
                 }
