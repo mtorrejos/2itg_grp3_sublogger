@@ -76,6 +76,20 @@
         //user subscriptions table
     }
 
+    function validateName($name) {
+        if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) {
+            $nameErr = "Only letters and white space allowed";
+        }
+        return $nameErr;
+    }
+
+    function validateEmail($email) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $emailErr = "Not a valid email address";
+        }
+        return $emailErr;
+    }
+
     function getFirstName($email) {
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
         $sql = $con->prepare("SELECT user_FirstName FROM users WHERE user_Email = '$email';");
@@ -96,7 +110,7 @@
         return $dbpass;
     }
 
-    function getPassword($email) {
+    function getPassword($email) { //hashed password
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
         $sql = $con->prepare("SELECT user_Password FROM users WHERE user_Email = '$email';");
         $sql->execute();

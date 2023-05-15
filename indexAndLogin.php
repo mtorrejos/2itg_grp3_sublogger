@@ -15,7 +15,7 @@
                 $emailErrMsg = "Account not found!"; //echo '<script>alert("Account not found!")</script>';
             }
             else {
-                if (getPassword($email) === $password) {
+                if (password_verify($password, getPassword($email))) { //if (getPassword($email) === $password)
                     $_SESSION['email'] = $email;
                     header("Location: homepage.php");
                 }

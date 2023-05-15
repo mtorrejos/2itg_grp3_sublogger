@@ -5,24 +5,33 @@
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $email = $_POST['email'];
-        $password = $_POST['password'];
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
         $fName = $_POST['firstname'];
         $lName = $_POST['lastname'];
         $emailtime = $_POST['emailReminderFrequency'];
         $emailsurvey = $_POST['emailSurveyFrequency'];
+        $emailErr = false;
+        $fNameErr = false;
+        $lNameErr = false;
 
         if(checkAccount($email) <= 0) { //change this to be more in line with the visuals
-            $sql =  "INSERT INTO users (user_FirstName, user_LastName, user_Email, user_Password, user_EmailReminderTime, user_EmailSurveyTime) VALUES ('$fName', '$lName', '$email', '$password', '.$emailtime.', '.$emailsurvey.');";
-            $con->query($sql);
-            echo '<script>alert("Account Created! Directing to homepage...")</script>';
-            header("Location: indexAndLogin.php");
+            if(!(!empty(validateName($fName)) || !empty(validateName($lName)) || !empty(validateEmail($email)))) {//no error message
+                $sql =  "INSERT INTO users (user_FirstName, user_LastName, user_Email, user_Password, user_EmailReminderTime, user_EmailSurveyTime) VALUES ('$fName', '$lName', '$email', '$password', '.$emailtime.', '.$emailsurvey.');";
+                $con->query($sql);
+                //echo '<script>alert("Account Created! Directing to homepage...")</script>';
+                header("Location: indexAndLogin.php");
+            }
+            else {
+                $fNameErr = true; $lNameErr = true; $emailErr = true;
+                $fNameErrMsg = validateName($fName);
+                $lNameErrMsg = validateName($lName);
+                $emailErrMsg = validateEmail($email);
+            }
         }
-
         else {
-            echo '<script>alert("There is already an account with that email!")</script>';
-        }
-
-       
+            $emailErr = true;
+            $emailErrMsg = "An account with this email already exists."; //echo '<script>alert("There is already an account with that email!")</script>';
+        }       
     }
 ?>
 
@@ -56,32 +65,35 @@
         <div class="row">
             <div class="col-xxl-6 gx-5">
                 <div class="mb-3">
-                    <label for="firstname" class="form-label" style="font-size:18px;">First Name<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">No numbers allowed</span></label>
+                    <label for="firstname" class="form-label" style="font-size:18px;">First Name<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">
+                    <?php if(isset($fName) && $fNameErr==true) {echo $fNameErrMsg;} ?></span></label>
                     <input type="text" class="form-control textbox-blue" id="firstname" name="firstname" required>
                 </div>
                 <div class="mb-3" style="padding-top:15px;">
-                    <label for="lastname" class="form-label" style="font-size:18px;">Last Name<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">No numbers allowed</span></label>
+                    <label for="lastname" class="form-label" style="font-size:18px;">Last Name<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">
+                    <?php if(isset($lName) && $lNameErr==true) {echo $lNameErrMsg;} ?></span></label>
                     <input type="text" class="form-control textbox-blue" id="lastname" name="lastname" required>
                 </div>
                 <div class="mb-3" style="padding-top:15px;">
-                    <label for="email" class="form-label" style="font-size:18px;">Email Address<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">Not a valid email address</span></label>
+                    <label for="email" class="form-label" style="font-size:18px;">Email Address<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">
+                    <?php if(isset($email) && $emailErr==true) {echo $emailErrMsg;} ?></span></label>
                     <input type="text" class="form-control textbox-blue" id="email" name="email" required>
                 </div>
             </div>
             <div class="col-xxl-6 gx-5">
                 <div class="mb-3">
-                    <label for="password" class="form-label" style="font-size:18px;">Password<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">No numbers allowed</span></label>
+                    <label for="password" class="form-label" style="font-size:18px;">Password<span style="color:#f04148; padding-left:10px;">*</span></label>
                     <input type="password" class="form-control textbox-blue" id="password" name="password" required>
                 </div>
                 <div class="mb-3" style="padding-top:15px; margin:0 !important;">
-                    <label for="retypepassword" class="form-label" style="font-size:18px;">Retype Password<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">No numbers allowed</span></label>
+                    <label for="retypepassword" class="form-label" style="font-size:18px;">Retype Password<span style="color:#f04148; padding-left:10px;">*</span></label>
                     <input type="password" class="form-control textbox-blue" id="retypepassword" name="retypepassword" required>
                 </div>
                 <div class=row>
                     <div class="col-xxl-6">
                         <div class="mb-3" style="padding-top:10px;">
                             <label for="emailReminderFrequency" class="form-label" style="font-size:18px; margin:0; height:15px;">Email Reminder Frequency<span style="color:#f04148; padding-left:10px;">*</label>
-                            <br><span style="color:#fff; font-size:10px;">This is to reminder you of your subscription dues</span>
+                            <br><span style="color:#fff; font-size:9px;">This is to reminder you of your subscription dues</span>
                             <select id="emailReminderFrequency" name="emailReminderFrequency" class="form-select dropdown-blue" required>
                                 <option value="1" selected>every 5 minutes</option>
                                 <option value="2">every hour</option>
@@ -96,7 +108,7 @@
                     <div class="col-xxl-6">
                         <div class="mb-3" style="padding-top:10px;">
                             <label for="emailSurveyFrequency" class="form-label" style="font-size:18px; margin:0; height:15px;">Email Survey Frequency<span style="color:#f04148; padding-left:10px;">*</span></label>
-                            <br><span style="color:#fff; font-size:10px;">This is to record the last time you used your subscription</span>
+                            <br><span style="color:#fff; font-size:9px;">This is to record the last time you used your subscription</span>
                             <select id="emailSurveyFrequency" name="emailSurveyFrequency" class="form-select dropdown-blue" required>
                                 <option value="1" selected>every 5 minutes</option>
                                 <option value="2">every hour</option>
