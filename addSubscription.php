@@ -16,8 +16,8 @@
         $subCardName = $_POST['subCardName'];
         $subCardNumber = $_POST['subCardNumber'];
 
-        if(checkSubName() <= 0) {
-            $sql =  "INSERT INTO $email (sub_Name, sub_AcctName, sub_Username, sub_Email, sub_CardName, sub_CardNo, sub_Type, sub_StartDate, sub_EndDate, sub_LastUsed) VALUES ('$subName', '$subAcctName', '$subUsername', '$subEmail', '$subCardName', '.$subCardNumber.', '$subType', '$subStartDate','$subEndDate', '$subLastUsed');";
+        if(checkSubName($email,$subName) <= 0) {
+            $sql =  "INSERT INTO `$email` (sub_Name, sub_AcctName, sub_Username, sub_Email, sub_CardName, sub_CardNo, sub_Type, sub_StartDate, sub_EndDate, sub_LastUsed) VALUES ('$subName', '$subAcctName', '$subUsername', '$subEmail', '$subCardName', '.$subCardNumber.', '$subType', '$subStartDate','$subEndDate', '$subLastUsed');";
             $con->query($sql);
             echo '<script>alert("Subscription added!")</script>';
         }

@@ -2,7 +2,6 @@
     session_start();
     require_once "connection/connection.php";
     $con = connection();
-    createSubTable($_SESSION['email']);
 
 ?>
 
