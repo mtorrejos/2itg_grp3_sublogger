@@ -6,20 +6,22 @@
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $_POST['email'];
         $password = $_POST['password'];
+        $passErr = false;
+        $emailErr = false;
 
         if(isset($email) && isset($password)) { 
             if(checkAccount($email) <= 0) { //change this to be more in line with the visuals
-                echo '<script>alert("Account not found!")</script>';
+                $emailErr = true;
+                $emailErrMsg = "Account not found!"; //echo '<script>alert("Account not found!")</script>';
             }
-
             else {
                 if (getPassword($email) === $password) {
                     $_SESSION['email'] = $email;
-                    header("Location: profile.php");
+                    header("Location: homepage.php");
                 }
-
                 else {
-                    echo '<script>alert("Incorrect Password")</script>';
+                    $passErr = true;
+                    $passErrMsg = "Incorrect Password"; //echo '<script>alert("Incorrect Password")</script>';
                 }
             }
         }
@@ -72,11 +74,15 @@
             <label class="center title">Login to SubLogger</label>
             <form name="login" id="login" method="POST" class="center indexforms">
                 <div class="mb-3">
-                    <label for="email" class="form-label" style="font-size:18px;">Email Address<span style="color:#f04148; padding-left: 50px;">Not a valid email address</span></label>
+                    <label for="email" class="form-label" style="font-size:18px;">Email Address<span style="color:#f04148; padding-left: 50px;">
+                    <?php if(isset($email) && isset($password) && $emailErr==true) {echo $emailErrMsg; }?>
+                    </span></label>
                     <input type="email" class="form-control textbox-blue" id="email" name="email" required>
                 </div>
                 <div class="mb-3" style="padding-top:20px;">
-                    <label for="password" class="form-label" style="font-size:18px;">Password<span style="color:#f04148; padding-left: 50px;">Must contain at least 8 characters</span></label>
+                    <label for="password" class="form-label" style="font-size:18px;">Password<span style="color:#f04148; padding-left: 50px;">
+                    <?php if(isset($email) && isset($password) && $passErr==true) {echo $passErrMsg; }?>
+                    </span></label>
                     <input type="password" class="form-control textbox-blue" id="password" name="password" required>
                 </div>
                 <div class="contentButton">

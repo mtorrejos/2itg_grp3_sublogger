@@ -82,6 +82,26 @@
         //user subscriptions table
     }
 
+    function getFirstName($email) {
+        $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
+        $sql = $con->prepare("SELECT user_FirstName FROM users WHERE user_Email = '$email';");
+        $sql->execute();
+        $sql->bind_result($dbpass);
+        $sql->fetch();
+        $sql->close();
+        return $dbpass;
+    }
+
+    function getLastName($email) {
+        $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
+        $sql = $con->prepare("SELECT user_LastName FROM users WHERE user_Email = '$email';");
+        $sql->execute();
+        $sql->bind_result($dbpass);
+        $sql->fetch();
+        $sql->close();
+        return $dbpass;
+    }
+
     function getPassword($email) {
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
         $sql = $con->prepare("SELECT user_Password FROM users WHERE user_Email = '$email';");
@@ -142,7 +162,7 @@
     }
 
     function getSurveyText($email) {
-        switch (getFrequency($email)){
+        switch (getSurvey($email)){
             case 1:
                 return "Every 5 minutes"; //might be a bit too much lmao
                 break;

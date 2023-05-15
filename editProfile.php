@@ -37,8 +37,8 @@
         }
 
         echo '<script>alert("Account Modified! Directing to homepage...")</script>';
-        session_destroy();
-        header("Location: indexAndLogin.php");
+        //session_destroy();
+        header("Location: profile.php");
     }
 ?>
 
@@ -73,11 +73,11 @@
     <div class="profileDetails editProfileDetails" style="display:block; margin-left:auto; margin-right:auto; width:auto; position:relative; top:0px; width:50%;">
         <div class="row" style="margin-top:5px; margin-bottom:5px;">
             <div class="col-lg-5">
-                <label for="firstname" class="form-label profileLabel" style="padding:0; margin-top:15px; margin-bottom:0;">First Name:</label>
+                <label for="firstname" class="form-label profileLabel" style="padding:0; margin-top:15px; margin-bottom:0;" value="<?php echo $_SESSION['email']; ?>">First Name:</label>
                 <span class="editProfileSpan">No numbers allowed</span>
             </div>
             <div class="col-lg-7">
-                <input type="text" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="firstname" name="firstname" value="" required>
+                <input type="text" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="firstname" name="firstname" value="<?php echo getFirstName($_SESSION['email']); ?>" required>
             </div>
         </div>
         <div class="row" style="margin-top:5px; margin-bottom:5px;">
@@ -86,7 +86,7 @@
                 <span class="editProfileSpan">No numbers allowed</span>
             </div>
             <div class="col-lg-7">
-                <input type="text" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="lastname" name="lastname" value="" required>
+                <input type="text" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="lastname" name="lastname" value="<?php echo getLastName($_SESSION['email']); ?>" required>
             </div>
         </div>
         <div class="row" style="margin-top:5px; margin-bottom:5px;">
@@ -95,7 +95,7 @@
                 <span class="editProfileSpan">Not a valid email address</span>
             </div>
             <div class="col-lg-7">
-                <input type="email" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="email" name="email" value="" required>
+                <input type="email" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="email" name="email" value="<?php echo $_SESSION['email']; ?>" required>
             </div>
         </div>
         <div class="row" style="margin-top:5px; margin-bottom:5px;">
@@ -104,7 +104,7 @@
                 <span class="editProfileSpan">Must contain atleast 8 characters</span>
             </div>
             <div class="col-lg-7">
-                <input type="password" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="password" name="password" value="" required>
+                <input type="password" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="password" name="password" value="<?php echo getPassword($_SESSION['email']); ?>" required>
             </div>
         </div>
         <div class="row" style="margin-top:5px; margin-bottom:5px;">
@@ -113,42 +113,48 @@
             </div>
             <div class="col-lg-7">
                 <select id="emailReminderFrequency" name="emailReminderFrequency" class="form-select dropdown-blue" required>
-                    <option value="1" selected>every 5 minutes</option>
-                    <option value="2">every hour</option>
-                    <option value="3">once a month</option>
-                    <option value="4">twice a month</option>
-                    <option value="5">once every two months</option>
-                    <option value="6">once every six months</option>
-                    <option value="7">once a year</option>
+                    <?php
+                    $frequency = getFrequency($_SESSION['email']);
+                    echo '<option value="1"'; if($frequency==1){echo ' selected';} echo'>every 5 minutes</option>';
+                    echo '<option value="2"'; if($frequency==2){echo ' selected';} echo'>every hour</option>';
+                    echo '<option value="3"'; if($frequency==3){echo ' selected';} echo'>once a month</option>';
+                    echo '<option value="4"'; if($frequency==4){echo ' selected';} echo'>twice a month</option>';
+                    echo '<option value="5"'; if($frequency==5){echo ' selected';} echo'once every two months</option>';
+                    echo '<option value="6"'; if($frequency==6){echo ' selected';} echo'>once every six months</option>';
+                    echo '<option value="7"'; if($frequency==7){echo ' selected';} echo'>once a year</option>';
+                    ?>
                 </select>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-5">
-                <label for="emailSurveyFrequency" class="form-label profileLabel" style="padding:0; margin-top:15px; margin-bottom:0;">Email Survey Frequency:</label>
+                <label for="emailSurveyFrequency" class="form-label profileLabel" style="padding:0; margin-top:15px; margin-bottom:0;" <?php echo getSurvey($_SESSION['email']); ?>>Email Survey Frequency:</label>
             </div>
             <div class="col-lg-7">
                 <select id="emailSurveyFrequency" name="emailSurveyFrequency" class="form-select dropdown-blue" required>
-                    <option value="1" selected>every 5 minutes</option>
-                    <option value="2">every hour</option>
-                    <option value="3">once a month</option>
-                    <option value="4">twice a month</option>
-                    <option value="5">once every two months</option>
-                    <option value="6">once every six months</option>
-                    <option value="7">once a year</option>
+                <?php
+                    $survey = getSurvey($_SESSION['email']);
+                    echo '<option value="1"'; if($survey==1){echo ' selected';} echo'>every 5 minutes</option>';
+                    echo '<option value="2"'; if($survey==2){echo ' selected';} echo'>every hour</option>';
+                    echo '<option value="3"'; if($survey==3){echo ' selected';} echo'>once a month</option>';
+                    echo '<option value="4"'; if($survey==4){echo ' selected';} echo'>twice a month</option>';
+                    echo '<option value="5"'; if($survey==5){echo ' selected';} echo'once every two months</option>';
+                    echo '<option value="6"'; if($survey==6){echo ' selected';} echo'>once every six months</option>';
+                    echo '<option value="7"'; if($survey==7){echo ' selected';} echo'>once a year</option>';
+                    ?>
                 </select>
             </div>
         </div>
 
         <div class="contentButton" style="padding-top:30px;">
-            <a href="profile.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid btnProfile center" id="btnReg" name="btnReg" value="Save"></a>
+            <a href="profile.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid btnProfile center" id="btnEditProfile" name="btnEditProfile" value="Save"></a>
         </div>
         <a href="profile.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">Cancel</a>
     </div>
     </form>
     <div style="padding-bottom: 20px;"></div>
     <?php require_once("headerAndFooter/footer.php"); ?>
-
+    
     <!--Turning password into asterisks-->
     <script>
         var pass= document.getElementById("password").innerHTML;
