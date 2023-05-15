@@ -6,13 +6,20 @@
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $fName = $_POST['firstname'];
-        $lName = $_POST['lastname'];
-        $emailtime = $_POST['emailReminderFrequency'];
-        $emailsurvey = $_POST['emailSurveyFrequency'];
+        $subName = $_POST['subName'];
+        $subType = $_POST['subType'];
+        $subStartDate = $_POST['subStartDate'];
+        $subEndDate = $_POST['subEndDate'];
+        $subLastUsed = $_POST['subLastUsed'];
+        $subAcctName = $_POST['subAcctName'];
+        $subUsername = $_POST['subUsername'];
+        $subEmail = $_POST['subEmail'];
+        $subCardName = $_POST['subCardName'];
+        $subCardNumber = $_POST['subCardNumber'];
 
+        $sql = "UPDATE $email SET sub_Name='$subName', sub_AcctName='$subAcctName', sub_Username='$subUsername', sub_Email='$subEmail', sub_CardName='$subCardName', sub_CardNo='.$subCardNumber.', sub_Type='$subType', sub_StartDate='$subStartDate', sub_EndDate='$subEndDate', sub_LastUsed='$subLastUsed' WHERE sub_Name = '$subName';";
+            $con->query($sql);
+            echo '<script>alert("Subscription edited!")</script>';
         
     }
 ?>
@@ -49,7 +56,7 @@
             <div class="col-xxl-6 gx-5">
                 <div class="mb-3">
                     <label for="subName" class="form-label" style="font-size:18px;">Subscription Name<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">Should not be empty</span></label>
-                    <input type="text" class="form-control textbox-white" id="subName" name="subName" value="Canva" required>
+                    <input type="text" class="form-control textbox-white" id="subName" name="subName" value=""  required>
                 </div>
             </div>
         </div>

@@ -190,6 +190,17 @@
         }
     }
 
+    function getAccountDetail($email,$sub,$detail){
+        $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
+        $sql = $con->prepare("SELECT '$detail' FROM '$email' WHERE sub_Name = '$sub';");
+        $sql->execute();
+        $sql->bind_result($detail);
+        $sql->fetch();
+        $sql->close();
+        return $detail;
+
+    }
+
 
 
 
