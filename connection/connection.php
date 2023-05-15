@@ -51,7 +51,7 @@
 
     function checkSubName($email,$name) {
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
-        $sql = $con->prepare("SELECT COUNT(*) FROM $email WHERE sub_Name = '$name';");
+        $sql = $con->prepare("SELECT COUNT(*) FROM `$email` WHERE sub_Name = '$name';");
         $sql->execute();
         $sql->bind_result($count);
         $sql->fetch();

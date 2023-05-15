@@ -25,6 +25,9 @@
                 }
             }
         }
+
+
+        if(isset($_SESSION['email'])) { createSubTable($_SESSION['email']); }
     }
 
 ?>

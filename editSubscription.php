@@ -2,6 +2,7 @@
     session_start();
     require_once "connection/connection.php";
     $con = connection();
+    $email = $_SESSION['email'];
 
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -17,7 +18,7 @@
         $subCardName = $_POST['subCardName'];
         $subCardNumber = $_POST['subCardNumber'];
 
-        $sql = "UPDATE $email SET sub_Name='$subName', sub_AcctName='$subAcctName', sub_Username='$subUsername', sub_Email='$subEmail', sub_CardName='$subCardName', sub_CardNo='.$subCardNumber.', sub_Type='$subType', sub_StartDate='$subStartDate', sub_EndDate='$subEndDate', sub_LastUsed='$subLastUsed' WHERE sub_Name = '$subName';";
+        $sql = "UPDATE `$email` SET sub_Name='$subName', sub_AcctName='$subAcctName', sub_Username='$subUsername', sub_Email='$subEmail', sub_CardName='$subCardName', sub_CardNo='$subCardNumber', sub_Type='$subType', sub_StartDate='$subStartDate', sub_EndDate='$subEndDate', sub_LastUsed='$subLastUsed' WHERE sub_Name = '$subName';";
             $con->query($sql);
             echo '<script>alert("Subscription edited!")</script>';
         
