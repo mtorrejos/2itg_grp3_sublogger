@@ -149,7 +149,7 @@ section {
     background-position: 15%;
     background-repeat: no-repeat;
     padding: 0;
-    height: 100vh;
+    /*height: 100vh;*/
 }
 .contentCover {
     position: absolute;
@@ -300,12 +300,6 @@ footer {
     }
     .nav-link {
         font-size: 1.7vh !important;
-    }
-    footer {
-        height: 6vh !important;
-    }
-    .footer-div {
-        font-size: 1.25vh !important;
     }
 
     .indexh1 {

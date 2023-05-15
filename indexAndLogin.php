@@ -50,6 +50,7 @@
 </head>
 <body>
     <?php require_once("headerAndFooter/navbarWithLogin.php"); ?>
+    <div>
     <div class="row">
         <div class="col-xxl-6 section1">
             <div class="indexh1div">
@@ -85,6 +86,7 @@
             </form>
             <div style="padding-bottom: 100px;"></div>
         </div>
+    </div>
     </div>
     <?php require_once("headerAndFooter/footer.php"); ?>
 </body>
