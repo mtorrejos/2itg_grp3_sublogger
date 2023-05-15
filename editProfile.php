@@ -119,7 +119,7 @@
                     echo '<option value="2"'; if($frequency==2){echo ' selected';} echo'>every hour</option>';
                     echo '<option value="3"'; if($frequency==3){echo ' selected';} echo'>once a month</option>';
                     echo '<option value="4"'; if($frequency==4){echo ' selected';} echo'>twice a month</option>';
-                    echo '<option value="5"'; if($frequency==5){echo ' selected';} echo'once every two months</option>';
+                    echo '<option value="5"'; if($frequency==5){echo ' selected';} echo'>once every two months</option>';
                     echo '<option value="6"'; if($frequency==6){echo ' selected';} echo'>once every six months</option>';
                     echo '<option value="7"'; if($frequency==7){echo ' selected';} echo'>once a year</option>';
                     ?>
@@ -138,7 +138,7 @@
                     echo '<option value="2"'; if($survey==2){echo ' selected';} echo'>every hour</option>';
                     echo '<option value="3"'; if($survey==3){echo ' selected';} echo'>once a month</option>';
                     echo '<option value="4"'; if($survey==4){echo ' selected';} echo'>twice a month</option>';
-                    echo '<option value="5"'; if($survey==5){echo ' selected';} echo'once every two months</option>';
+                    echo '<option value="5"'; if($survey==5){echo ' selected';} echo'>once every two months</option>';
                     echo '<option value="6"'; if($survey==6){echo ' selected';} echo'>once every six months</option>';
                     echo '<option value="7"'; if($survey==7){echo ' selected';} echo'>once a year</option>';
                     ?>
