@@ -2,6 +2,19 @@
     session_start();
     require_once "connection/connection.php";
     $con = connection();
+
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $fName = $_POST['firstname'];
+        $lName = $_POST['lastname'];
+        $emailtime = $_POST['emailReminderFrequency'];
+        $emailsurvey = $_POST['emailSurveyFrequency'];
+
+        
+    }
 ?>
 
 <!DOCTYPE html>
