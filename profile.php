@@ -30,7 +30,7 @@
 <body>
     <?php require_once("headerAndFooter/navbarWithAccount.php"); ?>
     <div style="padding-top:110px; height:215px;" class="section3">
-        <label class="center title profileTitle" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;">First Name Last Name</label>
+        <label class="center title profileTitle" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;"><?php echo getFirstName($_SESSION['email']).' '.getLastName($_SESSION['email']); ?></label>
     </div>
     <div class="profileDetails" style="display:block; margin-left:auto; margin-right:auto; width:auto; position:relative; top:-50px;">
         <label for="email" class="form-label profileLabel">Email Address:</label>
