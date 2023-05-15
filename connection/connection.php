@@ -82,6 +82,7 @@
     }
 
     function validateName($name) {
+        $nameErr="";
         if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) {
             $nameErr = "Only letters and white space allowed";
         }
@@ -89,6 +90,7 @@
     }
 
     function validateEmail($email) {
+        $emailErr="";
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $emailErr = "Not a valid email address";
         }
