@@ -91,7 +91,7 @@
             <div class="contentButton">
             <a href="homepage.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" id="btnReg" name="btnReg" value="Save"></a>
             </div>
-            <a href="homepage.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center">Cancel</a>
+            <a href="homepage.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">Cancel</a>
         </form>
         <div style="padding-bottom:50px;"></div>
     </div>

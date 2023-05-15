@@ -143,9 +143,10 @@
         <div class="contentButton" style="padding-top:30px;">
             <a href="profile.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid btnProfile center" id="btnReg" name="btnReg" value="Save"></a>
         </div>
-        <a href="profile.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center">Cancel</a>
+        <a href="profile.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">Cancel</a>
     </div>
     </form>
+    <div style="padding-bottom: 20px;"></div>
     <?php require_once("headerAndFooter/footer.php"); ?>
 
     <!--Turning password into asterisks-->

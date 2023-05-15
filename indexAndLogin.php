@@ -66,8 +66,8 @@
                 </ul>
             </div>
         </div>
-        <div class="col-xxl-6" style="padding-top:170px;">
-            <img src="img/SubLogger_Logo.png" class="center" style="width: 200px; height: 200px;">
+        <div class="col-xxl-6 sectionLogin" style="padding-top:170px;">
+            <img src="img/SubLogger_Logo.png" class="center loginLogo" style="width: 200px; height: 200px;">
             <label class="center title">Login to SubLogger</label>
             <form name="login" id="login" method="POST" class="center indexforms">
                 <div class="mb-3">
@@ -75,13 +75,13 @@
                     <input type="email" class="form-control textbox-blue" id="email" name="email" required>
                 </div>
                 <div class="mb-3" style="padding-top:20px;">
-                    <label for="password" class="form-label" style="font-size:18px;">Password<span style="color:#f04148; padding-left: 50px;">Must contaiin at least 8 characters</span></label>
+                    <label for="password" class="form-label" style="font-size:18px;">Password<span style="color:#f04148; padding-left: 50px;">Must contain at least 8 characters</span></label>
                     <input type="password" class="form-control textbox-blue" id="password" name="password" required>
                 </div>
                 <div class="contentButton">
                     <a href="homepage" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" id="btnLogin" name="btnLogin" value="Login"></a>
                 </div>
-                <a href="register.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center">No account yet? Register now.</a>
+                <a href="register.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">No account yet? Register now.</a>
             </form>
             <div style="padding-bottom: 100px;"></div>
         </div>

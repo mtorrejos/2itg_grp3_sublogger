@@ -114,7 +114,7 @@
             <div class="contentButton">
             <a href="indexAndLogin.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" id="btnReg" name="btnReg" value="Create Account"></a>
             </div>
-            <a href="indexAndLogin.php" style="text-align:center; color:#fff; text-decoration:none; width:80%;" class="center">Cancel</a>
+            <a href="indexAndLogin.php" style="text-align:center; color:#fff; text-decoration:none; width:80%;" class="center link">Cancel</a>
         </form>
         <div style="padding-bottom: 90px;"></div>
     </div>
