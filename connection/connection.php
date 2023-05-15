@@ -70,7 +70,7 @@
         `sub_Username` VARCHAR(50),
         `sub_Email` VARCHAR(100),
         `sub_CardName` VARCHAR(100),
-        `sub_CardNo` INT(20),
+        `sub_CardNo` BIGINT(255),
         `sub_Type` VARCHAR(20) NOT NULL,
         `sub_StartDate` DATE NOT NULL,
         `sub_EndDate` DATE NOT NULL,
@@ -97,9 +97,17 @@
         return $emailErr;
     }
 
+    function vaidateNumber($num) {
+        $numErr="";
+        if(!is_numeric($num)) {
+            $numErr = "Numbers only";
+        }
+        return $numErr;
+    }
+
     function getFirstName($email) {
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
-        $sql = $con->prepare("SELECT user_FirstName FROM users WHERE user_Email = '$email';");
+        $sql = $con->prepare("SELECT user_FirstName FROM users WHERE user_Email = '$email';") or die($con->error);
         $sql->execute();
         $sql->bind_result($dbpass);
         $sql->fetch();
@@ -109,7 +117,7 @@
 
     function getLastName($email) {
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
-        $sql = $con->prepare("SELECT user_LastName FROM users WHERE user_Email = '$email';");
+        $sql = $con->prepare("SELECT user_LastName FROM users WHERE user_Email = '$email';") or die($con->error);
         $sql->execute();
         $sql->bind_result($dbpass);
         $sql->fetch();
@@ -119,7 +127,7 @@
 
     function getPassword($email) { //hashed password
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
-        $sql = $con->prepare("SELECT user_Password FROM users WHERE user_Email = '$email';");
+        $sql = $con->prepare("SELECT user_Password FROM users WHERE user_Email = '$email';") or die($con->error);
         $sql->execute();
         $sql->bind_result($dbpass);
         $sql->fetch();
@@ -129,7 +137,7 @@
 
     function getFrequency($email) {
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
-        $sql = $con->prepare("SELECT user_EmailReminderTime FROM users WHERE user_Email = '$email';");
+        $sql = $con->prepare("SELECT user_EmailReminderTime FROM users WHERE user_Email = '$email';") or die($con->error);
         $sql->execute();
         $sql->bind_result($time);
         $sql->fetch();
@@ -168,7 +176,7 @@
 
     function getSurvey($email) {
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
-        $sql = $con->prepare("SELECT user_EmailSurveyTime FROM users WHERE user_Email = '$email';");
+        $sql = $con->prepare("SELECT user_EmailSurveyTime FROM users WHERE user_Email = '$email';") or die($con->error);
         $sql->execute();
         $sql->bind_result($time);
         $sql->fetch();
@@ -207,17 +215,11 @@
 
     function getAccountDetail($email,$sub,$detail){
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
-        $sql = $con->prepare("SELECT '$detail' FROM '$email' WHERE sub_Name = '$sub';");
+        $sql = $con->prepare("SELECT `$detail` FROM `$email` WHERE sub_Name = '$sub';") or die($con->error);
         $sql->execute();
         $sql->bind_result($detail);
         $sql->fetch();
         $sql->close();
         return $detail;
-
     }
-
-
-
-
-
 ?>

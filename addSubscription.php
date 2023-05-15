@@ -15,15 +15,23 @@
         $subEmail = $_POST['subEmail'];
         $subCardName = $_POST['subCardName'];
         $subCardNumber = $_POST['subCardNumber'];
-
-        if(checkSubName($email,$subName) <= 0) {
-            $sql =  "INSERT INTO `$email` (sub_Name, sub_AcctName, sub_Username, sub_Email, sub_CardName, sub_CardNo, sub_Type, sub_StartDate, sub_EndDate, sub_LastUsed) VALUES ('$subName', '$subAcctName', '$subUsername', '$subEmail', '$subCardName', '.$subCardNumber.', '$subType', '$subStartDate','$subEndDate', '$subLastUsed');";
-            $con->query($sql);
-            echo '<script>alert("Subscription added!")</script>';
+        $subNameErr = false;
+        $subCardNumberErr = false;
+        
+        if(!(checkSubName($email,$subName) <= 0)) {
+            $subNameErr = true;
+            $subNameErrMsg = "There is already a subscription with that name!";
+            if(!empty(vaidateNumber($subCardNumber))) {
+                $subCardNumberErr = true;
+                $subCardNumberErrMsg = vaidateNumber($subCardNumber);
+            }
         }
-
         else {
-            echo '<script>alert("There is already a subscription with that name!")</script>';
+            $sql = "INSERT INTO `$email` (sub_Name, sub_AcctName, sub_Username, sub_Email, sub_CardName, sub_CardNo, sub_Type, sub_StartDate, sub_EndDate, sub_LastUsed) VALUES ('$subName', '$subAcctName', '$subUsername', '$subEmail', '$subCardName', '.$subCardNumber.', '$subType', '$subStartDate','$subEndDate', '$subLastUsed');";
+            $con->query($sql);
+            $_SESSION['email'] = $email;
+            header("Location: homepage.php");
+            //echo '<script>alert("Subscription added!")</script>';
         }
     }
 ?>
@@ -59,7 +67,8 @@
         <div class="row justify-content-center">
             <div class="col-xxl-6 gx-5">
                 <div class="mb-3">
-                    <label for="subName" class="form-label" style="font-size:18px;">Subscription Name<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">Should not be empty</span></label>
+                    <label for="subName" class="form-label" style="font-size:18px;">Subscription Name<span style="color:#f04148; padding-left:0px;">*</span><span style="color:#f04148; padding-left: 30px;">
+                    <?php if(isset($subName) && $subNameErr==true) {echo $subNameErrMsg;} ?></span></label>
                     <input type="text" class="form-control textbox-white" id="subName" name="subName" required>
                 </div>
             </div>
@@ -67,19 +76,19 @@
         <div class="row">
             <div class="col-xxl-6 gx-5">
                 <div class="mb-3">
-                    <label for="subType" class="form-label" style="font-size:18px;">Subscription Type<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">Should not be empty</span></label>
+                    <label for="subType" class="form-label" style="font-size:18px;">Subscription Type<span style="color:#f04148; padding-left:10px;">*</span></label>
                     <input type="text" class="form-control textbox-white" id="subType" name="subType" required>
                 </div>
                 <div class="mb-3">
-                    <label for="subStartDate" class="form-label" style="font-size:18px;">Start Date<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">Should not be empty</span></label>
+                    <label for="subStartDate" class="form-label" style="font-size:18px;">Start Date<span style="color:#f04148; padding-left:10px;">*</span></label>
                     <input type="date" class="form-control textbox-white" id="subStartDate" name="subStartDate" required>
                 </div>
                 <div class="mb-3" style="padding-top:15px;">
-                    <label for="subEndDate" class="form-label" style="font-size:18px;">End Date<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">Should not be empty</span></label>
+                    <label for="subEndDate" class="form-label" style="font-size:18px;">End Date<span style="color:#f04148; padding-left:10px;">*</span></label>
                     <input type="date" class="form-control textbox-white" id="subEndDate" name="subEndDate" required>
                 </div>
                 <div class="mb-3" style="padding-top:15px;">
-                    <label for="subLastUsed" class="form-label" style="font-size:18px;">Last Used<span style="color:#f04148; padding-left:10px;">*</span><span style="color:#f04148; padding-left: 50px;">Should not be empty</span></label>
+                    <label for="subLastUsed" class="form-label" style="font-size:18px;">Last Used<span style="color:#f04148; padding-left:10px;">*</span></label>
                     <input type="date" class="form-control textbox-white" id="subLastUsed" name="subLastUsed" required>
                 </div>
             </div>
@@ -93,7 +102,7 @@
                     <input type="text" class="form-control textbox-white" id="subUsername" name="subUsername">
                 </div>
                 <div class="mb-3" style="padding-top:15px;">
-                    <label for="subEmail" class="form-label" style="font-size:18px;">Email Address<span style="color:#f04148; padding-left: 50px;">Not a valid email address</span></label>
+                    <label for="subEmail" class="form-label" style="font-size:18px;">Email Address</label>
                     <input type="subEmail" class="form-control textbox-white" id="subEmail" name="subEmail">
                 </div>
                 <div class=row>
@@ -105,7 +114,8 @@
                     </div>
                     <div class="col-xxl-6">
                         <div class="mb-3" style="padding-top:15px;">
-                            <label for="subCardNumber" class="form-label" style="font-size:18px;">Card Number<span style="color:#f04148; padding-left: 30px;">Numbers only</span></label>
+                            <label for="subCardNumber" class="form-label" style="font-size:18px;">Card Number<span style="color:#f04148; padding-left: 20px;">
+                            <?php if(isset($subCardNumber) && $subCardNumberErr==true) {echo $subCardNumberErrMsg;} ?></span></label>
                             <input type="password" class="form-control textbox-white" id="subCardNumber" name="subCardNumber">
                         </div>
                     </div>

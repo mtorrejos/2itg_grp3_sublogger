@@ -2,6 +2,11 @@
     session_start();
     require_once "connection/connection.php";
     $con = connection();
+
+    $email = $_SESSION['email'];
+    $result = $con->query("SELECT * FROM `$email`;");
+
+    $email = $_SESSION['email'];
 ?>
 
 <!DOCTYPE html>
@@ -11,6 +16,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--Bootstrap CSS & JS CDN-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <!--Google Fonts-->
@@ -27,6 +34,7 @@
 </head>
 <body>
     <?php require_once("headerAndFooter/navbarWithAccount.php"); ?>
+    <!--TITLE & ADD SUBSCRIPTION BUTTON-->
     <div style="padding-top:110px;" class="section3">
         <label class="center title" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;">Subscriptions</label>
         <div style="position:fixed; z-index:8; display: flex; width:100%; justify-content: flex-end">
@@ -37,8 +45,10 @@
             </div>
         </div>
     </div>
+    <!--SORT-->
+    <?php if($result->num_rows > 0) {?>
     <div class="row">
-        <form name="login" id="login" method="GET" class="center justify-content-start sortform" style="width:40%;">
+        <form name="sort" id="sort" method="GET" class="center justify-content-start sortform" style="width:40%;">
             <div class="row">
                 <div class=col-lg-6>
                     <div class="row" style="padding-top:20px; padding-bottom:10px; padding-left:10px; padding-right:10px;">
@@ -68,219 +78,70 @@
             </div>
         </form>
     </div>
+    <!--SUBSCRIPTIONS-->
     <div style="display:flex; width:100% !important; min-height:70vh; border:1 blue; position:relative; z-index:1;" class="d-flex align-content-start flex-wrap justify-content-center"> <!--class="d-flex flex-wrap"-->
+    <?php while ($row = $result->fetch_assoc()){ ?>
         <div class="col-3 card-blue">
-            <h1 class="homepageSubName">Canva</h1>
+            <h1 class="homepageSubName"><?php echo $row['sub_Name']; ?></h1>
             <table>
                 <tr>
                     <td class="homepageLabel">Type:</td>
-                    <td class="homepageValue" id="subType" name="subType">Premium</td>
+                    <td class="homepageValue" id="subType" name="subType"><?php echo $row['sub_Type']; ?></td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">Start Date:</td>
-                    <td class="homepageValue" id="subStartDate" name="subStartDate">March 20, 2023</td>
+                    <td class="homepageValue" id="subStartDate" name="subStartDate"><?php echo $row['sub_StartDate']; ?></td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">End Date:</td>
-                    <td class="homepageValue" id="subEndDate" name="subEndDate">April 20, 2023</td>
+                    <td class="homepageValue" id="subEndDate" name="subEndDate"><?php echo $row['sub_EndDate']; ?></td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">Last Used:</td>
-                    <td class="homepageValue" id="subLastUsed" name="subLastUsed">March 20, 2023</td>
+                    <td class="homepageValue" id="subLastUsed" name="subLastUsed"><?php echo $row['sub_LastUsed']; ?></td>
                 </tr>
             </table>
             <table>
-                <tr><td class="homepageValue" id="subAcctName" name="subAcctname">Ira Rayzel S. Ji</td></tr>
-                <tr><td class="homepageValue" id="subUsername" name="subUsername">irarayzelji2002</td></tr>
-                <tr><td class="homepageValue" id="subEmail" name="subEmail">irarayzelji@gmail.com</td></tr>
-                <tr><td class="homepageValue" id="subCardName" name="subCardName">MasterCard</td></tr>
-                <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber">**** **** **** ****</td></tr>
+                <tr><td class="homepageValue" id="subAcctName" name="subAcctname"><?php echo $row['sub_AcctName']; ?></td></tr>
+                <tr><td class="homepageValue" id="subUsername" name="subUsername"><?php echo $row['sub_Username']; ?></td></tr>
+                <tr><td class="homepageValue" id="subEmail" name="subEmail"><?php echo $row['sub_Email']; ?></td></tr>
+                <tr><td class="homepageValue" id="subCardName" name="subCardName"><?php echo $row['sub_CardName']; ?></td></tr>
+                <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber" value=""><?php if($row['sub_CardNo']>0) {echo $row['sub_CardNo'];}; ?></td></tr>
             </table>
             <div class="d-flex justify-content-end">
-                <a href="editSubscription.php"><img src="img/Edit_Icon.png" class="homepageIcon"></a>
-                <a href="deleteSubscription.php"><img src="img/Delete_Icon.png" class="homepageIcon"></a>
+                <?php $subName=$row['sub_Name']?>
+                <button type="submit" style="background:none; color:inherit; border:none; padding:0; font:inherit; outline:inherit;">
+                <a href="editSubscription.php?subName=<?php echo $subName;?>"><img src="img/Edit_Icon.png" class="homepageIcon"></a></button>
+                
+                <button type="button" style="background:none; color:inherit; border:none; padding:0; font:inherit; outline:inherit;" onclick="deleteSub($email)" data-toggle="modal" data-target="#deleteSubModal">
+                <a href="homepage.php?subName=<?php echo $subName;?>"><img src="img/Delete_Icon.png" class="homepageIcon"></a></button>
             </div>
         </div>
-        <div class="col-3 card-blue">
-            <h1 class="homepageSubName">Canva</h1>
-            <table>
-                <tr>
-                    <td class="homepageLabel">Type:</td>
-                    <td class="homepageValue" id="subType" name="subType">Premium</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">Start Date:</td>
-                    <td class="homepageValue" id="subStartDate" name="subStartDate">March 20, 2023</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">End Date:</td>
-                    <td class="homepageValue" id="subEndDate" name="subEndDate">April 20, 2023</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">Last Used:</td>
-                    <td class="homepageValue" id="subLastUsed" name="subLastUsed">March 20, 2023</td>
-                </tr>
-            </table>
-            <table>
-                <tr><td class="homepageValue" id="subAcctName" name="subAcctname">Ira Rayzel S. Ji</td></tr>
-                <tr><td class="homepageValue" id="subUsername" name="subUsername">irarayzelji2002</td></tr>
-                <tr><td class="homepageValue" id="subEmail" name="subEmail">irarayzelji@gmail.com</td></tr>
-                <tr><td class="homepageValue" id="subCardName" name="subCardName">MasterCard</td></tr>
-                <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber">**** **** **** ****</td></tr>
-            </table>
-            <div class="d-flex justify-content-end">
-                <a href="editSubscription.php"><img src="img/Edit_Icon.png" class="homepageIcon"></a>
-                <a href="deleteSubscription.php"><img src="img/Delete_Icon.png" class="homepageIcon"></a>
-            </div>
-        </div>
-        <div class="col-3 card-blue">
-            <h1 class="homepageSubName">Canva</h1>
-            <table>
-                <tr>
-                    <td class="homepageLabel">Type:</td>
-                    <td class="homepageValue" id="subType" name="subType">Premium</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">Start Date:</td>
-                    <td class="homepageValue" id="subStartDate" name="subStartDate">March 20, 2023</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">End Date:</td>
-                    <td class="homepageValue" id="subEndDate" name="subEndDate">April 20, 2023</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">Last Used:</td>
-                    <td class="homepageValue" id="subLastUsed" name="subLastUsed">March 20, 2023</td>
-                </tr>
-            </table>
-            <table>
-                <tr><td class="homepageValue" id="subAcctName" name="subAcctname">Ira Rayzel S. Ji</td></tr>
-                <tr><td class="homepageValue" id="subUsername" name="subUsername">irarayzelji2002</td></tr>
-                <tr><td class="homepageValue" id="subEmail" name="subEmail">irarayzelji@gmail.com</td></tr>
-                <tr><td class="homepageValue" id="subCardName" name="subCardName">MasterCard</td></tr>
-                <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber">**** **** **** ****</td></tr>
-            </table>
-            <div class="d-flex justify-content-end">
-                <a href="editSubscription.php"><img src="img/Edit_Icon.png" class="homepageIcon"></a>
-                <a href="deleteSubscription.php"><img src="img/Delete_Icon.png" class="homepageIcon"></a>
-            </div>
-        </div>
-        <div class="col-3 card-blue">
-            <h1 class="homepageSubName">Canva</h1>
-            <table>
-                <tr>
-                    <td class="homepageLabel">Type:</td>
-                    <td class="homepageValue" id="subType" name="subType">Premium</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">Start Date:</td>
-                    <td class="homepageValue" id="subStartDate" name="subStartDate">March 20, 2023</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">End Date:</td>
-                    <td class="homepageValue" id="subEndDate" name="subEndDate">April 20, 2023</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">Last Used:</td>
-                    <td class="homepageValue" id="subLastUsed" name="subLastUsed">March 20, 2023</td>
-                </tr>
-            </table>
-            <table>
-                <tr><td class="homepageValue" id="subAcctName" name="subAcctname">Ira Rayzel S. Ji</td></tr>
-                <tr><td class="homepageValue" id="subUsername" name="subUsername">irarayzelji2002</td></tr>
-                <tr><td class="homepageValue" id="subEmail" name="subEmail">irarayzelji@gmail.com</td></tr>
-                <tr><td class="homepageValue" id="subCardName" name="subCardName">MasterCard</td></tr>
-                <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber">**** **** **** ****</td></tr>
-            </table>
-            <div class="d-flex justify-content-end">
-                <a href="editSubscription.php"><img src="img/Edit_Icon.png" class="homepageIcon"></a>
-                <a href="deleteSubscription.php"><img src="img/Delete_Icon.png" class="homepageIcon"></a>
-            </div>
-        </div>
-        <div class="col-3 card-blue">
-            <h1 class="homepageSubName">Canva</h1>
-            <table>
-                <tr>
-                    <td class="homepageLabel">Type:</td>
-                    <td class="homepageValue" id="subType" name="subType">Premium</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">Start Date:</td>
-                    <td class="homepageValue" id="subStartDate" name="subStartDate">March 20, 2023</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">End Date:</td>
-                    <td class="homepageValue" id="subEndDate" name="subEndDate">April 20, 2023</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">Last Used:</td>
-                    <td class="homepageValue" id="subLastUsed" name="subLastUsed">March 20, 2023</td>
-                </tr>
-            </table>
-            <table>
-                <tr><td class="homepageValue" id="subAcctName" name="subAcctname">Ira Rayzel S. Ji</td></tr>
-                <tr><td class="homepageValue" id="subUsername" name="subUsername">irarayzelji2002</td></tr>
-                <tr><td class="homepageValue" id="subEmail" name="subEmail">irarayzelji@gmail.com</td></tr>
-                <tr><td class="homepageValue" id="subCardName" name="subCardName">MasterCard</td></tr>
-                <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber">**** **** **** ****</td></tr>
-            </table>
-            <div class="d-flex justify-content-end">
-                <a href="editSubscription.php"><img src="img/Edit_Icon.png" class="homepageIcon"></a>
-                <a href="deleteSubscription.php"><img src="img/Delete_Icon.png" class="homepageIcon"></a>
-            </div>
-        </div>
-        <div class="col-3 card-blue">
-            <h1 class="homepageSubName">Canva</h1>
-            <table>
-                <tr>
-                    <td class="homepageLabel">Type:</td>
-                    <td class="homepageValue" id="subType" name="subType">Premium</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">Start Date:</td>
-                    <td class="homepageValue" id="subStartDate" name="subStartDate">March 20, 2023</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">End Date:</td>
-                    <td class="homepageValue" id="subEndDate" name="subEndDate">April 20, 2023</td>
-                </tr>
-                <tr>
-                    <td class="homepageLabel">Last Used:</td>
-                    <td class="homepageValue" id="subLastUsed" name="subLastUsed">March 20, 2023</td>
-                </tr>
-            </table>
-            <table>
-                <tr><td class="homepageValue" id="subAcctName" name="subAcctname">Ira Rayzel S. Ji</td></tr>
-                <tr><td class="homepageValue" id="subUsername" name="subUsername">irarayzelji2002</td></tr>
-                <tr><td class="homepageValue" id="subEmail" name="subEmail">irarayzelji@gmail.com</td></tr>
-                <tr><td class="homepageValue" id="subCardName" name="subCardName">MasterCard</td></tr>
-                <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber">**** **** **** ****</td></tr>
-            </table>
-            <div class="d-flex justify-content-end">
-                <a href="editSubscription.php"><img src="img/Edit_Icon.png" class="homepageIcon"></a>
-                <a href="deleteSubscription.php"><img src="img/Delete_Icon.png" class="homepageIcon"></a>
-            </div>
-        </div>
+    <?php }; ?>
     </div>
     <div style="padding-bottom: 90px;"></div>
-
-    <!--If there are no subscriptions
+    <?php } else {?>
+    
+    <!--If there are no subscriptions-->
     <div class="center homepage-nosubsdiv">
         <img src="img/Empty_Box.png" alt="" class="center homepage-nosubsimage">
         <label class="center homepage-nosubslabel">Uh Oh, you don't have any subscriptions yet. Click the plus button to add one!</label>
     </div>
-    -->
+    <?php }?>
     
     <?php require_once("headerAndFooter/footer.php"); ?>
 
-    <!--Turning card number into asterisks (Not Working)-->
     <script>
-        var pass= document.getElementById("subCardNumber").innerHTML;
-        var char = pass.length;
-        var hidden ="";
-        for (i=0;i<char;i++) {
-            hidden += "*"; }
-        document.getElementById("subCardNumber").innerHTML = subCardNumber;
+        function deleteSub($email) {
+            <?php
+            $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
+            $_SESSION['subName']=$_GET['subName'];
+            $subName = $_SESSION['subName'];
+            $sql = "DELETE FROM `$email` WHERE sub_Name = '$subName';";
+            $con->query($sql); 
+            header("Location: homepage.php");
+            ?>
+        }
     </script>
 </body>
 </html>
