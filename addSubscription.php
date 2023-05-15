@@ -2,6 +2,30 @@
     session_start();
     require_once "connection/connection.php";
     $con = connection();
+    $email = $_SESSION['email'];
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $subName = $_POST['subName'];
+        $subType = $_POST['subType'];
+        $subStartDate = $_POST['subStartDate'];
+        $subEndDate = $_POST['subEndDate'];
+        $subLastUsed = $_POST['subLastUsed'];
+        $subAcctName = $_POST['subAcctName'];
+        $subUsername = $_POST['subUsername'];
+        $subEmail = $_POST['subEmail'];
+        $subCardName = $_POST['subCardName'];
+        $subCardNumber = $_POST['subCardNumber'];
+
+        if(checkSubName() <= 0) {
+            $sql =  "INSERT INTO $email (sub_Name, sub_AcctName, sub_Username, sub_Email, sub_CardName, sub_CardNo, sub_Type, sub_StartDate, sub_EndDate, sub_LastUsed) VALUES ('$fName', '$lName', '$email', '$password', '.$emailtime.', '.$emailsurvey.');";
+            $con->query($sql);
+            echo '<script>alert("Subscription added!")</script>';
+        }
+
+        else {
+            echo '<script>alert("There is already a subscription with that name!")</script>';
+        }
+    }
 ?>
 
 <!DOCTYPE html>

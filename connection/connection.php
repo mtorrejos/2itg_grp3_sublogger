@@ -14,12 +14,7 @@
             $sql = "CREATE DATABASE IF NOT EXISTS sublogger";
             $con->query($sql);
         }
-        //database connection
 
-        $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
-
-        //table creation
-        
         //users table
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
         $sql = ' CREATE TABLE IF NOT EXISTS `users`(
@@ -46,6 +41,17 @@
     function checkAccount($email) {
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
         $sql = $con->prepare("SELECT COUNT(*) FROM users WHERE user_Email = '$email';");
+        $sql->execute();
+        $sql->bind_result($count);
+        $sql->fetch();
+        $sql->close();
+        return $count;
+
+    }
+
+    function checkSubName($email,$name) {
+        $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
+        $sql = $con->prepare("SELECT COUNT(*) FROM $email WHERE sub_Name = '$name';");
         $sql->execute();
         $sql->bind_result($count);
         $sql->fetch();
