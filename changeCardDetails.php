@@ -25,10 +25,7 @@
         
         echo '<script>alert("stored in db:'; echo $subCardNumber; echo ':ends here");</script>';
         if($subCardNumber==0 || $subCardNumber=="" || $typedCardNumber==0 || $typedCardNumber=="") {
-            $sql = "INSERT INTO `$email` (sub_Name, sub_AcctName, sub_Username, sub_Email, sub_CardName, sub_CardNo, sub_Type, sub_StartDate, sub_EndDate, sub_LastUsed) VALUES (`$subName`, `$subAcctName`, `$subUsername`, `$subEmail`, `$subCardName`, `$newSubCardNumber`, `$subType`, `$subStartDate`,`$subEndDate`, `$subLastUsed`);" or die($con->error);
-            $con->query($sql);
-            $sql = "DELETE FROM `$email` WHERE sub_Name = '$subName';" or die($con->error);
-            $con->query($sql);
+            updateCardNo($email,$subName,$subAcctName,$subUsername,$subEmail,$subCardName,$newSubCardNumber,$subType,$subStartDate,$subEndDate,$subLastUsed,$subCardNumber);
             header("Location: homepage.php?subName=$subName&addedtotable");
         }
         else {
@@ -40,10 +37,7 @@
             }
             else {
                 if(password_verify($typedCardNumber, $subCardNumber)) {
-                    $sql = "INSERT INTO `$email` (sub_Name, sub_AcctName, sub_Username, sub_Email, sub_CardName, sub_CardNo, sub_Type, sub_StartDate, sub_EndDate, sub_LastUsed) VALUES (`$subName`, `$subAcctName`, `$subUsername`, `$subEmail`, `$subCardName`, `$newSubCardNumber`, `$subType`, `$subStartDate`,`$subEndDate`, `$subLastUsed`);" or die($con->error);
-                    $con->query($sql);
-                    $sql = "DELETE FROM `$email` WHERE sub_Name = '$subName';";
-                    $con->query($sql);
+                    updateCardNo($email,$subName,$subAcctName,$subUsername,$subEmail,$subCardName,$newSubCardNumber,$subType,$subStartDate,$subEndDate,$subLastUsed,$subCardNumber);
                     echo '<script>alert("Edited to table");</script>';
                     header("Location: homepage.php?subName=$subName&editedtotable") or die($con->error);
                 }
@@ -79,7 +73,7 @@
     <title>Edit Subscription</title>
 </head>
 <body style="background-color:#e1edff;">
-<?php require_once("headerAndFooter/navbarWithAccount.php"); ?>
+    <?php require_once("headerAndFooter/navbarWithAccount.php"); ?>
     <div style="padding-top:110px; height:215px;" class="section3">
         <label class="center title" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;">Change Card Details</label>
     </div>

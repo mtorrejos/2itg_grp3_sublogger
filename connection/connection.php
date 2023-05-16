@@ -223,9 +223,13 @@
         return $detail;
     }
 
-    function updateCardNo($email,$subName,$num) {
+    function updateCardNo($email,$subName,$subAcctName,$subUsername,$subEmail,$subCardName,$newSubCardNumber,$subType,$subStartDate,$subEndDate,$subLastUsed,$subCardNumber) {
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
-        $sql = "UPDATE `$email` SET `sub_CardNo` = '$num' WHERE `sub_Name` = '$subName';" or die($con->error);
+        //$sql = "UPDATE `$email` SET `sub_CardNo` = '$num' WHERE `sub_Name` = '$subName';" or die($con->error);
+        $old = $subCardNumber;
+        $sql = "INSERT INTO `$email` (sub_Name, sub_AcctName, sub_Username, sub_Email, sub_CardName, sub_CardNo, sub_Type, sub_StartDate, sub_EndDate, sub_LastUsed) VALUES ('$subName', '$subAcctName', '$subUsername', '$subEmail', '$subCardName', '$newSubCardNumber', '$subType', '$subStartDate','$subEndDate', '$subLastUsed');" or die($con->error);
+        $con->query($sql);
+        $sql = "DELETE FROM `$email` WHERE sub_Name = '$subName' AND sub_CardNo = '$old';" or die($con->error);
         $con->query($sql);
     }
     

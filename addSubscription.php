@@ -35,7 +35,7 @@
                 header("Location: homepage.php");
             }
             else {
-                $sql = "INSERT INTO `$email` (sub_Name, sub_AcctName, sub_Username, sub_Email, sub_CardName, sub_CardNo, sub_Type, sub_StartDate, sub_EndDate, sub_LastUsed) VALUES ('$subName', '$subAcctName', '$subUsername', '$subEmail', '$subCardName', '.$subCardNumber.', '$subType', '$subStartDate','$subEndDate', '$subLastUsed');";
+                $sql = "INSERT INTO `$email` (sub_Name, sub_AcctName, sub_Username, sub_Email, sub_CardName, sub_CardNo, sub_Type, sub_StartDate, sub_EndDate, sub_LastUsed) VALUES ('$subName', '$subAcctName', '$subUsername', '$subEmail', '$subCardName', '$subCardNumber', '$subType', '$subStartDate','$subEndDate', '$subLastUsed');";
                 $con->query($sql);
                 $_SESSION['email'] = $email;
                 header("Location: homepage.php");
