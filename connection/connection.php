@@ -70,7 +70,7 @@
         `sub_Username` VARCHAR(50),
         `sub_Email` VARCHAR(100),
         `sub_CardName` VARCHAR(100),
-        `sub_CardNo` BIGINT(255),
+        `sub_CardNo` VARCHAR(255) NOT NULL,
         `sub_Type` VARCHAR(20) NOT NULL,
         `sub_StartDate` DATE NOT NULL,
         `sub_EndDate` DATE NOT NULL,
@@ -97,9 +97,9 @@
         return $emailErr;
     }
 
-    function vaidateNumber($num) {
+    function validateNumber($num) {
         $numErr="";
-        if(!is_numeric($num)) {
+        if(!is_numeric($num) && ($num!=0 || $num!="")) {
             $numErr = "Numbers only";
         }
         return $numErr;
@@ -222,4 +222,11 @@
         $sql->close();
         return $detail;
     }
+
+    function updateCardNo($email,$subName,$num) {
+        $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
+        $sql = "UPDATE `$email` SET `sub_CardNo` = '$num' WHERE `sub_Name` = '$subName';" or die($con->error);
+        $con->query($sql);
+    }
+    
 ?>

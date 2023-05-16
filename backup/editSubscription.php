@@ -3,6 +3,9 @@
     require_once "connection/connection.php";
     $con = connection();
     $email = $_SESSION['email'];
+    $_SESSION['subName']=$_GET['subName'];
+    $subName = $_SESSION['subName'];
+    $subID = getAccountDetail($email,$subName,'sub_ID');
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $subName = $_POST['subName'];
@@ -14,32 +17,19 @@
         $subUsername = $_POST['subUsername'];
         $subEmail = $_POST['subEmail'];
         $subCardName = $_POST['subCardName'];
-        $subCardNumber = password_hash($_POST['subCardNumber'], PASSWORD_DEFAULT);
-        $typedSubCardNumber = $_POST['subCardNumber'];
-        $subNameErr = false;
+        $subCardNumber = $_POST['subCardNumber'];
         $subCardNumberErr = false;
         
-        if(!(checkSubName($email,$subName) <= 0)) {
-            $subNameErr = true;
-            $subNameErrMsg = "There is already a subscription with that name!";
-            if(!empty(validateNumber($subCardNumber))) {
-                $subCardNumberErr = true;
-                $subCardNumberErrMsg = validateNumber($subCardNumber);
-            }
+        if(!empty(vaidateNumber($subCardNumber))) {
+            $subCardNumberErr = true;
+            $subCardNumberErrMsg = vaidateNumber($subCardNumber);
         }
         else {
-            if($typedSubCardNumber==0 || $typedSubCardNumber=="") {
-                $sql = "INSERT INTO `$email` (sub_Name, sub_AcctName, sub_Username, sub_Email, sub_CardName, sub_CardNo, sub_Type, sub_StartDate, sub_EndDate, sub_LastUsed) VALUES ('$subName', '$subAcctName', '$subUsername', '$subEmail', '$subCardName', '0', '$subType', '$subStartDate','$subEndDate', '$subLastUsed');";
-                $con->query($sql);
-                $_SESSION['email'] = $email;
-                header("Location: homepage.php");
-            }
-            else {
-                $sql = "INSERT INTO `$email` (sub_Name, sub_AcctName, sub_Username, sub_Email, sub_CardName, sub_CardNo, sub_Type, sub_StartDate, sub_EndDate, sub_LastUsed) VALUES ('$subName', '$subAcctName', '$subUsername', '$subEmail', '$subCardName', '.$subCardNumber.', '$subType', '$subStartDate','$subEndDate', '$subLastUsed');";
-                $con->query($sql);
-                $_SESSION['email'] = $email;
-                header("Location: homepage.php");
-            }
+            $sql = "UPDATE `$email` SET sub_Name='$subName', sub_AcctName='$subAcctName', sub_Username='$subUsername', sub_Email='$subEmail', sub_CardName='$subCardName', sub_CardNo='$subCardNumber', sub_Type='$subType', sub_StartDate='$subStartDate', sub_EndDate='$subEndDate', sub_LastUsed='$subLastUsed' WHERE sub_ID = '$subID';";
+            $con->query($sql);
+            $_SESSION['email'] = $email;
+            header("Location: homepage.php");
+            //echo '<script>alert("Subscription edited!")</script>';
         }
     }
 ?>
@@ -63,21 +53,22 @@
     <link rel="icon" href="img/SubLogger_Logo.png" type="image/gif" sizes="16x16">
     <!--CSS-->
     <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
-    <title>Add Subscription</title>
+    <title>Edit Subscription</title>
 </head>
 <body>
     <?php require_once("headerAndFooter/navbarWithAccount.php"); ?>
     <div style="padding-top:110px; height:215px;" class="section3">
-        <label class="center title" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;">Add Subscription</label>
+        <label class="center title" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;">Edit Subscription</label>
     </div>
+
+    
     <div style="padding-top:20px; background-color:#e1edff;">
-        <form name="addSubscription" id="addSubscription" method="POST" class="center addSubForms">
+        <form name="editSubscription" id="editSubscription" method="POST" class="center addSubForms">
         <div class="row justify-content-center">
             <div class="col-xxl-6 gx-5">
                 <div class="mb-3">
-                    <label for="subName" class="form-label" style="font-size:18px;">Subscription Name<span style="color:#f04148; padding-left:0px;">*</span><span style="color:#f04148; padding-left: 30px;">
-                    <?php if(isset($subName) && $subNameErr==true) {echo $subNameErrMsg;} ?></span></label>
-                    <input type="text" class="form-control textbox-white" id="subName" name="subName" required>
+                    <label for="subName" class="form-label" style="font-size:18px;">Subscription Name<span style="color:#f04148; padding-left:10px;">*</span></label>
+                    <input type="text" class="form-control textbox-white" id="subName" name="subName" value="<?php echo getAccountDetail($email,$subName,'sub_Name'); ?>"  required>
                 </div>
             </div>
         </div>
@@ -85,58 +76,68 @@
             <div class="col-xxl-6 gx-5">
                 <div class="mb-3">
                     <label for="subType" class="form-label" style="font-size:18px;">Subscription Type<span style="color:#f04148; padding-left:10px;">*</span></label>
-                    <input type="text" class="form-control textbox-white" id="subType" name="subType" required>
+                    <input type="text" class="form-control textbox-white" id="subType" name="subType" value="<?php echo getAccountDetail($email,$subName,'sub_Type'); ?>" required>
                 </div>
                 <div class="mb-3">
                     <label for="subStartDate" class="form-label" style="font-size:18px;">Start Date<span style="color:#f04148; padding-left:10px;">*</span></label>
-                    <input type="date" class="form-control textbox-white" id="subStartDate" name="subStartDate" required>
+                    <input type="text" class="form-control textbox-white" id="subStartDate" name="subStartDate" placeholder="MM/DD/YYYY" value="<?php echo getAccountDetail($email,$subName,'sub_StartDate'); ?>" required>
                 </div>
                 <div class="mb-3" style="padding-top:15px;">
                     <label for="subEndDate" class="form-label" style="font-size:18px;">End Date<span style="color:#f04148; padding-left:10px;">*</span></label>
-                    <input type="date" class="form-control textbox-white" id="subEndDate" name="subEndDate" required>
+                    <input type="text" class="form-control textbox-white" id="subEndDate" name="subEndDate" placeholder="MM/DD/YYYY" value="<?php echo getAccountDetail($email,$subName,'sub_EndDate'); ?>" required>
                 </div>
                 <div class="mb-3" style="padding-top:15px;">
                     <label for="subLastUsed" class="form-label" style="font-size:18px;">Last Used<span style="color:#f04148; padding-left:10px;">*</span></label>
-                    <input type="date" class="form-control textbox-white" id="subLastUsed" name="subLastUsed" required>
+                    <input type="text" class="form-control textbox-white" id="subLastUsed" name="subLastUsed" placeholder="MM/DD/YYYY" value="<?php echo getAccountDetail($email,$subName,'sub_LastUsed'); ?>" required>
                 </div>
             </div>
             <div class="col-xxl-6 gx-5">
                 <div class="mb-3">
                     <label for="subAcctName" class="form-label" style="font-size:18px;">Account Name</label>
-                    <input type="text" class="form-control textbox-white" id="subAcctName" name="subAcctName">
+                    <input type="text" class="form-control textbox-white" id="subAcctName" value="<?php echo getAccountDetail($email,$subName,'sub_AcctName'); ?>" name="subAcctName">
                 </div>
                 <div class="mb-3">
                     <label for="subUsername" class="form-label" style="font-size:18px;">Username</label>
-                    <input type="text" class="form-control textbox-white" id="subUsername" name="subUsername">
+                    <input type="text" class="form-control textbox-white" id="subUsername" value="<?php echo getAccountDetail($email,$subName,'sub_Username'); ?>" name="subUsername">
                 </div>
                 <div class="mb-3" style="padding-top:15px;">
                     <label for="subEmail" class="form-label" style="font-size:18px;">Email Address</label>
-                    <input type="subEmail" class="form-control textbox-white" id="subEmail" name="subEmail">
+                    <input type="subEmail" class="form-control textbox-white" id="subEmail" value="<?php echo getAccountDetail($email,$subName,'sub_Email'); ?>" name="subEmail">
                 </div>
                 <div class=row>
                     <div class="col-xxl-6">
                         <div class="mb-3" style="padding-top:15px;">
                             <label for="subCardName" class="form-label" style="font-size:18px;">Card Name</label>
-                            <input type="text" class="form-control textbox-white" id="subCardName" name="subCardName">
+                            <input type="text" class="form-control textbox-white" id="subCardName" value="<?php echo getAccountDetail($email,$subName,'sub_CardName'); ?>" name="subCardName">
                         </div>
                     </div>
                     <div class="col-xxl-6">
                         <div class="mb-3" style="padding-top:15px;">
                             <label for="subCardNumber" class="form-label" style="font-size:18px;">Card Number<span style="color:#f04148; padding-left: 20px;">
                             <?php if(isset($subCardNumber) && $subCardNumberErr==true) {echo $subCardNumberErrMsg;} ?></span></label>
-                            <input type="password" class="form-control textbox-white" id="subCardNumber" name="subCardNumber">
+                            <input type="password" class="form-control textbox-white" id="subCardNumber" value="<?php echo getAccountDetail($email,$subName,'sub_CardNo'); ?>" name="subCardNumber">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
             <div class="contentButton">
-                <a href="homepage.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" id="btnReg" name="btnReg" value="Add"></a>
+            <a href="homepage.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" id="btnReg" name="btnReg" value="Save"></a>
             </div>
             <a href="homepage.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">Cancel</a>
         </form>
         <div style="padding-bottom:50px;"></div>
     </div>
     <?php require_once("headerAndFooter/footer.php"); ?>
+
+    <!--Turning password into asterisks-->
+    <script>
+        var pass= document.getElementById("subCardNumber").innerHTML;
+        var char = pass.length;
+        var password ="";
+        for (i=0;i<char;i++) {
+            password += "*"; }
+        document.getElementById("subCardNumber").innerHTML = password;
+    </script>
 </body>
 </html>

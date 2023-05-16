@@ -17,19 +17,12 @@
         $subUsername = $_POST['subUsername'];
         $subEmail = $_POST['subEmail'];
         $subCardName = $_POST['subCardName'];
-        $subCardNumber = $_POST['subCardNumber'];
-        $subCardNumberErr = false;
         
-        if(!empty(vaidateNumber($subCardNumber))) {
-            $subCardNumberErr = true;
-            $subCardNumberErrMsg = vaidateNumber($subCardNumber);
-        }
-        else {
-            $sql = "UPDATE `$email` SET sub_Name='$subName', sub_AcctName='$subAcctName', sub_Username='$subUsername', sub_Email='$subEmail', sub_CardName='$subCardName', sub_CardNo='$subCardNumber', sub_Type='$subType', sub_StartDate='$subStartDate', sub_EndDate='$subEndDate', sub_LastUsed='$subLastUsed' WHERE sub_ID = '$subID';";
+        if(isset($_POST['btnSave'])) {
+            $sql = "UPDATE `$email` SET sub_Name='$subName', sub_AcctName='$subAcctName', sub_Username='$subUsername', sub_Email='$subEmail', sub_CardName='$subCardName', sub_Type='$subType', sub_StartDate='$subStartDate', sub_EndDate='$subEndDate', sub_LastUsed='$subLastUsed' WHERE sub_ID = '$subID';";
             $con->query($sql);
             $_SESSION['email'] = $email;
             header("Location: homepage.php");
-            //echo '<script>alert("Subscription edited!")</script>';
         }
     }
 ?>
@@ -61,7 +54,6 @@
         <label class="center title" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;">Edit Subscription</label>
     </div>
 
-    
     <div style="padding-top:20px; background-color:#e1edff;">
         <form name="editSubscription" id="editSubscription" method="POST" class="center addSubForms">
         <div class="row justify-content-center">
@@ -104,40 +96,20 @@
                     <label for="subEmail" class="form-label" style="font-size:18px;">Email Address</label>
                     <input type="subEmail" class="form-control textbox-white" id="subEmail" value="<?php echo getAccountDetail($email,$subName,'sub_Email'); ?>" name="subEmail">
                 </div>
-                <div class=row>
-                    <div class="col-xxl-6">
-                        <div class="mb-3" style="padding-top:15px;">
-                            <label for="subCardName" class="form-label" style="font-size:18px;">Card Name</label>
-                            <input type="text" class="form-control textbox-white" id="subCardName" value="<?php echo getAccountDetail($email,$subName,'sub_CardName'); ?>" name="subCardName">
-                        </div>
-                    </div>
-                    <div class="col-xxl-6">
-                        <div class="mb-3" style="padding-top:15px;">
-                            <label for="subCardNumber" class="form-label" style="font-size:18px;">Card Number<span style="color:#f04148; padding-left: 20px;">
-                            <?php if(isset($subCardNumber) && $subCardNumberErr==true) {echo $subCardNumberErrMsg;} ?></span></label>
-                            <input type="password" class="form-control textbox-white" id="subCardNumber" value="<?php echo getAccountDetail($email,$subName,'sub_CardNo'); ?>" name="subCardNumber">
-                        </div>
-                    </div>
+                <div class="mb-3" style="padding-top:15px;">
+                    <label for="subCardName" class="form-label" style="font-size:18px;">Card Name</label>
+                    <input type="text" class="form-control textbox-white" id="subCardName" value="<?php echo getAccountDetail($email,$subName,'sub_CardName'); ?>" name="subCardName">
                 </div>
             </div>
         </div>
             <div class="contentButton">
-            <a href="homepage.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" id="btnReg" name="btnReg" value="Save"></a>
+            <a href="homepage.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" style="margin-bottom:10px;" id="btnSave" name="btnSave" value="Save"></a>
+            <a href="changeCardDetails.php?subName=<?php echo $subName;?>" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="button" class="btn btn-primary btn-md btnMid center" style="margin-top:10px;" id="btnEditCardNo" name="btnEditCardNo" value="Change Card Details"></a>
             </div>
             <a href="homepage.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">Cancel</a>
         </form>
         <div style="padding-bottom:50px;"></div>
     </div>
     <?php require_once("headerAndFooter/footer.php"); ?>
-
-    <!--Turning password into asterisks-->
-    <script>
-        var pass= document.getElementById("subCardNumber").innerHTML;
-        var char = pass.length;
-        var password ="";
-        for (i=0;i<char;i++) {
-            password += "*"; }
-        document.getElementById("subCardNumber").innerHTML = password;
-    </script>
 </body>
 </html>
