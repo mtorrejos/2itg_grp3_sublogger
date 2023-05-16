@@ -16,10 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--Bootstrap CSS & JS CDN-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <!--Google Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -113,8 +110,8 @@
                 <button type="submit" style="background:none; color:inherit; border:none; padding:0; font:inherit; outline:inherit;">
                 <a href="editSubscription.php?subName=<?php echo $subName;?>"><img src="img/Edit_Icon.png" class="homepageIcon"></a></button>
                 
-                <button type="button" style="background:none; color:inherit; border:none; padding:0; font:inherit; outline:inherit;" onclick="deleteSub($email)" data-toggle="modal" data-target="#deleteSubModal">
-                <a href="homepage.php?subName=<?php echo $subName;?>"><img src="img/Delete_Icon.png" class="homepageIcon"></a></button>
+                <button type="button" style="background:none; color:inherit; border:none; padding:0; font:inherit; outline:inherit;">
+                <a href="deleteSubscription.php?subName=<?php echo $subName;?>"><img src="img/Delete_Icon.png" class="homepageIcon"></a></button> <!--data-bs-toggle="modal" data-bs-target="#deleteSubModal"-->
             </div>
         </div>
     <?php }; ?>
@@ -125,23 +122,33 @@
     <!--If there are no subscriptions-->
     <div class="center homepage-nosubsdiv">
         <img src="img/Empty_Box.png" alt="" class="center homepage-nosubsimage">
-        <label class="center homepage-nosubslabel">Uh Oh, you don't have any subscriptions yet. Click the plus button to add one!</label>
+        <label class="center homepage-nosubslabel">Uh Oh, you don't have any subscriptions yet. Click the plus buttson to add one!</label>
     </div>
     <?php }?>
     
     <?php require_once("headerAndFooter/footer.php"); ?>
 
-    <script>
-        function deleteSub($email) {
-            <?php
-            $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
-            $_SESSION['subName']=$_GET['subName'];
-            $subName = $_SESSION['subName'];
-            $sql = "DELETE FROM `$email` WHERE sub_Name = '$subName';";
-            $con->query($sql); 
-            header("Location: homepage.php");
-            ?>
-        }
-    </script>
+    <!-- Modal -->
+    <div class="modal fade" id="deleteSubModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm Deletion</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete your subscription?
+            </div>
+            <div class="modal-footer">
+                <a href="homepage.php?subName=<?php echo $subName;?>" target="_self" style="text-decoration:none;"><input type="submit" class="btn btn-primary btn-md btnMid center" style="width:100px !important; padding:10px; font-size:18px; background-color:#0d6efd; margin:0;" id="btnYes" name="btnYes" value="Yes" onclick="deleteSub()"></a>
+                <a href="homepage.php" target="_self" style="text-decoration:none;" data-bs-dismiss="modal"><input type="submit" class="btn btn-primary btn-md btnMid center" style="width:100px !important; padding:10px; font-size:18px; background-color:#6c757d; margin:0;" id="btnNo" name="btnNo" value="No"></a>
+            </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 </body>
 </html>

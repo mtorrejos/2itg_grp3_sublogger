@@ -2,6 +2,31 @@
     session_start();
     require_once "connection/connection.php";
     $con = connection();
+    
+    $email = $_SESSION['email'];
+    $result = $con->query("SELECT * FROM `$email`;");
+
+    $email = $_SESSION['email'];
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if(isset($_POST['btnSave'])) {
+            $subNameArray = array();
+            while ($row = $result->fetch_assoc()){
+                $subNameArray[] = $row['sub_Name'];
+            }
+            $subLastUsed = $_POST['subLastUsed'];
+            $data = array_combine($subNameArray,$subLastUsed);
+            foreach($data as $key => $value) {
+                $subName = $key;
+                $subLastUsed = $value;
+
+                $sql = "UPDATE `$email` SET sub_LastUsed='$subLastUsed' WHERE sub_Name = '$subName';";
+                $con->query($sql);
+            }
+            $_SESSION['email'] = $email;
+            header("Location: homepage.php");
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -34,66 +59,22 @@
     </div>
     <form name="survey" id="survey" method="POST">
     <div class="profileDetails editProfileDetails" style="display:block; margin-left:auto; margin-right:auto; width:auto; position:relative; top:0px; width:50%;">
+    <?php while ($row = $result->fetch_assoc()){?>
         <div class="row" style="margin-top:5px; margin-bottom:5px;">
-            <div class="col-lg-5">
-                <label for="subLastUsed" class="form-label profileLabel" style="padding:0; margin-top:15px; margin-bottom:0;">Subscription Name:</label>
-                <span class="editProfileSpan">This field is required</span>
+            <div class="col-lg-4">
+                <label for="subLastUsed" class="form-label profileLabel" style="padding:0; margin-top:15px; margin-bottom:0;"><?php echo $row['sub_Name']; ?>:</label>
             </div>
-            <div class="col-lg-7">
-                <input type="text" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="subLastUsed" name="subLastUsed" placeholder="MM/DD/YYYY" value="04/22/23" required>
+            <div class="col-lg-8">
+                <input type="date" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" name="subLastUsed[]" placeholder="MM/DD/YYYY" value="<?php echo $row['sub_LastUsed']; ?>" required>
             </div>
         </div>
-        <div class="row" style="margin-top:5px; margin-bottom:5px;">
-            <div class="col-lg-5">
-                <label for="subLastUsed" class="form-label profileLabel" style="padding:0; margin-top:15px; margin-bottom:0;">Subscription Name:</label>
-                <span class="editProfileSpan">This field is required</span>
-            </div>
-            <div class="col-lg-7">
-                <input type="text" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="subLastUsed" name="subLastUsed" placeholder="MM/DD/YYYY" value="04/22/23" required>
-            </div>
-        </div>
-        <div class="row" style="margin-top:5px; margin-bottom:5px;">
-            <div class="col-lg-5">
-                <label for="subLastUsed" class="form-label profileLabel" style="padding:0; margin-top:15px; margin-bottom:0;">Subscription Name:</label>
-                <span class="editProfileSpan">This field is required</span>
-            </div>
-            <div class="col-lg-7">
-                <input type="text" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="subLastUsed" name="subLastUsed" placeholder="MM/DD/YYYY" value="04/22/23" required>
-            </div>
-        </div>
-        <div class="row" style="margin-top:5px; margin-bottom:5px;">
-            <div class="col-lg-5">
-                <label for="subLastUsed" class="form-label profileLabel" style="padding:0; margin-top:15px; margin-bottom:0;">Subscription Name:</label>
-                <span class="editProfileSpan">This field is required</span>
-            </div>
-            <div class="col-lg-7">
-                <input type="text" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="subLastUsed" name="subLastUsed" placeholder="MM/DD/YYYY" value="04/22/23" required>
-            </div>
-        </div>
-        <div class="row" style="margin-top:5px; margin-bottom:5px;">
-            <div class="col-lg-5">
-                <label for="subLastUsed" class="form-label profileLabel" style="padding:0; margin-top:15px; margin-bottom:0;">Subscription Name:</label>
-                <span class="editProfileSpan">This field is required</span>
-            </div>
-            <div class="col-lg-7">
-                <input type="text" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="subLastUsed" name="subLastUsed" placeholder="MM/DD/YYYY" value="04/22/23" required>
-            </div>
-        </div>
-        <div class="row" style="margin-top:5px; margin-bottom:5px;">
-            <div class="col-lg-5">
-                <label for="subLastUsed" class="form-label profileLabel" style="padding:0; margin-top:15px; margin-bottom:0;">Subscription Name:</label>
-                <span class="editProfileSpan">This field is required</span>
-            </div>
-            <div class="col-lg-7">
-                <input type="text" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="subLastUsed" name="subLastUsed" placeholder="MM/DD/YYYY" value="04/22/23" required>
-            </div>
-        </div>
-        
+    <?php }; ?>
         <div class="contentButton" style="padding-top:30px;">
-            <a href="homepage.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid btnProfile center" id="btnReg" name="btnReg" value="Save"></a>
+            <a href="homepage.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid btnProfile center" id="btnSave" name="btnSave" value="Save"></a>
         </div>
         <a href="homepage.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">Cancel</a>
-    </div></form>
+    </div>
+    </form>
     <div style="padding-bottom: 20px;"></div>
 
     <?php require_once("headerAndFooter/footer.php"); ?>
