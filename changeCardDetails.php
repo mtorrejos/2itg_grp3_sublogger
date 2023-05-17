@@ -95,7 +95,7 @@
 <body style="background-color:#e1edff;">
     <?php require_once("headerAndFooter/navbarWithAccount.php"); ?>
     <div style="padding-top:110px; height:215px;" class="section3">
-        <label class="center title" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;">Change Card Details</label>
+        <label class="center title changeCardDetailsTitle" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;">Change Card Details</label>
     </div>
     
     <div style="padding-top:20px; background-color:#e1edff;">

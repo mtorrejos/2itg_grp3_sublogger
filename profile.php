@@ -31,11 +31,11 @@
     <div style="padding-top:110px; height:215px;" class="section3">
         <label class="center title profileTitle" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;"><?php echo getFirstName($_SESSION['email']).' '.getLastName($_SESSION['email']); ?></label>
     </div>
-    <div class="profileDetails" style="display:block; margin-left:auto; margin-right:auto; width:auto; position:relative; top:-50px;">
+    <div class="profileDetails" style="display:block; margin-left:auto; margin-right:auto; padding:50px; width:auto; position:relative; top:-50px;">
         <label for="email" class="form-label profileLabel">Email Address:</label>
         <label for="text" class="form-label profileValue" id=email name=email><?php echo $_SESSION['email']; ?></label> <br>
         <label for="text" class="form-label profileLabel">Password:</label>
-        <label for="password" class="form-label profileValue" id=password name=password><?php echo getPassword($_SESSION['email']); ?></label> <br>
+        <label for="password" class="form-label profileValue" id=password name=password>****************</label> <br>
         <label for="text" class="form-label profileLabel">Email Reminder Frequency:</label>
         <label for="text" class="form-label profileValue" id=text name=text><?php echo getFrequencyText($_SESSION['email']); ?></label> <br>
         <label for="text" class="form-label profileLabel">Email Survey Frequency:</label>
