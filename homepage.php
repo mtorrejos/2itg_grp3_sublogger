@@ -70,7 +70,6 @@
                     </div>
                 </div>
             </div><br>
-
         </form>
     </div>
     <!--SUBSCRIPTIONS-->
@@ -104,7 +103,7 @@
                 <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber" value=""><?php if($row['sub_CardNo']>0) {echo $row['sub_CardNo'];}; ?></td></tr>
             </table>
             <div class="d-flex justify-content-end">
-                <?php $subName=$row['sub_Name']?>
+                <?php $subName=$row['sub_Name']; $sorted=false;?>
                 <button type="submit" style="background:none; color:inherit; border:none; padding:0; font:inherit; outline:inherit;">
                 <a href="editSubscription.php?subName=<?php echo $subName;?>"><img src="img/Edit_Icon.png" class="homepageIcon"></a></button>
                 

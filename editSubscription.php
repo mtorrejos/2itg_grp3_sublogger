@@ -25,6 +25,31 @@
             header("Location: homepage.php");
         }
     }
+
+    if($_SERVER['REQUEST_METHOD'] == 'GET') {
+        $_SESSION['sortAccordingTo'] = $_GET['sortAccordingTo'];
+        $_SESSION['order'] = $_GET['order'];
+        $sortAccordingTo = $_SESSION['sortAccordingTo'];
+        $order = $_SESSION['order'];
+        $sortAccordingToSQL="";
+        $orderSQL="";
+
+        switch($sortAccordingTo) {
+            case "Default": $sortAccordingToSQL = ""; break;
+            case "Start Date": $sortAccordingToSQL = "sub_StartDate"; break;
+            case "End Date": $sortAccordingToSQL = "sub_EndDate"; break;
+            case "Last Used": $sortAccordingToSQL = "sub_LastUsed"; break;
+            case "Name": $sortAccordingToSQL = "sub_Name"; break;
+        }
+        
+        switch($order) {
+            case "None": $orderSQL = ""; break;
+            case "Ascending": $orderSQL = "ASC"; break;
+            case "Descending": $orderSQL = "DESC"; break;
+        }
+        //echo '<script>alert("sort1: '; echo $_GET['sortAccordingTo']; echo ' order1: '; echo $_GET['order'];
+        //echo ' sort: '; echo $sortAccordingToSQL; echo ' order: '; echo $orderSQL; echo '");</script>';
+    }
 ?>
 
 <!DOCTYPE html>
@@ -106,7 +131,7 @@
             <a href="homepage.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" style="margin-bottom:10px;" id="btnSave" name="btnSave" value="Save"></a>
             <a href="changeCardDetails.php?subName=<?php echo $subName;?>" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="button" class="btn btn-primary btn-md btnMid center" style="margin-top:10px;" id="btnEditCardNo" name="btnEditCardNo" value="Change Card Details"></a>
             </div>
-            <a href="homepage.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">Cancel</a>
+            <a href="<?php if(isset($sortAccordingTo) && isset($order)){echo 'homepageSorted.php?sortAccordingTo='; echo $sortAccordingTo; echo '&order='; echo $order;} else{echo 'homepage.php';}?>" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">Cancel</a>
         </form>
         <div style="padding-bottom:50px;"></div>
     </div>
