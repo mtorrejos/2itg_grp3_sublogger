@@ -4,11 +4,7 @@
     $con = connection();
 
     $email = $_SESSION['email'];
-    $result = $con->query("SELECT * FROM `$email`;");
-
-    $email = $_SESSION['email'];
-    createSubTable($_SESSION['email']);
-?>
+    $result = $con->query("SELECT * FROM `$email`;");?>
 
 <!DOCTYPE html>
 <html lang="en">
