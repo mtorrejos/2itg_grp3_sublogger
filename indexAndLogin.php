@@ -56,7 +56,7 @@
     <div class="row">
         <div class="col-xxl-6 section1">
             <div class="indexh1div">
-                <h1 class="indexh1">Tired of remembering your subsription dues? SubLogger is here to help you track your subscriptions effortlessly!</h1>
+                <h1 class="indexh1">Tired of remembering your subscription dues? SubLogger is here to help you track your subscriptions effortlessly!</h1>
                 <br><br>
                 <ul class="indexul">
                 <table>

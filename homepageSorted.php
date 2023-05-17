@@ -26,12 +26,16 @@
             case "Ascending": $orderSQL = "ASC"; break;
             case "Descending": $orderSQL = "DESC"; break;
         }
-        echo '<script>alert("sort1: '; echo $_GET['sortAccordingTo']; echo ' order1: '; echo $_GET['order'];
-        echo ' sort: '; echo $sortAccordingToSQL; echo ' order: '; echo $orderSQL; echo '");</script>';
-        $result = $con->query("SELECT * FROM `$email` ORDER BY $sortAccordingToSQL $orderSQL;") or die($con->error);
+        //echo '<script>alert("sort1: '; echo $_GET['sortAccordingTo']; echo ' order1: '; echo $_GET['order'];
+        //echo ' sort: '; echo $sortAccordingToSQL; echo ' order: '; echo $orderSQL; echo '");</script>';
+        if($sortAccordingToSQL!="" && $orderSQL!="") {
+            $result = $con->query("SELECT * FROM `$email` ORDER BY $sortAccordingToSQL $orderSQL;") or die($con->error);
+        } else {
+            $result = $con->query("SELECT * FROM `$email`;") or die($con->error);
+        }
     }
     else {
-        //$result = $con->query("SELECT * FROM `$email`;") or die($con->error);
+        $result = $con->query("SELECT * FROM `$email`;") or die($con->error);
     }
 ?>
 
@@ -136,12 +140,12 @@
                 <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber" value=""><?php if($row['sub_CardNo']>0) {echo $row['sub_CardNo'];}; ?></td></tr>
             </table>
             <div class="d-flex justify-content-end">
-                <?php $subName=$row['sub_Name']?>
+                <?php $subName=$row['sub_Name']; $sorted=true;?>
                 <button type="submit" style="background:none; color:inherit; border:none; padding:0; font:inherit; outline:inherit;">
-                <a href="editSubscription.php?subName=<?php echo $subName;?>"><img src="img/Edit_Icon.png" class="homepageIcon"></a></button>
+                <a href="editSubscription.php?subName=<?php echo $subName;?>&sortAccordingTo=<?php echo $sortAccordingTo;?>&order=<?php echo $order;?>" onclick="document.getElementById('sort').form.submit()"><img src="img/Edit_Icon.png" class="homepageIcon"></a></button>
                 
                 <button type="button" style="background:none; color:inherit; border:none; padding:0; font:inherit; outline:inherit;">
-                <a href="deleteSubscription.php?subName=<?php echo $subName;?>"><img src="img/Delete_Icon.png" class="homepageIcon"></a></button> <!--data-bs-toggle="modal" data-bs-target="#deleteSubModal"-->
+                <a href="deleteSubscription.php?subName=<?php echo $subName;?>&sortAccordingTo=<?php echo $sortAccordingTo;?>&order=<?php echo $order;?>"><img src="img/Delete_Icon.png" class="homepageIcon"></a></button> <!--data-bs-toggle="modal" data-bs-target="#deleteSubModal"-->
             </div>
         </div>
     <?php }; ?>
