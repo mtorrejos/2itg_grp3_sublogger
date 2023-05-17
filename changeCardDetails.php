@@ -17,33 +17,53 @@
     $subStartDate = getAccountDetail($email,$subName,'sub_StartDate');
     $subEndDate = getAccountDetail($email,$subName,'sub_EndDate');
     $subLastUsed = getAccountDetail($email,$subName,'sub_LastUsed');
+    
+    if($_SERVER['REQUEST_METHOD'] == 'GET') {
+        if(isset($_GET['sortAccordingTo']) && isset($_GET['order'])) {
+            $_SESSION['sortAccordingTo'] = $_GET['sortAccordingTo'];
+            $_SESSION['order'] = $_GET['order'];
+            $sortAccordingTo = $_SESSION['sortAccordingTo'];
+            $order = $_SESSION['order'];
+            //echo '<script>alert("sort1: '.$_GET['sortAccordingTo'].' order1: '.$_GET['order'].'</script>';
+        }
+    }
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $typedCardNumber = $_POST['subCardNumber'];
         $newSubCardNumber = password_hash($_POST['newSubCardNumber'], PASSWORD_DEFAULT);
         $typedNewSubCardNumber = $_POST['newSubCardNumber'];
         
-        echo '<script>alert("stored in db:'; echo $subCardNumber; echo ':ends here");</script>';
+        //echo '<script>alert("stored in db:'; echo $subCardNumber; echo ':ends here");</script>';
         if($subCardNumber==0 || $subCardNumber=="" || $typedCardNumber==0 || $typedCardNumber=="") {
             updateCardNo($email,$subName,$subAcctName,$subUsername,$subEmail,$subCardName,$newSubCardNumber,$subType,$subStartDate,$subEndDate,$subLastUsed,$subCardNumber);
-            header("Location: homepage.php?subName=$subName&addedtotable");
+            if(isset($_GET['sortAccordingTo']) && isset($_GET['order'])) {
+                $link = 'homepageSorted.php?sortAccordingTo='.$_GET['sortAccordingTo'].'&order='.$_GET['order'];
+            } else {
+                $link = 'homepage.php';}
+            header("Location: $link");
+            //header("Location: homepage.php?subName=$subName");
         }
         else {
-            echo '<script>alert("textbox to verify:'; echo $typedCardNumber; echo ':ends here");</script>';
+            //echo '<script>alert("textbox to verify:'; echo $typedCardNumber; echo ':ends here");</script>';
             if(!empty(validateNumber($typedNewSubCardNumber))) {
-                echo '<script>alert("Wrong Validation");</script>';
+                //echo '<script>alert("Wrong Validation");</script>';
                 $newSubCardNumberErr = true;
                 $newSubCardNumberErrMsg = "Numbers Only";
             }
             else {
                 if(password_verify($typedCardNumber, $subCardNumber)) {
                     updateCardNo($email,$subName,$subAcctName,$subUsername,$subEmail,$subCardName,$newSubCardNumber,$subType,$subStartDate,$subEndDate,$subLastUsed,$subCardNumber);
-                    echo '<script>alert("Edited to table");</script>';
-                    header("Location: homepage.php?subName=$subName&editedtotable") or die($con->error);
+                    //echo '<script>alert("Edited to table");</script>';
+                    if(isset($_GET['sortAccordingTo']) && isset($_GET['order'])) {
+                        $link = 'homepageSorted.php?sortAccordingTo='.$_GET['sortAccordingTo'].'&order='.$_GET['order'];
+                    } else {
+                        $link = 'homepage.php';}
+                    header("Location: $link");
+                    //header("Location: homepage.php?subName=$subName");
                 }
                 else {
-                    echo '<script>alert("Wrong number match");</script>';
-                    $subCardNumberErr = false;
+                    //echo '<script>alert("Wrong number match");</script>';
+                    $subCardNumberErr = true;
                     $subCardNumberErrMsg = "Incorrect card number";
                 }
             }
@@ -107,9 +127,9 @@
                 </div>
             </div>
             <div class="contentButton">
-            <a href="homepage.php?subName=<?php echo $subName;?>" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" id="btnSave" name="btnSave" value="Save"></a>
+            <a href="<?php if(isset($sortAccordingTo) && isset($order)){echo 'homepageSorted.php?subName='.$subName.'&sortAccordingTo='.$sortAccordingTo.'&order='.$order;} else{echo 'homepage.php';}?>" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" id="btnSave" name="btnSave" value="Save"></a>
             </div>
-            <a href="homepage.php?subName=<?php echo $subName;?>" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">Cancel</a>
+            <a href="<?php if(isset($sortAccordingTo) && isset($order)){echo 'homepageSorted.php?subName='.$subName.'&sortAccordingTo='.$sortAccordingTo.'&order='.$order;} else{echo 'homepage.php';}?>" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">Cancel</a>
         </form>
         <div style="padding-bottom:50px;"></div>
     </div>

@@ -28,7 +28,11 @@
         }
         //echo '<script>alert("sort1: '; echo $_GET['sortAccordingTo']; echo ' order1: '; echo $_GET['order'];
         //echo ' sort: '; echo $sortAccordingToSQL; echo ' order: '; echo $orderSQL; echo '");</script>';
-        $result = $con->query("SELECT * FROM `$email` ORDER BY $sortAccordingToSQL $orderSQL;") or die($con->error);
+        if($sortAccordingToSQL!="" && $orderSQL!="") {
+            $result = $con->query("SELECT * FROM `$email` ORDER BY $sortAccordingToSQL $orderSQL;") or die($con->error);
+        } else {
+            $result = $con->query("SELECT * FROM `$email`;") or die($con->error);
+        }
     }
     else {
         $result = $con->query("SELECT * FROM `$email`;") or die($con->error);

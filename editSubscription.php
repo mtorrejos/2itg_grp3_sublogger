@@ -22,18 +22,23 @@
             $sql = "UPDATE `$email` SET sub_Name='$subName', sub_AcctName='$subAcctName', sub_Username='$subUsername', sub_Email='$subEmail', sub_CardName='$subCardName', sub_Type='$subType', sub_StartDate='$subStartDate', sub_EndDate='$subEndDate', sub_LastUsed='$subLastUsed' WHERE sub_ID = '$subID';";
             $con->query($sql);
             $_SESSION['email'] = $email;
-            header("Location: homepage.php");
+            if(isset($_GET['sortAccordingTo']) && isset($_GET['order'])) {
+                $link = 'homepageSorted.php?sortAccordingTo='.$_GET['sortAccordingTo'].'&order='.$_GET['order'];
+            } else {
+                $link = 'homepage.php';}
+            header("Location: $link");
+            //header("Location: homepage.php");
         }
     }
 
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
-        $_SESSION['sortAccordingTo'] = $_GET['sortAccordingTo'];
-        $_SESSION['order'] = $_GET['order'];
-        $sortAccordingTo = $_SESSION['sortAccordingTo'];
-        $order = $_SESSION['order'];
-        $sortAccordingToSQL="";
-        $orderSQL="";
-        //echo '<script>alert("sort1: '; echo $_GET['sortAccordingTo']; echo ' order1: '; echo $_GET['order'];
+        if(isset($_GET['sortAccordingTo']) && isset($_GET['order'])) {
+            $_SESSION['sortAccordingTo'] = $_GET['sortAccordingTo'];
+            $_SESSION['order'] = $_GET['order'];
+            $sortAccordingTo = $_SESSION['sortAccordingTo'];
+            $order = $_SESSION['order'];
+            //echo '<script>alert("sort1: '.$_GET['sortAccordingTo'].' order1: '.$_GET['order'].'</script>';
+        }
     }
 ?>
 
@@ -113,8 +118,8 @@
             </div>
         </div>
             <div class="contentButton">
-            <a href="homepage.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" style="margin-bottom:10px;" id="btnSave" name="btnSave" value="Save"></a>
-            <a href="changeCardDetails.php?subName=<?php echo $subName;?>" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="button" class="btn btn-primary btn-md btnMid center" style="margin-top:10px;" id="btnEditCardNo" name="btnEditCardNo" value="Change Card Details"></a>
+            <a href="<?php if(isset($sortAccordingTo) && isset($order)){echo 'homepageSorted.php?sortAccordingTo='.$sortAccordingTo.'&order='.$order;} else{echo 'homepage.php';}?>" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" style="margin-bottom:10px;" id="btnSave" name="btnSave" value="Save"></a>
+            <a href="<?php if(isset($sortAccordingTo) && isset($order)){echo 'changeCardDetails.php?subName='.$subName.'&sortAccordingTo='.$sortAccordingTo.'&order='; echo $order;} else{echo 'changeCardDetails.php?subName='.$subName;}?>" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="button" class="btn btn-primary btn-md btnMid center" style="margin-top:10px;" id="btnEditCardNo" name="btnEditCardNo" value="Change Card Details"></a>
             </div>
             <a href="<?php if(isset($sortAccordingTo) && isset($order)){echo 'homepageSorted.php?sortAccordingTo='; echo $sortAccordingTo; echo '&order='; echo $order;} else{echo 'homepage.php';}?>" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">Cancel</a>
         </form>

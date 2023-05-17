@@ -9,13 +9,15 @@
     $con->query($sql);
 
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
-        $_SESSION['sortAccordingTo'] = $_GET['sortAccordingTo'];
-        $_SESSION['order'] = $_GET['order'];
-        $sortAccordingTo = $_SESSION['sortAccordingTo'];
-        $order = $_SESSION['order'];
-        //echo '<script>alert("sort1: '; echo $_GET['sortAccordingTo']; echo ' order1: '; echo $_GET['order'];
+        if(isset($_GET['sortAccordingTo']) && isset($_GET['order'])) {
+            $_SESSION['sortAccordingTo'] = $_GET['sortAccordingTo'];
+            $_SESSION['order'] = $_GET['order'];
+            $sortAccordingTo = $_SESSION['sortAccordingTo'];
+            $order = $_SESSION['order'];
+            //echo '<script>alert("sort1: '.$_GET['sortAccordingTo'].' order1: '.$_GET['order'].'</script>';
+        }
     }
-    
+
     if(isset($sortAccordingTo) && isset($order)) {
         $link = 'homepageSorted.php?sortAccordingTo='.$sortAccordingTo.'&order='.$order;
     } else {
