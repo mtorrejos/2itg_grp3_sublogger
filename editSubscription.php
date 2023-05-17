@@ -33,22 +33,7 @@
         $order = $_SESSION['order'];
         $sortAccordingToSQL="";
         $orderSQL="";
-
-        switch($sortAccordingTo) {
-            case "Default": $sortAccordingToSQL = ""; break;
-            case "Start Date": $sortAccordingToSQL = "sub_StartDate"; break;
-            case "End Date": $sortAccordingToSQL = "sub_EndDate"; break;
-            case "Last Used": $sortAccordingToSQL = "sub_LastUsed"; break;
-            case "Name": $sortAccordingToSQL = "sub_Name"; break;
-        }
-        
-        switch($order) {
-            case "None": $orderSQL = ""; break;
-            case "Ascending": $orderSQL = "ASC"; break;
-            case "Descending": $orderSQL = "DESC"; break;
-        }
         //echo '<script>alert("sort1: '; echo $_GET['sortAccordingTo']; echo ' order1: '; echo $_GET['order'];
-        //echo ' sort: '; echo $sortAccordingToSQL; echo ' order: '; echo $orderSQL; echo '");</script>';
     }
 ?>
 

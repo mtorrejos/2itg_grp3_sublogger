@@ -141,7 +141,7 @@
                 <a href="editSubscription.php?subName=<?php echo $subName;?>&sortAccordingTo=<?php echo $sortAccordingTo;?>&order=<?php echo $order;?>" onclick="document.getElementById('sort').form.submit()"><img src="img/Edit_Icon.png" class="homepageIcon"></a></button>
                 
                 <button type="button" style="background:none; color:inherit; border:none; padding:0; font:inherit; outline:inherit;">
-                <a href="deleteSubscription.php?subName=<?php echo $subName;?>"><img src="img/Delete_Icon.png" class="homepageIcon"></a></button> <!--data-bs-toggle="modal" data-bs-target="#deleteSubModal"-->
+                <a href="deleteSubscription.php?subName=<?php echo $subName;?>&sortAccordingTo=<?php echo $sortAccordingTo;?>&order=<?php echo $order;?>"><img src="img/Delete_Icon.png" class="homepageIcon"></a></button> <!--data-bs-toggle="modal" data-bs-target="#deleteSubModal"-->
             </div>
         </div>
     <?php }; ?>
