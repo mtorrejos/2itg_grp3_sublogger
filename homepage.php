@@ -7,6 +7,7 @@
     $result = $con->query("SELECT * FROM `$email`;");
 
     $email = $_SESSION['email'];
+    createSubTable($_SESSION['email']);
 ?>
 
 <!DOCTYPE html>
