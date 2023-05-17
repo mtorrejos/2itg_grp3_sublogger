@@ -223,6 +223,16 @@
         return $detail;
     }
 
+    function getMailerDetail($detail) {
+        $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
+        $sql = $con->prepare("SELECT `$detail` FROM mailer WHERE mailer_ID = 1;") or die($con->error);
+        $sql->execute();
+        $sql->bind_result($detail);
+        $sql->fetch();
+        $sql->close();
+        return $detail;
+    }
+
     function updateCardNo($email,$subName,$subAcctName,$subUsername,$subEmail,$subCardName,$newSubCardNumber,$subType,$subStartDate,$subEndDate,$subLastUsed,$subCardNumber) {
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
         //$sql = "UPDATE `$email` SET `sub_CardNo` = '$num' WHERE `sub_Name` = '$subName';" or die($con->error);

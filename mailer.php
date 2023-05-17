@@ -1,7 +1,15 @@
-<?php
-	session_start();
-	require_once "connection/connection.php";
-    $con = connection();
+<?php //Note: This will not work as of right now. I still need to add the account details, but adding them on git is too dangerous
+    require_once "connection/connection.php";
+
+    $conDatabase = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
+    $nAccount = $conDatabase->query("SELECT MAX(user_ID) AS max_ID FROM users;");
+    $row = $nAccount->fetch_assoc();
+    $maxID = $row['max_ID'];
+
+    $fromMail = $conDatabase->query()
+    
+
+    $dateToday = date("m-d-Y");
 
 	use PHPMailer\PHPMailer\PHPMailer;
 	use PHPMailer\PHPMailer\Exception;
@@ -9,7 +17,19 @@
 	require 'PHPMailer/src/PHPMailer.php';
 	require 'PHPMailer/src/SMTP.php';
 
-	$mail = new PHPMailer(true);
+/*
+    $mail = new PHPMailer(true);
+    $mail->isSMTP(); 
+    $mail->Host       = '';                           
+    $mail->SMTPAuth   = true;                                      
+    $mail->Username   = '';            
+    $mail->Password   = '';                         
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;                
+    $mail->Port       = ;      
+    $mail->setFrom('reminder.sublogger@gmail.com', 'Sublogger Reminders');                                 
+
+	
+    $count = 0;
 
 	try {
 	$mail->isSMTP(); 
@@ -34,5 +54,5 @@
     catch (Exception $e) {
     	echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 	}
-
+*/
 ?>
