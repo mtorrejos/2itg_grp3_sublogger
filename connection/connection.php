@@ -243,4 +243,14 @@
         $con->query($sql);
     }
     
+    function difference($date){
+        $date1 = new DateTime("now");
+        $date2 = new DateTime($date);
+        $interval = $date1->diff($date2);
+        //Divided
+        $diff = $interval->y . " years, " . $interval->m." months, ".$interval->d." days"; 
+        return $diff;
+        //Days Only
+        //return $interval->days . " days "; 
+    }
 ?>
