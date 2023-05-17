@@ -7,7 +7,6 @@
     $result = $con->query("SELECT * FROM `$email`;");
 
     $email = $_SESSION['email'];
-    createSubTable($_SESSION['email']);
 ?>
 
 <!DOCTYPE html>
@@ -46,12 +45,12 @@
     <!--SORT-->
     <?php if($result->num_rows > 0) {?>
     <div class="row">
-        <form name="sort" id="sort" method="GET" action="homepageSorted.php" class="center justify-content-start sortform" style="width:40%;">
+        <form name="sort" id="sort" method="GET" class="center justify-content-start sortform" style="width:40%;">
             <div class="row">
                 <div class=col-lg-6>
                     <div class="row" style="padding-top:20px; padding-bottom:10px; padding-left:10px; padding-right:10px;">
                         <label class="homepageSortLabel col-sm-6">Sort according to:</label>
-                        <select id="sortAccordingTo" name="sortAccordingTo" class="form-select dropdown-blue col-sm-6" onchange="this.form.submit()">
+                        <select id="sortAccordingTo" name="sortAccordingTo" class="form-select dropdown-blue col-sm-6">
                             <option value="Default" selected>Default</option>
                             <option value="Start Date">Start Date</option>
                             <option value="End Date">End Date</option>
@@ -63,7 +62,7 @@
                 <div class=col-lg-6>
                     <div class="row" style="padding-top:20px; padding-bottom:10px; padding-left:10px; padding-right:10px;">
                         <label class="homepageSortLabel col-sm-6">In what order:</label>
-                        <select id="order" name="order" class="form-select dropdown-blue col-sm-6" onchange="this.form.submit()">
+                        <select id="order" name="order" class="form-select dropdown-blue col-sm-6">
                             <option value="None" selected>None</option>
                             <option value="Ascending">Ascending</option>
                             <option value="Descending">Descending</option>
@@ -71,7 +70,9 @@
                     </div>
                 </div>
             </div><br>
-
+            <div class="contentButton" style="visibility:hidden; width:0; height:0;"> <!--submit form on every change in dropdown-->
+                <input type="submit" id="btnSort" name="btnSort" value="Sort"><a href="#" target="_self"></a>
+            </div>
         </form>
     </div>
     <!--SUBSCRIPTIONS-->

@@ -4,10 +4,35 @@
     $con = connection();
 
     $email = $_SESSION['email'];
-    $result = $con->query("SELECT * FROM `$email`;");
+        
+    if($_SERVER['REQUEST_METHOD'] == 'GET') {
+        $_SESSION['sortAccordingTo'] = $_GET['sortAccordingTo'];
+        $_SESSION['order'] = $_GET['order'];
+        $sortAccordingTo = $_SESSION['sortAccordingTo'];
+        $order = $_SESSION['order'];
+        $sortAccordingToSQL="";
+        $orderSQL="";
 
-    $email = $_SESSION['email'];
-    createSubTable($_SESSION['email']);
+        switch($sortAccordingTo) {
+            case "Default": $sortAccordingToSQL = ""; break;
+            case "Start Date": $sortAccordingToSQL = "sub_StartDate"; break;
+            case "End Date": $sortAccordingToSQL = "sub_EndDate"; break;
+            case "Last Used": $sortAccordingToSQL = "sub_LastUsed"; break;
+            case "Name": $sortAccordingToSQL = "sub_Name"; break;
+        }
+        
+        switch($order) {
+            case "None": $orderSQL = ""; break;
+            case "Ascending": $orderSQL = "ASC"; break;
+            case "Descending": $orderSQL = "DESC"; break;
+        }
+        echo '<script>alert("sort1: '; echo $_GET['sortAccordingTo']; echo ' order1: '; echo $_GET['order'];
+        echo ' sort: '; echo $sortAccordingToSQL; echo ' order: '; echo $orderSQL; echo '");</script>';
+        $result = $con->query("SELECT * FROM `$email` ORDER BY $sortAccordingToSQL $orderSQL;") or die($con->error);
+    }
+    else {
+        //$result = $con->query("SELECT * FROM `$email`;") or die($con->error);
+    }
 ?>
 
 <!DOCTYPE html>
@@ -44,19 +69,21 @@
         </div>
     </div>
     <!--SORT-->
-    <?php if($result->num_rows > 0) {?>
+    <?php if($result->num_rows>0) { //!empty($result->num_rows) && $result->num_rows>0 ?>
     <div class="row">
-        <form name="sort" id="sort" method="GET" action="homepageSorted.php" class="center justify-content-start sortform" style="width:40%;">
+        <form name="sort" id="sort" method="GET" class="center justify-content-start sortform" style="width:40%;">
             <div class="row">
                 <div class=col-lg-6>
                     <div class="row" style="padding-top:20px; padding-bottom:10px; padding-left:10px; padding-right:10px;">
                         <label class="homepageSortLabel col-sm-6">Sort according to:</label>
                         <select id="sortAccordingTo" name="sortAccordingTo" class="form-select dropdown-blue col-sm-6" onchange="this.form.submit()">
-                            <option value="Default" selected>Default</option>
-                            <option value="Start Date">Start Date</option>
-                            <option value="End Date">End Date</option>
-                            <option value="Last Used">Last Used</option>
-                            <option value="Name">Name</option>
+                            <?php
+                            echo '<option value="Default"'; if(isset($sortAccordingTo) && $sortAccordingTo=='Default'){echo ' selected';} echo '>Default</option>';
+                            echo '<option value="Start Date"'; if(isset($sortAccordingTo) && $sortAccordingTo=='Start Date'){echo ' selected';} echo '>Start Date</option>';
+                            echo '<option value="End Date"'; if(isset($sortAccordingTo) && $sortAccordingTo=='End Date'){echo ' selected';} echo '>End Date</option>';
+                            echo '<option value="Last Used"'; if(isset($sortAccordingTo) && $sortAccordingTo=='Last Used'){echo ' selected';} echo '>Last Used</option>';
+                            echo '<option value="Name"'; if(isset($sortAccordingTo) && $sortAccordingTo=='Name'){echo ' selected';} echo '>Name</option>';
+                            ?>
                         </select>
                     </div>
                 </div>
@@ -64,14 +91,18 @@
                     <div class="row" style="padding-top:20px; padding-bottom:10px; padding-left:10px; padding-right:10px;">
                         <label class="homepageSortLabel col-sm-6">In what order:</label>
                         <select id="order" name="order" class="form-select dropdown-blue col-sm-6" onchange="this.form.submit()">
-                            <option value="None" selected>None</option>
-                            <option value="Ascending">Ascending</option>
-                            <option value="Descending">Descending</option>
+                            <?php
+                            echo '<option value="None"'; if(isset($order) && $order=='None'){echo ' selected';} echo '>None</option>';
+                            echo '<option value="Ascending"'; if(isset($order) && $order=='Ascending'){echo ' selected';} echo '>Ascending</option>';
+                            echo '<option value="Descending"'; if(isset($order) && $order=='Descending'){echo ' selected';} echo '>Descending</option>';
+                            ?>
                         </select>
                     </div>
                 </div>
             </div><br>
-
+            <div class="contentButton" style="visibility:hidden; width:0; height:0;"> <!--submit form on every change in dropdown-->
+                <input type="submit" id="btnSort" name="btnSort" value="Sort"><a href="#" target="_self"></a>
+            </div>
         </form>
     </div>
     <!--SUBSCRIPTIONS-->
@@ -145,7 +176,7 @@
             </div>
         </div>
     </div>
-    
+
     <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
