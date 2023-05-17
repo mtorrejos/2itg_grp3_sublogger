@@ -90,7 +90,7 @@
     <link rel="icon" href="img/SubLogger_Logo.png" type="image/gif" sizes="16x16">
     <!--CSS-->
     <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
-    <title>Edit Subscription</title>
+    <title>Change Card Details</title>
 </head>
 <body style="background-color:#e1edff;">
     <?php require_once("headerAndFooter/navbarWithAccount.php"); ?>

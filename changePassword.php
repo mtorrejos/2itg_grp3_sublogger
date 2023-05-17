@@ -44,7 +44,7 @@
     <link rel="icon" href="img/SubLogger_Logo.png" type="image/gif" sizes="16x16">
     <!--CSS-->
     <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
-    <title>Edit Profile</title>
+    <title>Change Password</title>
 </head>
 <body>
     <?php require_once("headerAndFooter/navbarWithAccount.php"); ?>
