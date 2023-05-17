@@ -6,28 +6,23 @@
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $_POST['email'];
         $password = $_POST['password'];
-        $passErr = false;
-        $emailErr = false;
 
         if(isset($email) && isset($password)) { 
             if(checkAccount($email) <= 0) { //change this to be more in line with the visuals
-                $emailErr = true;
-                $emailErrMsg = "Account not found!"; //echo '<script>alert("Account not found!")</script>';
+                echo '<script>alert("Account not found!")</script>';
             }
+
             else {
-                if (password_verify($password, getPassword($email))) { //if (getPassword($email) === $password)
+                if (getPassword($email) === $password) {
                     $_SESSION['email'] = $email;
-                    header("Location: homepage.php");
+                    header("Location: profile.php");
                 }
+
                 else {
-                    $passErr = true;
-                    $passErrMsg = "Incorrect Password"; //echo '<script>alert("Incorrect Password")</script>';
+                    echo '<script>alert("Incorrect Password")</script>';
                 }
             }
         }
-
-
-        if(isset($_SESSION['email'])) { createSubTable($_SESSION['email']); }
     }
 
 ?>
@@ -55,11 +50,10 @@
 </head>
 <body>
     <?php require_once("headerAndFooter/navbarWithLogin.php"); ?>
-    <div>
     <div class="row">
         <div class="col-xxl-6 section1">
             <div class="indexh1div">
-                <h1 class="indexh1">Tired of remembering your subsription dues? SubLogger is here to help you track your subscriptions effortlessly!</h1>
+                <h1 class="indexh1">Tired of remembering your subscription dues? SubLogger is here to help you track your subscriptions effortlessly!</h1>
                 <br><br>
                 <ul class="indexul">
                 <table>
@@ -72,30 +66,25 @@
                 </ul>
             </div>
         </div>
-        <div class="col-xxl-6 sectionLogin" style="padding-top:170px;">
-            <img src="img/SubLogger_Logo.png" class="center loginLogo" style="width: 200px; height: 200px;">
+        <div class="col-xxl-6" style="padding-top:170px;">
+            <img src="img/SubLogger_Logo.png" class="center" style="width: 200px; height: 200px;">
             <label class="center title">Login to SubLogger</label>
             <form name="login" id="login" method="POST" class="center indexforms">
                 <div class="mb-3">
-                    <label for="email" class="form-label" style="font-size:18px;">Email Address<span style="color:#f04148; padding-left: 50px;">
-                    <?php if(isset($email) && isset($password) && $emailErr==true) {echo $emailErrMsg; }?>
-                    </span></label>
+                    <label for="email" class="form-label" style="font-size:18px;">Email Address<span style="color:#f04148; padding-left: 50px;">Not a valid email address</span></label>
                     <input type="email" class="form-control textbox-blue" id="email" name="email" required>
                 </div>
                 <div class="mb-3" style="padding-top:20px;">
-                    <label for="password" class="form-label" style="font-size:18px;">Password<span style="color:#f04148; padding-left: 50px;">
-                    <?php if(isset($email) && isset($password) && $passErr==true) {echo $passErrMsg; }?>
-                    </span></label>
+                    <label for="password" class="form-label" style="font-size:18px;">Password<span style="color:#f04148; padding-left: 50px;">Must contain at least 8 characters</span></label>
                     <input type="password" class="form-control textbox-blue" id="password" name="password" required>
                 </div>
                 <div class="contentButton">
                     <a href="homepage" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" id="btnLogin" name="btnLogin" value="Login"></a>
                 </div>
-                <a href="register.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">No account yet? Register now.</a>
+                <a href="register.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center">No account yet? Register now.</a>
             </form>
             <div style="padding-bottom: 100px;"></div>
         </div>
-    </div>
     </div>
     <?php require_once("headerAndFooter/footer.php"); ?>
 </body>
