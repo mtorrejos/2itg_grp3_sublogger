@@ -148,7 +148,7 @@
     function getFrequencyText($email) {
         switch (getFrequency($email)){
             case 1:
-                return "Every 5 minutes"; //might be a bit too much lmao
+                return "None"; //might be a bit too much lmao
                 break;
             case 2:
                 return "Every hour";
@@ -187,7 +187,7 @@
     function getSurveyText($email) {
         switch (getSurvey($email)){
             case 1:
-                return "Every 5 minutes"; //might be a bit too much lmao
+                return "None"; //might be a bit too much lmao
                 break;
             case 2:
                 return "Every hour";

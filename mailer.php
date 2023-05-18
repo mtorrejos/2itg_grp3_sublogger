@@ -2,10 +2,7 @@
     require_once "connection/connection.php";
 
     $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
-    $nAccount = $con->query("SELECT MAX(user_ID) AS max_ID FROM users;");
-    $row = $nAccount->fetch_assoc();
-    $maxID = $row['max_ID'];
-    $cntID = 1;
+    $nAccount = $con->query("SELECT * FROM users;");
     $dateToday = date("m-d-Y");
 
 	use PHPMailer\PHPMailer\PHPMailer;
@@ -20,39 +17,21 @@
     $mail->Username   = '';                             //add when ready
     $mail->Password   = '';                             //add when ready
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;                
-    $mail->Port       = ;                               //add when ready
+    $mail->Port       = 256;                               //add when ready
     $mail->setFrom('reminder.sublogger@gmail.com', 'Sublogger Reminders');
     $mail->isHTML(true);
     $mail->Subject = 'Sublogger Subscription Reminders';
 
-    while($cntID <= $maxID) {
-        //get the value of EmailReminderTime
-        $emailCode = $con->query("SELECT user_EmailReminderTime FROM users WHERE user_ID = $cntID;");   
-        $row = $emailCode->fetch_assoc();
-        $emailDate = $row['user_EmailReminderTime'];
+    if ($nAccount->num_rows > 0) {
+        while($row = $nAccount->fetch_assoc()) {
+            $email = $row['user_Email'];
+            $username = $row['user_FirstName'];
+            $emailDate = $row['user_EmailReminderTime'];
 
-        $username = $con->query("SELECT user_Email FROM users WHERE user_ID = $cntID;");   
-        $rowEmail = $username->fetch_assoc();
-        $email = $rowEmail['user_EmailReminderTime'];
-
-        if(checkSend($emailDate) == true) { 
-            sendMail($email,createBody($email)) }
-        $cntID++;
+            //if(checkSend($emailDate)){ sendMail($email,createBody($email),$mail,$username); }
+            sendMail($email,createBody($email),$mail,$username);
+        }
     }
-    
-    
-    try {
-        $mail->addAddress($email);                              
-        $mail->Body    = '<b>Hello World!</b>';
-
-        $mail->send();
-        echo 'Message has been sent';
-    }
-
-    catch (Exception $e) {
-    	echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
-	}
-
 
     function checkSend($emailDate) {
         $dateToday = date("m-d-Y");
@@ -80,18 +59,40 @@
     }
 
     function createBody($email) {
+        $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
+        $nSubs = $con->query("SELECT * FROM `$email`;");
+        $subDetailsFull = '';
+        if ($nSubs->num_rows > 0) {
+            while($row = $nSubs->fetch_assoc()) {
+                $subName = $row['sub_Name'];
+                $subDueDate = $row['sub_EndDate'];
+
+                $subDetails = '<tr>
+                <td class="homepageValue" id="subAcctName" name="subAcctname">' .$subName. '</td>
+                <td class="homepageValue" id="subEndDate" name="subEndDate">'.$subDueDate.'</td>
+                </tr>';
+
+                $subDetailsFull .= $subDetails;
+            }
+        }
+        return $subDetailsFull;
+
 
     }
 
-    function sendMail($email,$body) {
-        try {
-            $mail->addAddress($email);                              
-            $mail->Body    = $body;
+    function sendMail($email,$body,$mail,$username) {
+        $emailTemplate = file_get_contents('updateDueDateMail.php');
 
+        try {
+            $mail->addAddress($email);
+
+            if(empty($body)) { $email_body = str_replace('{SUBSCRIPTIONS}', 'No subscriptions found!',$emailTemplate); }
+            else { $email_body = str_replace(['{SUBSCRIPTIONS}', '{NAME}'], [$body, $username],$emailTemplate); }
+
+            $mail->Body    = $email_body;
             $mail->send();
-            echo 'Message has been sent';
         }
 
-        catch (Exception $e) { echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"; }
+        catch (Exception $e) { echo "<br>Message could not be sent. Mailer Error: {$mail->ErrorInfo}"; }
     }
 ?>

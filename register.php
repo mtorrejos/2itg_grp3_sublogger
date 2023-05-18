@@ -96,7 +96,7 @@
                             <label for="emailReminderFrequency" class="form-label" style="font-size:18px; margin:0; height:15px;">Email Reminder Frequency<span style="color:#f04148; padding-left:10px;">*</label>
                             <br><span style="color:#fff; font-size:9px;">This is to reminder you of your subscription dues</span>
                             <select id="emailReminderFrequency" name="emailReminderFrequency" class="form-select dropdown-blue" required>
-                                <option value="1" selected>every 5 minutes</option>
+                                <option value="1" selected>None</option>
                                 <option value="2">every hour</option>
                                 <option value="3">once a month</option>
                                 <option value="4">twice a month</option>
@@ -111,7 +111,7 @@
                             <label for="emailSurveyFrequency" class="form-label" style="font-size:18px; margin:0; height:15px;">Email Survey Frequency<span style="color:#f04148; padding-left:10px;">*</span></label>
                             <br><span style="color:#fff; font-size:9px;">This is to record the last time you used your subscription</span>
                             <select id="emailSurveyFrequency" name="emailSurveyFrequency" class="form-select dropdown-blue" required>
-                                <option value="1" selected>every 5 minutes</option>
+                                <option value="1" selected>None</option>
                                 <option value="2">every hour</option>
                                 <option value="3">once a month</option>
                                 <option value="4">twice a month</option>

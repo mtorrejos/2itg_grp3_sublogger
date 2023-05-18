@@ -114,7 +114,7 @@
                 <select id="emailReminderFrequency" name="emailReminderFrequency" class="form-select dropdown-blue" required>
                     <?php
                     $frequency = getFrequency($_SESSION['email']);
-                    echo '<option value="1"'; if($frequency==1){echo ' selected';} echo'>every 5 minutes</option>';
+                    echo '<option value="1"'; if($frequency==1){echo ' selected';} echo'>None</option>';
                     echo '<option value="2"'; if($frequency==2){echo ' selected';} echo'>every hour</option>';
                     echo '<option value="3"'; if($frequency==3){echo ' selected';} echo'>once a month</option>';
                     echo '<option value="4"'; if($frequency==4){echo ' selected';} echo'>twice a month</option>';
@@ -133,7 +133,7 @@
                 <select id="emailSurveyFrequency" name="emailSurveyFrequency" class="form-select dropdown-blue" required>
                 <?php
                     $survey = getSurvey($_SESSION['email']);
-                    echo '<option value="1"'; if($survey==1){echo ' selected';} echo'>every 5 minutes</option>';
+                    echo '<option value="1"'; if($survey==1){echo ' selected';} echo'>None</option>';
                     echo '<option value="2"'; if($survey==2){echo ' selected';} echo'>every hour</option>';
                     echo '<option value="3"'; if($survey==3){echo ' selected';} echo'>once a month</option>';
                     echo '<option value="4"'; if($survey==4){echo ' selected';} echo'>twice a month</option>';
