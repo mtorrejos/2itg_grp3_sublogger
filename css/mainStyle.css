@@ -232,6 +232,9 @@ input:-webkit-autofill:active{
 input:-webkit-autofill{
     -webkit-text-fill-color: #2e3192 !important;
 }
+::-webkit-calendar-picker-indicator {
+    filter: invert(13%) sepia(88%) saturate(2733%) hue-rotate(234deg) brightness(89%) contrast(89%);
+}
 
 /*indexAndLogin.php*/
 .indexh1div {
