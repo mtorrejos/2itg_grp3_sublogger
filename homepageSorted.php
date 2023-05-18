@@ -116,9 +116,9 @@
     <!--SUBSCRIPTIONS-->
     <div style="display:flex; width:100% !important; min-height:70vh; border:1 blue; position:relative; z-index:1;" class="d-flex align-content-start flex-wrap justify-content-center"> <!--class="d-flex flex-wrap"-->
     <?php while ($row = $result->fetch_assoc()){ ?>
-        <div class="col-3 card-blue">
+        <div class="col-3 card-blue" style="display:table;">
             <h1 class="homepageSubName"><?php echo $row['sub_Name']; ?></h1>
-            <table>
+            <div style="min-height:316px;"><table style="word-break:break-word;">
                 <tr>
                     <td class="homepageLabel">Type:</td>
                     <td class="homepageValue" id="subType" name="subType"><?php echo $row['sub_Type']; ?></td>
@@ -129,20 +129,34 @@
                 </tr>
                 <tr>
                     <td class="homepageLabel">End Date:</td>
-                    <td class="homepageValue" id="subEndDate" name="subEndDate"><?php echo $row['sub_EndDate']; ?></td>
+                    <td class="homepageValue" id="subEndDate" name="subEndDate">
+                    <?php if($row['sub_EndDate']!="" && $row['sub_EndDate']!=0){echo $row['sub_EndDate'];} else {echo "No Due Date";} ?></td>
                 </tr>
                 <tr>
                     <td class="homepageLabel">Last Used:</td>
                     <td class="homepageValue" id="subLastUsed" name="subLastUsed"><?php echo $row['sub_LastUsed']; ?></td>
                 </tr>
-            </table>
-            <table>
-                <tr><td class="homepageValue" id="subAcctName" name="subAcctname"><?php echo $row['sub_AcctName']; ?></td></tr>
-                <tr><td class="homepageValue" id="subUsername" name="subUsername"><?php echo $row['sub_Username']; ?></td></tr>
-                <tr><td class="homepageValue" id="subEmail" name="subEmail"><?php echo $row['sub_Email']; ?></td></tr>
-                <tr><td class="homepageValue" id="subCardName" name="subCardName"><?php echo $row['sub_CardName']; ?></td></tr>
-                <tr><td class="homepageValue" id="subCardNumber" name="subCardNumber" value=""><?php if($row['sub_CardNo']>0) {echo $row['sub_CardNo'];}; ?></td></tr>
-            </table>
+                <?php if($row['sub_AcctName']!="" && $row['sub_AcctName']!=0){ ?><tr>
+                    <td class="homepageLabel">Account Name:</td>
+                    <td class="homepageValue" id="subAcctName" name="subAcctname"><?php echo $row['sub_AcctName']; ?></td>
+                </tr><?php } ?>
+                <?php if($row['sub_Username']!="" && $row['sub_Username']!=0){ ?><tr>
+                    <td class="homepageLabel">Username:</td>
+                    <td class="homepageValue" id="subUsername" name="subUsername"><?php echo $row['sub_Username']; ?></td>
+                </tr><?php } ?>
+                <?php if($row['sub_Email']!="" && $row['sub_Email']!=0){ ?><tr>
+                    <td class="homepageLabel">Email Address:</td>
+                    <td class="homepageValue" id="subEmail" name="subEmail"><?php echo $row['sub_Email']; ?></td>
+                </tr><?php } ?>
+                <?php if($row['sub_CardName']!="" && $row['sub_CardName']!=0){ ?><tr>
+                    <td class="homepageLabel">Card Name:</td>
+                    <td class="homepageValue" id="subCardName" name="subCardName"><?php echo $row['sub_CardName']; ?></td>
+                </tr><?php } ?>
+                <?php if($row['sub_CardNo']!="" && $row['sub_CardNo']!=0){ ?><tr>
+                    <td class="homepageLabel">Card Number:</td>
+                    <td class="homepageValue" id="subCardNumber" name="subCardNumber"><?php if($row['sub_CardNo']!="") {echo "**** **** **** ****";} ?></td>
+                </tr><?php } ?>
+            </table></div>
             <div class="d-flex justify-content-end">
                 <?php $subName=$row['sub_Name']; $sorted=true;?>
                 <button type="submit" style="background:none; color:inherit; border:none; padding:0; font:inherit; outline:inherit;">

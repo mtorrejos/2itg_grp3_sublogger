@@ -1,11 +1,3 @@
-<?php
-    session_start();
-    require_once "connection/connection.php";
-    $con = connection();
-
-    $email = $_SESSION['email'];
-    $result = $con->query("SELECT * FROM `$email`;"); 
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- FAVICON -->
-    <link rel="icon" href="img/SubLogger_Logo.png" type="image/gif" sizes="16x16">
+    <link rel="icon" href="https://i.ibb.co/nb8kpML/Sub-Logger-Logo.png" type="image/gif" sizes="16x16">
     <title>Due Date Reminder Mail</title>
     <style>
         body{
@@ -86,7 +78,7 @@
             <tr>
                 <td><table>
                     <tr>
-                        <td><h1 style="font-size:23px; font-weight:700; padding-top:20px; padding-bottom:5px; margin:0; text-align:center;">Hi <?php echo getFirstName($email);?>!</h1></td>
+                        <td><h1 style="font-size:23px; font-weight:700; padding-top:20px; padding-bottom:5px; margin:0; text-align:center;">Hi {NAME}!</h1></td>
                     </tr>
                     <tr>
                         <td><h1 style="font-size:19px; font-weight:500; padding-top:5px; padding-bottom:20px; margin:0; text-align:center;">Here are updates on your subscriptions.</h1>
@@ -102,13 +94,12 @@
                         <td><p style="font-size:19px; font-weight:900; padding:10px; margin:0; text-align:center;">Due Date</p></td>
                     </tr>
                     <!--TABLE ROW TO LOOP-->
-                    <?php while ($row = $result->fetch_assoc()){?>
-                    <tr style="text-align:left;">
-                        <td><p style="font-size:15px; font-weight:400; padding:10px; margin:0;"><?php echo $row['sub_Name']; ?></p></td>
-                        <td><p style="font-size:15px; font-weight:400; padding:10px; margin:0;"><?php echo difference($row['sub_EndDate']);?></p></td>
-                        <td><p style="font-size:15px; font-weight:400; padding:10px; margin:0;"><?php echo $row['sub_EndDate']; ?></p></td>
-                    </tr>
-                    <?php }; ?>
+                    <!-- <tr style="text-align:left;">
+                        <td><p style="font-size:15px; font-weight:400; padding:10px; margin:0;">Canva</p></td>
+                        <td><p style="font-size:15px; font-weight:400; padding:10px; margin:0;">0 years, 0 months, 2 days</p></td>
+                        <td><p style="font-size:15px; font-weight:400; padding:10px; margin:0;">2023-05-20</p></td>
+                    </tr> -->
+                    {SUBSCRIPTIONS}
                 </table></td>
             </tr>
             <!--FOOTER-->
@@ -121,7 +112,7 @@
                     </tr><tr>
                         <td><p style="padding:5px; margin:0;">Want to change how you receive emails?</p></td>
                     </tr><tr>
-                        <td><p style="padding:5px; margin:0;"><a href="#" target="_blank" style="text-decoration:underline; color:#2e3192;">Manage your notification settings here.</a></p></td>
+                        <td><p style="padding:5px; margin:0;"><a href="editProfile.php" target="_blank" style="text-decoration:underline; color:#2e3192;">Manage your notification settings here.</a></p></td>
                     </tr>
                 </table></td>
             </tr>

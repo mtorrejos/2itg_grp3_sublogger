@@ -1,10 +1,3 @@
-<?php
-    session_start();
-    require_once "connection/connection.php";
-    $con = connection();
-    
-    $email = $_SESSION['email'];
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <!-- FAVICON -->
-    <link rel="icon" href="img/SubLogger_Logo.png" type="image/gif" sizes="16x16">
+    <link rel="icon" href="https://i.ibb.co/nb8kpML/Sub-Logger-Logo.png" type="image/gif" sizes="16x16">
     <title>Due Date Reminder Mail</title>
     <style>
         body{
@@ -85,9 +78,9 @@
             <tr style="text-align:center;">
                 <td><table style="padding-top:20px; padding-bottom:20px; display:inline-block; width:80%;"><tr>
                     <td style="padding:10px; margin:0; text-align:center;">
-                    <h1 style="font-size:23px; font-weight:700; padding-bottom:5px; margin:0; text-align:center;">Hi <?php echo getFirstName($email);?>!</h1>
+                    <h1 style="font-size:23px; font-weight:700; padding-bottom:5px; margin:0; text-align:center;">Hi {NAME}!</h1>
                     <p style="margin:0; font-size:19px; font-weight:500;">Please update when you've last used your subscriptions
-                    <a href="#" target="_blank" style="text-decoration:underline; color:#2e3192;">here.</a></p>
+                    <a href="survey.php" target="_blank" style="text-decoration:underline; color:#2e3192;">here.</a></p>
                     </td>
                 </tr></table></td>
             </tr>
@@ -101,7 +94,7 @@
                     </tr><tr>
                         <td><p style="padding:5px; margin:0;">Want to change how you receive emails?</p></td>
                     </tr><tr>
-                        <td><p style="padding:5px; margin:0;"><a href="#" target="_blank" style="text-decoration:underline; color:#2e3192;">Manage your notification settings here.</a></p></td>
+                        <td><p style="padding:5px; margin:0;"><a href="editProfile.php" target="_blank" style="text-decoration:underline; color:#2e3192;">Manage your notification settings here.</a></p></td>
                     </tr>
                 </table></td>
             </tr>

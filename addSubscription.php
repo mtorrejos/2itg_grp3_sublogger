@@ -97,8 +97,8 @@
                     <input type="date" class="form-control textbox-white" id="subStartDate" name="subStartDate" required>
                 </div>
                 <div class="mb-3" style="padding-top:15px;">
-                    <label for="subEndDate" class="form-label" style="font-size:18px;">End Date<span style="color:#f04148; padding-left:10px;">*</span></label>
-                    <input type="date" class="form-control textbox-white" id="subEndDate" name="subEndDate" required>
+                    <label for="subEndDate" class="form-label" style="font-size:18px;">End Date</label>
+                    <input type="date" class="form-control textbox-white" id="subEndDate" name="subEndDate">
                 </div>
                 <div class="mb-3" style="padding-top:15px;">
                     <label for="subLastUsed" class="form-label" style="font-size:18px;">Last Used<span style="color:#f04148; padding-left:10px;">*</span></label>

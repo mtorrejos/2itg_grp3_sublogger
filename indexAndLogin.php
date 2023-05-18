@@ -105,7 +105,7 @@
                     <label for="password" class="form-label" style="font-size:18px;">Password<span style="color:#f04148; padding-left: 50px;">
                     <?php if(isset($email) && isset($password) && $passErr==true) {echo $passErrMsg; }?>
                     </span></label>
-                    <input type="password" class="form-control textbox-blue" id="password" name="password" required>
+                    <input type="password" class="form-control textbox-blue" id="password" name="password" style="height:50px;" required>
                 </div>
                 <div class="contentButton">
                     <a href="homepage" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid center" id="btnLogin" name="btnLogin" value="Login"></a>

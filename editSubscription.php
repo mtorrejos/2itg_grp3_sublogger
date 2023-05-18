@@ -95,7 +95,7 @@
                     <input type="date" class="form-control textbox-white" id="subStartDate" name="subStartDate" placeholder="MM/DD/YYYY" value="<?php echo getAccountDetail($email,$subName,'sub_StartDate'); ?>" required>
                 </div>
                 <div class="mb-3" style="padding-top:15px;">
-                    <label for="subEndDate" class="form-label" style="font-size:18px;">End Date<span style="color:#f04148; padding-left:10px;">*</span></label>
+                    <label for="subEndDate" class="form-label" style="font-size:18px;">End Date</label>
                     <input type="date" class="form-control textbox-white" id="subEndDate" name="subEndDate" placeholder="MM/DD/YYYY" value="<?php echo getAccountDetail($email,$subName,'sub_EndDate'); ?>" required>
                 </div>
                 <div class="mb-3" style="padding-top:15px;">

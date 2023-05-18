@@ -73,7 +73,7 @@
         `sub_CardNo` VARCHAR(255) NOT NULL,
         `sub_Type` VARCHAR(20) NOT NULL,
         `sub_StartDate` DATE NOT NULL,
-        `sub_EndDate` DATE NOT NULL,
+        `sub_EndDate` DATE,
         `sub_LastUsed` DATE NOT NULL,
         PRIMARY KEY(`sub_ID`)
         ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8;";
