@@ -3,8 +3,11 @@
     require_once "connection/connection.php";
     $con = connection();
 
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(!(isset($_SESSION['email']))){
+        header("Location: indexAndLogin.php?redirect=editProfile");
+    }
 
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $email = $_POST['email'];
         $password = getPassword($_SESSION['email']);
         $fName = $_POST['firstname'];

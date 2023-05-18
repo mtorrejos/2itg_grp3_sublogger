@@ -3,8 +3,12 @@
     require_once "connection/connection.php";
     $con = connection();
 
-    $email = $_SESSION['email'];
-        
+    if(isset($_SESSION['email'])){
+        $email = $_SESSION['email'];
+    } else {
+        header("Location: indexAndLogin.php?redirect=homepage");
+    }
+
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
         $_SESSION['sortAccordingTo'] = $_GET['sortAccordingTo'];
         $_SESSION['order'] = $_GET['order'];

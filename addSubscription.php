@@ -2,7 +2,12 @@
     session_start();
     require_once "connection/connection.php";
     $con = connection();
-    $email = $_SESSION['email'];
+
+    if(isset($_SESSION['email'])){
+        $email = $_SESSION['email'];
+    } else {
+        header("Location: indexAndLogin.php?redirect=addSubscription");
+    }
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $subName = $_POST['subName'];

@@ -3,6 +3,9 @@
     require_once "connection/connection.php";
     $con = connection();
 
+    if(!(isset($_SESSION['email']))){
+        header("Location: indexAndLogin.php?redirect=profile");
+    }
 ?>
 
 <!DOCTYPE html>

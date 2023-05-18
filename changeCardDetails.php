@@ -2,21 +2,26 @@
     session_start();
     require_once "connection/connection.php";
     $con = connection();
-    $email = $_SESSION['email'];
-    $_SESSION['subName']=$_GET['subName'];
-    $subName = $_SESSION['subName'];
-    $subID = getAccountDetail($email,$subName,'sub_ID');
-    $subCardName = getAccountDetail($email,$subName,'sub_CardName');
-    $subCardNumber = getAccountDetail($email,$subName,'sub_CardNo');
-    $subCardNumberErr = false;
-    $newSubCardNumberErr = false;
-    $subAcctName = getAccountDetail($email,$subName,'sub_AcctName');
-    $subUsername = getAccountDetail($email,$subName,'sub_Username');
-    $subEmail = getAccountDetail($email,$subName,'sub_Email');
-    $subType = getAccountDetail($email,$subName,'sub_Type');
-    $subStartDate = getAccountDetail($email,$subName,'sub_StartDate');
-    $subEndDate = getAccountDetail($email,$subName,'sub_EndDate');
-    $subLastUsed = getAccountDetail($email,$subName,'sub_LastUsed');
+
+    if(isset($_GET['subName'])){
+        $email = $_SESSION['email'];
+        $_SESSION['subName']=$_GET['subName'];
+        $subName = $_SESSION['subName'];
+        $subID = getAccountDetail($email,$subName,'sub_ID');
+        $subCardName = getAccountDetail($email,$subName,'sub_CardName');
+        $subCardNumber = getAccountDetail($email,$subName,'sub_CardNo');
+        $subCardNumberErr = false;
+        $newSubCardNumberErr = false;
+        $subAcctName = getAccountDetail($email,$subName,'sub_AcctName');
+        $subUsername = getAccountDetail($email,$subName,'sub_Username');
+        $subEmail = getAccountDetail($email,$subName,'sub_Email');
+        $subType = getAccountDetail($email,$subName,'sub_Type');
+        $subStartDate = getAccountDetail($email,$subName,'sub_StartDate');
+        $subEndDate = getAccountDetail($email,$subName,'sub_EndDate');
+        $subLastUsed = getAccountDetail($email,$subName,'sub_LastUsed');
+    } else {
+        header("Location: indexAndLogin.php?redirect=homepage");
+    }
     
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(isset($_GET['sortAccordingTo']) && isset($_GET['order'])) {

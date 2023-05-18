@@ -2,10 +2,15 @@
     session_start();
     require_once "connection/connection.php";
     $con = connection();
-    $email = $_SESSION['email'];
-    $_SESSION['subName']=$_GET['subName'];
-    $subName = $_SESSION['subName'];
-    $subID = getAccountDetail($email,$subName,'sub_ID');
+
+    if(isset($_GET['subName'])){
+        $email = $_SESSION['email'];
+        $_SESSION['subName']=$_GET['subName'];
+        $subName = $_SESSION['subName'];
+        $subID = getAccountDetail($email,$subName,'sub_ID');
+    } else {
+        header("Location: indexAndLogin.php?redirect=homepage");
+    }
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $subName = $_POST['subName'];

@@ -3,10 +3,12 @@
     require_once "connection/connection.php";
     $con = connection();
     
-    $email = $_SESSION['email'];
-    $result = $con->query("SELECT * FROM `$email`;");
-
-    $email = $_SESSION['email'];
+    if(isset($_SESSION['email'])){
+        $email = $_SESSION['email'];
+        $result = $con->query("SELECT * FROM `$email`;");
+    } else {
+        header("Location: indexAndLogin.php?redirect=survey");
+    }
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(isset($_POST['btnSave'])) {

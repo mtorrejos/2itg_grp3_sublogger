@@ -17,7 +17,29 @@
             else {
                 if (password_verify($password, getPassword($email))) { //if (getPassword($email) === $password)
                     $_SESSION['email'] = $email;
-                    header("Location: homepage.php");
+                    if(isset($_GET['redirect'])){
+                        $redirect = $_GET['redirect'];
+                        if($redirect=='homepage') {
+                            header("Location: homepage.php");
+                        }
+                        elseif($redirect=='addSubscription') {
+                            header("Location: addSubscription.php");
+                        }
+                        elseif($redirect=='profile') {
+                            header("Location: profile.php");
+                        }
+                        elseif($redirect=='editProfile') {
+                            header("Location: editProfile.php");
+                        }
+                        elseif($redirect=='changePassword') {
+                            header("Location: changePassword.php");
+                        }
+                        elseif($redirect=='survey') {
+                            header("Location: survey.php");
+                        }
+                    } else {
+                        header("Location: homepage.php");
+                    }
                 }
                 else {
                     $passErr = true;

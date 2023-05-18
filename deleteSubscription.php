@@ -2,11 +2,16 @@
     session_start();
     require_once "connection/connection.php";
     $con = connection();
-    $email = $_SESSION['email'];
-    $_SESSION['subName'] = $_GET['subName'];
-    $subName = $_SESSION['subName'];
-    $sql = "DELETE FROM `$email` WHERE sub_Name = '$subName';";
-    $con->query($sql);
+
+    if(isset($_GET['subName'])){
+        $email = $_SESSION['email'];
+        $_SESSION['subName'] = $_GET['subName'];
+        $subName = $_SESSION['subName'];
+        $sql = "DELETE FROM `$email` WHERE sub_Name = '$subName';";
+        $con->query($sql);
+    } else {
+        header("Location: indexAndLogin.php?redirect=homepage");
+    }
 
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
         if(isset($_GET['sortAccordingTo']) && isset($_GET['order'])) {

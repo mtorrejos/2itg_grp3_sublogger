@@ -3,8 +3,11 @@
     require_once "connection/connection.php";
     $con = connection();
 
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(!(isset($_SESSION['email']))){
+        header("Location: indexAndLogin.php?redirect=changePassword");
+    }
 
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $password = getPassword($_SESSION['email']); //to check
         $typedPassword = $_POST['password'];
         $newPassword = password_hash($_POST['newPassword'], PASSWORD_DEFAULT); //to store

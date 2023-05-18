@@ -2,10 +2,16 @@
     session_start();
     require_once "connection/connection.php";
     $con = connection();
+    
+    if(isset($_SESSION['email'])){
+        $email = $_SESSION['email'];
+        $result = $con->query("SELECT * FROM `$email`;");
+    } else {
+        header("Location: indexAndLogin.php?redirect=homepage");
+    }
 
-    $email = $_SESSION['email'];
-    $result = $con->query("SELECT * FROM `$email`;");?>
-
+?>
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
