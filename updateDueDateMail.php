@@ -1,11 +1,3 @@
-<?php
-    session_start();
-    require_once "connection/connection.php";
-    $con = connection();
-
-    $email = $_SESSION['email'];
-    $result = $con->query("SELECT * FROM `$email`;"); 
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -86,7 +78,7 @@
             <tr>
                 <td><table>
                     <tr>
-                        <td><h1 style="font-size:23px; font-weight:700; padding-top:20px; padding-bottom:5px; margin:0; text-align:center;">Hi <?php echo getFirstName($email);?>!</h1></td>
+                        <td><h1 style="font-size:23px; font-weight:700; padding-top:20px; padding-bottom:5px; margin:0; text-align:center;">Hi !</h1></td>
                     </tr>
                     <tr>
                         <td><h1 style="font-size:19px; font-weight:500; padding-top:5px; padding-bottom:20px; margin:0; text-align:center;">Here are updates on your subscriptions.</h1>
@@ -102,13 +94,9 @@
                         <td><p style="font-size:19px; font-weight:900; padding:10px; margin:0; text-align:center;">Due Date</p></td>
                     </tr>
                     <!--TABLE ROW TO LOOP-->
-                    <?php while ($row = $result->fetch_assoc()){?>
-                    <tr style="text-align:left;">
-                        <td><p style="font-size:15px; font-weight:400; padding:10px; margin:0;"><?php echo $row['sub_Name']; ?></p></td>
-                        <td><p style="font-size:15px; font-weight:400; padding:10px; margin:0;"><?php echo difference($row['sub_EndDate']);?></p></td>
-                        <td><p style="font-size:15px; font-weight:400; padding:10px; margin:0;"><?php echo $row['sub_EndDate']; ?></p></td>
+                    {SUBSCRIPTIONS}
                     </tr>
-                    <?php }; ?>
+                    
                 </table></td>
             </tr>
             <!--FOOTER-->
