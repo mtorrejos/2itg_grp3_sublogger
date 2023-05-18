@@ -49,7 +49,7 @@
             color: #2e3192;
         }
         .imgSection {
-            background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.6)),url(img/Background_Image.png);
+            background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.6)),url(https://i.ibb.co/ZYgdVth/Background-Image.png);
             background-size: cover;
             background-position: 50%;
             background-repeat: no-repeat;
@@ -71,7 +71,7 @@
             </tr>
             <tr style="background-color:#031633; filter: drop-shadow(-2px -2px 5px rgba(0,0,0,0.3));">
                 <td><table><tr>
-                    <td style="padding-top:25px; padding-bottom:25px; text-align:right;"><img src="img/SubLogger_Logo.png" width="90px"alt="SubLogger Logo" title="SubLogger Logo"></td>
+                    <td style="padding-top:25px; padding-bottom:25px; text-align:right;"><img src="https://i.ibb.co/nb8kpML/Sub-Logger-Logo.png" width="90px"alt="SubLogger Logo" title="SubLogger Logo"></td>
                     <td><h1 style="font-size:35px; color:#0d6efd; font-weight:900; display:inline-block; padding-top:30px; padding-bottom:30px; padding-left:15px; margin:0;">SubLogger</h1></td>
                 </tr></table></td>
             </tr>
