@@ -16,7 +16,6 @@ html {
 nav {
     background-image: linear-gradient(90deg, #031633, #011025);
     box-shadow: 0 5px 10px rgba(0,0,0,0.6);
-    
 }
 .navbar-brand{
     font-size: 25px;
@@ -562,6 +561,12 @@ input:-webkit-autofill{
     .card-blue {
         height: 500px !important;
     }
+    .plus-icon {
+        width: 80% !important;
+    }
+    .plus-icon-div {
+        padding-right: 0 !important;
+    }
 }
 
 /*register.php*/
@@ -683,6 +688,7 @@ td {
     padding-top: 25px;
     width: 62%;
     color: #2e3192;
+    margin-top: 60px;
 }
 .profileLabel {
     font-size:22px;

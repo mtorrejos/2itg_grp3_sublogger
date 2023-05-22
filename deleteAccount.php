@@ -8,16 +8,17 @@
     }
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $email = $_SESSION['email'];
         $password = getPassword($_SESSION['email']); //to check
         $typedPassword = $_POST['password'];
-        $newPassword = password_hash($_POST['newPassword'], PASSWORD_DEFAULT); //to store
         $passErr = false;
         
         if(isset($typedPassword)) { 
             if (password_verify($typedPassword, $password)) {
-                $sql = "UPDATE users SET user_Password = '$newPassword' WHERE user_Email = '{$_SESSION['email']}';";
+                $sql = "DROP TABLE `$email`;" or die($con->error);
+                $sql = "DELETE FROM users WHERE user_Email = '$email';" or die($con->error);
                 $con->query($sql);
-                header("Location: profile.php");
+                header("Location: logout.php");
             }
             else {
                 $passErr = true;
@@ -47,15 +48,15 @@
     <link rel="icon" href="img/SubLogger_Logo.png" type="image/gif" sizes="16x16">
     <!--CSS-->
     <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
-    <title>Change Password</title>
+    <title>Delete Account</title>
 </head>
 <body>
     <?php require_once("headerAndFooter/navbarWithAccount.php"); ?>
 
     <div style="padding-top:110px; height:215px;" class="section3">
-        <label class="center title profileTitle" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;">Change Password</label>
+        <label class="center title profileTitle" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;">Delete Account</label>
     </div>
-    <form name="changePassword" id="changePassword" method="POST">
+    <form name="deleteAccount" id="deleteAccount" method="POST">
     <div class="profileDetails editProfileDetails" style="display:block; margin-left:auto; margin-right:auto; width:auto; position:relative; top:0px; width:50%;">
         <div class="row" style="margin-top:5px; margin-bottom:5px;">
             <div class="col-lg-5">
@@ -68,16 +69,8 @@
                 <input type="password" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="password" name="password" required>
             </div>
         </div>
-        <div class="row" style="margin-top:5px; margin-bottom:5px;">
-            <div class="col-lg-5">
-                <label for="lastname" class="form-label profileLabel" style="padding:0; margin-top:15px; margin-bottom:0;">New Password:<span style="color:#f04148; padding-left:10px;">*</span></label>
-            </div>
-            <div class="col-lg-7">
-                <input type="password" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" id="newPassword" name="newPassword" required>
-            </div>
-        </div>
         <div class="contentButton" style="padding-top:30px;">
-            <a href="profile.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid btnProfile center" id="btnEditProfile" name="btnEditProfile" value="Save"></a>
+            <a href="profile.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid btnProfile center" id="btnEditProfile" name="btnEditProfile" value="Delete Account"></a>
         </div>
         <a href="profile.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">Cancel</a>
     </div>

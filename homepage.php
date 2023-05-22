@@ -36,14 +36,10 @@
     <?php require_once("headerAndFooter/navbarWithAccount.php"); ?>
     <!--TITLE & ADD SUBSCRIPTION BUTTON-->
     <div style="padding-top:110px;" class="section3">
-        <label class="center title" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;">Subscriptions</label>
-        <div style="position:fixed; z-index:8; display: flex; width:100%; justify-content: flex-end">
-            <div style="position:absolute; top:-95px; padding-top:30px; padding-right:40px; padding-left:40px;">
-                <a href="addSubscription.php" class="addSubCircle" style="height:60px; width:60px; border-radius:30px; background-color:#0d6efd; filter: drop-shadow(1px 1px 3px rgba(0,0,0,0.3)); z-index:8; right:20px; display:block; text-decoration:none;">
-                    <a href="addSubscription.php" style="color:white; font-size: 55px; font-weight:400; margin-left: 14px; line-height:57px; position:absolute; top:30px; text-decoration:none;" class="center">+</a>
-                </a>
-            </div>
+         <div style="position:fixed; z-index:8; display:flex; width:100%; justify-content: flex-end; padding-right:10px;" class="plus-icon-div">            
+            <div style="position:relative;"><a href="addSubscription.php"><img src="img/Plus_Icon.png" class="plus-icon"></a></div>
         </div>
+        <label class="center title" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;">Subscriptions</label>
     </div>
     <!--SORT-->
     <?php if($result->num_rows > 0) {?>

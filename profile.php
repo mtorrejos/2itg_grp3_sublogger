@@ -47,6 +47,7 @@
         <div class="contentButton" style="padding-top:30px;">
             <a href="editProfile.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="button" class="btn btn-primary btn-md btnMid btnProfile center" id="btnReg" name="btnReg" value="Edit"></a>
             <a href="changePassword.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid btnProfile center" id="btnChangePassword" name="btnChangePassword" value="Change Password"></a>
+            <a href="deleteAccount.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid btnProfile center" id="btnChangePassword" name="btnChangePassword" value="Delete Account"></a>
         </div>
     </div>
     
