@@ -2,7 +2,7 @@
     require_once "connection/connection.php";
 
     $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
-    $nAccount = $con->query("SELECT * FROM users;");
+    $nAccount = "SELECT * FROM users;";
     $dateToday = date("m-d-Y");
 
 	use PHPMailer\PHPMailer\PHPMailer;
@@ -17,13 +17,14 @@
     $mail->Username   = '';                             //add when ready
     $mail->Password   = '';                             //add when ready
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;                
-    $mail->Port       = 256;                               //add when ready
-    $mail->setFrom('reminder.sublogger@gmail.com', 'Sublogger Reminders');
+    $mail->Port       = ;                               //add when ready
+    $mail->setFrom('');
     $mail->isHTML(true);
     $mail->Subject = 'Sublogger Subscription Reminders';
+    $mail->isSMTP();
 
-    if ($nAccount->num_rows > 0) {
-        while($row = $nAccount->fetch_assoc()) {
+    if($result = $con->query($nAccount)) {
+            while($row = $result->fetch_assoc()) {
             $email = $row['user_Email'];
             $username = $row['user_FirstName'];
             $emailDate = $row['user_EmailReminderTime'];
@@ -60,10 +61,9 @@
 
     function createBody($email) {
         $con = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASS,DATABASE_NAME);
-        $nSubs = $con->query("SELECT * FROM `$email`;");
         $subDetailsFull = '';
-        if ($nSubs->num_rows > 0) {
-            while($row = $nSubs->fetch_assoc()) {
+        if($result = $con->query("SELECT * FROM `$email`;")) {
+            while($row = $result->fetch_assoc()) {
                 $subName = $row['sub_Name'];
                 $subDueDate = $row['sub_EndDate'];
 
@@ -83,16 +83,19 @@
     function sendMail($email,$body,$mail,$username) {
         $emailTemplate = file_get_contents('updateDueDateMail.php');
 
-        try {
+         try {
             $mail->addAddress($email);
+            
+            $replace = [$body,$username];
+            $find = ['{SUBSCRIPTIONS}','{NAME}'];
 
-            if(empty($body)) { $email_body = str_replace('{SUBSCRIPTIONS}', 'No subscriptions found!',$emailTemplate); }
-            else { $email_body = str_replace(['{SUBSCRIPTIONS}', '{NAME}'], [$body, $username],$emailTemplate); }
+            if(empty($body)) { $email_body = str_replace($find, ['No subscriptions found!', $username],$emailTemplate); }
+            else { $email_body = str_replace($find, $replace,$emailTemplate); }
 
             $mail->Body    = $email_body;
+            echo $email;
             $mail->send();
         }
-
         catch (Exception $e) { echo "<br>Message could not be sent. Mailer Error: {$mail->ErrorInfo}"; }
     }
 ?>

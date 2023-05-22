@@ -59,25 +59,37 @@
         <label class="center title surveyTitle" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;">Survey</label>
         <label class="center surveySubtitle" style="filter: drop-shadow(2px 2px 20px rgba(0,0,0,0.3)) drop-shadow(-2px -2px 20px rgba(0,0,0,0.3)); padding:0;">of when subscriptions are last used</label>
     </div>
-    <form name="survey" id="survey" method="POST">
-    <div class="profileDetails editProfileDetails" style="display:block; margin-left:auto; margin-right:auto; width:auto; position:relative; top:0px; width:50%;">
-    <?php while ($row = $result->fetch_assoc()){?>
-        <div class="row" style="margin-top:5px; margin-bottom:5px;">
-            <div class="col-lg-4">
-                <label for="subLastUsed" class="form-label profileLabel" style="padding:0; margin-top:15px; margin-bottom:0;"><?php echo $row['sub_Name']; ?>:</label>
+    <?php if($result->num_rows > 0) { ?>
+        <form name="survey" id="survey" method="POST">
+        <div class="profileDetails editProfileDetails" style="display:block; margin-left:auto; margin-right:auto; width:auto; position:relative; top:0px; width:50%;">
+        <?php while ($row = $result->fetch_assoc()){?>
+            <div class="row" style="margin-top:5px; margin-bottom:5px;">
+                <div class="col-lg-4">
+                    <label for="subLastUsed" class="form-label profileLabel" style="padding:0; margin-top:15px; margin-bottom:0;"><?php echo $row['sub_Name']; ?>:</label>
+                </div>
+                <div class="col-lg-8">
+                    <input type="date" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" name="subLastUsed[]" placeholder="MM/DD/YYYY" value="<?php echo $row['sub_LastUsed']; ?>" required>
+                </div>
             </div>
-            <div class="col-lg-8">
-                <input type="date" class="form-control textbox-blue editProfileTextbox" style="margin-top:8px;" name="subLastUsed[]" placeholder="MM/DD/YYYY" value="<?php echo $row['sub_LastUsed']; ?>" required>
+        <?php }; ?>
+            <div class="contentButton" style="padding-top:30px;">
+                <a href="homepage.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid btnProfile center" id="btnSave" name="btnSave" value="Save"></a>
             </div>
+            <a href="homepage.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">Cancel</a>
         </div>
-    <?php }; ?>
-        <div class="contentButton" style="padding-top:30px;">
-            <a href="homepage.php" target="_self" style="color: rgb(0, 0, 0); text-decoration: none; width: 300px;"><input type="submit" class="btn btn-primary btn-md btnMid btnProfile center" id="btnSave" name="btnSave" value="Save"></a>
-        </div>
-        <a href="homepage.php" style="text-align:center; color:#2e3192; text-decoration:none; width:80%;" class="center link">Cancel</a>
+        </form>
+        <div style="padding-bottom: 20px;"></div>
+    <?php } else {?>
+    
+    <!--If there are no subscriptions-->
+    <div class="center homepage-nosubsdiv">
+        <img src="img/Empty_Box.png" alt="" class="center homepage-nosubsimage">
+        <label class="center homepage-nosubslabel">Uh Oh, you don't have any subscriptions yet. Go to your homepage to add some!</label>
     </div>
-    </form>
-    <div style="padding-bottom: 20px;"></div>
+    <?php }?>
+    
+    
+    
 
     <?php require_once("headerAndFooter/footer.php"); ?>
 </body>

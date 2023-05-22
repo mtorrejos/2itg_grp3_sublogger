@@ -1,4 +1,5 @@
 <?php 
+    session_start();
     require_once "connection/connection.php";
     $con = connection();
 
@@ -16,7 +17,7 @@
 
         if(checkAccount($email) <= 0) { //change this to be more in line with the visuals
             if(!(!empty(validateName($fName)) || !empty(validateName($lName)) || !empty(validateEmail($email)))) {//no error message
-                $sql =  "INSERT INTO users (user_FirstName, user_LastName, user_Email, user_Password, user_EmailReminderTime, user_EmailSurveyTime) VALUES ('$fName', '$lName', '$email', '$password', '.$emailtime.', '.$emailsurvey.');";
+                $sql =  "INSERT INTO users (user_FirstName, user_LastName, user_Email, user_Password, user_EmailReminderTime, user_EmailSurveyTime) VALUES ('$fName', '$lName', '$email', '$password', '$emailtime', '$emailsurvey');";
                 $con->query($sql);
                 //echo '<script>alert("Account Created! Directing to homepage...")</script>';
                 createSubTable($email);

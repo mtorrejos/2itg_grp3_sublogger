@@ -1,8 +1,8 @@
 <?php
-    define('DATABASE_HOST', 'localhost');
-    define('DATABASE_USER', 'root');
+    define('DATABASE_HOST', ''); //add when ready
+    define('DATABASE_USER', '');
     define('DATABASE_PASS', '');
-    define('DATABASE_NAME','sublogger');
+    define('DATABASE_NAME','');
 
     function connection() {
         $e = 'mysqli_sql_exception';

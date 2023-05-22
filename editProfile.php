@@ -26,7 +26,7 @@
         }
         else {
             if($_SESSION['email'] != $email) { //if email is changed
-                $sql =  "INSERT INTO users (user_FirstName, user_LastName, user_Email, user_Password, user_EmailReminderTime, user_EmailSurveyTime) VALUES ('$fName', '$lName', '$email', '$password', '.$emailtime.', '.$emailsurvey.');";
+                $sql =  "INSERT INTO users (user_FirstName, user_LastName, user_Email, user_Password, user_EmailReminderTime, user_EmailSurveyTime) VALUES ('$fName', '$lName', '$email', '$password', '$emailtime', '$emailsurvey');";
                 $con->query($sql);
                 $sql = "DELETE FROM users WHERE user_Email = '{$_SESSION['email']}';";
                 $con->query($sql);
