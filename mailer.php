@@ -18,7 +18,7 @@
     $mail->Password   = '';                             //add when ready
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;                
     $mail->Port       = ;                               //add when ready
-    $mail->setFrom('');
+    $mail->setFrom('reminder.sublogger@gmail.com', 'Sublogger Reminders');
     $mail->isHTML(true);
     $mail->Subject = 'Sublogger Subscription Reminders';
     $mail->isSMTP();
@@ -29,8 +29,7 @@
             $username = $row['user_FirstName'];
             $emailDate = $row['user_EmailReminderTime'];
 
-            //if(checkSend($emailDate)){ sendMail($email,createBody($email),$mail,$username); }
-            sendMail($email,createBody($email),$mail,$username);
+            if(checkSend($emailDate)){ sendMail($email,createBody($email),$mail,$username); }
         }
     }
 
@@ -66,10 +65,27 @@
             while($row = $result->fetch_assoc()) {
                 $subName = $row['sub_Name'];
                 $subDueDate = $row['sub_EndDate'];
+                $currentDate = new DateTime(date("Y-m-d"));
+                $dueDate = new DateTime($subDueDate);
+                $subDuein = $currentDate->diff($dueDate)->format("%r%a");
+                
+                if($subDueDate == "1976-01-01" || empty($subDueDate)) { 
+                    $subDueDateVal = "No Due Date"; 
+                    $subDueinVal = "No Due Date";
+                }
+                
+                else { 
+                    $subDueinVal = ($subDuein < 0) ? "Expired" : $subDuein . " days";
+                    $subDueinVal = $subDuein." days";
+                    $subDueDateVal = $subDueDate;
+                    
+                }
+                
 
                 $subDetails = '<tr>
                 <td class="homepageValue" id="subAcctName" name="subAcctname">' .$subName. '</td>
-                <td class="homepageValue" id="subEndDate" name="subEndDate">'.$subDueDate.'</td>
+                <td class="homepageValue" id="subEndDate" name="subEndDate">'.$subDueinVal.'</td>
+                <td class="homepageValue" id="subEndDate" name="subEndDate">'.$subDueDateVal.'</td>
                 </tr>';
 
                 $subDetailsFull .= $subDetails;
