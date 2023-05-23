@@ -5,6 +5,13 @@
 
     if(!(isset($_SESSION['email']))){
         header("Location: indexAndLogin.php?redirect=editProfile");
+    } else {
+        if(isset($_GET['email'])) {
+            $sourceEmail = $_GET['email'];
+            if($_SESSION['email']!=$sourceEmail) {
+                header("Location: logout.php?redirect=editProfile");
+            }
+        }
     }
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {

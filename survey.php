@@ -5,7 +5,14 @@
     
     if(isset($_SESSION['email'])){
         $email = $_SESSION['email'];
-        $result = $con->query("SELECT * FROM `$email`;");
+        if(isset($_GET['email'])) {
+            $sourceEmail = $_GET['email'];
+            if($_SESSION['email']!=$sourceEmail) {
+                header("Location: logout.php?redirect=survey");
+            }
+        } else {
+            $result = $con->query("SELECT * FROM `$email`;");
+        }
     } else {
         header("Location: indexAndLogin.php?redirect=survey");
     }
