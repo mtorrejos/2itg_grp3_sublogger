@@ -4,7 +4,7 @@
     $con = connection();
 
     if(!(isset($_SESSION['email']))){
-        header("Location: indexAndLogin.php?redirect=editProfile&email=$sourceEmail");
+        header("Location: indexAndLogin.php?redirect=editProfile");
     } else {
         if(isset($_GET['email'])) {
             $sourceEmail = $_GET['email'];

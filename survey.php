@@ -9,6 +9,8 @@
             $sourceEmail = $_GET['email'];
             if($_SESSION['email']!=$sourceEmail) {
                 header("Location: logout.php?redirect=survey");
+            } else {
+                $result = $con->query("SELECT * FROM `$email`;");
             }
         } else {
             $result = $con->query("SELECT * FROM `$email`;");
