@@ -1,6 +1,5 @@
 <?php
 	session_start();
-	session_destroy();
 	if(isset($_GET['email'])) {
 		$sourceEmail = $_GET['email'];
 		if($_GET['redirect']=='editProfile') {
@@ -11,4 +10,5 @@
 	} else {
 		header("Location: indexAndLogin.php");
 	}
+	session_destroy();
 ?>
